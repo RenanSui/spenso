@@ -6,7 +6,7 @@
 	"author": "RenanSui",
 	"scripts": {
 		"build:sass": "sass  --no-source-map src/sass:public/css",
-        "copy:assets": "copyfiles -u 1 ./src/assets/**/* public",
+		"copy:assets": "copyfiles -u 1 ./src/assets/**/* public",
 		"copy:html": "copyfiles -u 1 ./src/*.html public",
 		"copy": "npm-run-all --parallel copy:*",
 		"watch:assets": "onchange \"./src/assets/**/*\" -- npm run copy:assets",
@@ -16,7 +16,7 @@
 		"serve": "browser-sync start --server public --files public",
 		"start": "npm-run-all copy --parallel watch serve",
 		"build": "npm-run-all copy:html build:*",
-		"postbuild": "postcss public/css/*.css -u autoprefixer cssnano -r --no-map"
+		"postbuild": "postcss public/css/*.css -u autoprefixer cssnano --no-map & npx purgecss --css public/css/*.css css/palette.css --content public/index.html --output public/css/"
 	},
 	"dependencies": {
 		"autoprefixer": "^10.4.2",
@@ -27,5 +27,9 @@
 		"onchange": "^7.1.0",
 		"postcss-cli": "^9.1.0",
 		"sass": "^1.49.8"
+	},
+	"devDependencies": {
+		"eslint": "^8.24.0",
+		"purgecss": "^5.0.0"
 	}
 }

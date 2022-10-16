@@ -1,0 +1,37 @@
+// include in every button
+@mixin btn($bg-color: #e2e2e2) {
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    border: 0;
+    padding: $base-padding $base-padding * 2;
+    border-radius: $base-border-radius;
+    background-color: $bg-color;
+}
+
+.btn {
+    @include btn;
+}
+
+// loop through colors and create buttons
+@each $key,
+$val in $colors {
+    .btn-#{$key} {
+        @include btn($val);
+
+        &:hover {
+            background-color: lighten($val, 5);
+        }
+    }
+
+    .btn-circle-#{$key} {
+        @include btn($val);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+
+        &:hover {
+            background-color: lighten($val, 5);
+        }
+    }
+}

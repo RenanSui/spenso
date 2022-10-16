@@ -1,0 +1,32 @@
+// import google font
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+// Reset styles
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+video {
+    width: 100%;
+    aspect-ratio: 16/9
+}
+
+// Base styles
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
