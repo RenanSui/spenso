@@ -10,34 +10,59 @@
 </head>
 
 <body class="bg-primary text-white">
+
+    <!-- navbar -->
     <header class="navbar-secondary p-3">
         <h3 class="nav-title text-hover-gray">Dashboard</h3>
     </header>
 
+    <!-- info container -->
     <section class="info row justify-center container">
 
+        <!-- total balance container -->
         <div class="totalBalance bg-secondary bg-hover-secondary col-xs-12 m-2 p-4 rounded">
-            <p class="text-white-dark-4">TOTAL BALANCE</p>
-            <h3>$23,000</h3>
+            <div class="tBinfo">
+                <p class="text-gray">TOTAL BALANCE</p>
+                <h3>$23,000</h3>
+            </div>
         </div>
 
+        <!-- income container -->
         <div class="income bg-secondary bg-hover-secondary col-xs-5 ml-2 mr-2 p-3 rounded">
-            <iconify-icon icon="uim:arrow-circle-down" style="color: #6fcf97;" width="32"></iconify-icon>
-            <p class="text-white-dark-4">TOTAL INCOME</p>
-            <h3>+$23,000</h3>
+            <div class="icon">
+                <div class="green-circle-arrow-up">
+                    <div class="chevron-up"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="info">
+                <p class="text-gray">TOTAL INCOME</p>
+                <h3>+$23,000</h3>
+            </div>
         </div>
 
+        <!-- expense container -->
         <div class="expense bg-secondary bg-hover-secondary col-xs-5 ml-1 mr-2 p-3 rounded">
-            <iconify-icon icon="uim:arrow-circle-up" style="color: #eb5757;" width="32"></iconify-icon>
-            <p class="text-white-dark-4">TOTAL EXPENSE</p>
-            <h3>-$23,000</h3>
+            <div class="icon">
+                <div class="red-circle-arrow-up">
+                    <div class="chevron-up"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="info">
+                <p class="text-gray">TOTAL EXPENSE</p>
+                <h3>-$23,000</h3>
+            </div>
         </div>
     </section>
 
+    <!-- transactions title -->
     <h4 class="ml-2 mt-3 mb-3">Recent Transaction</h4>
 
+    <!-- transaction history -->
     <section class="history container"></section>
 
+    <!-- Add new transaction button -->
     <button class="btn-circle-blue">+</button>
 
     <script src="./app.js"></script>

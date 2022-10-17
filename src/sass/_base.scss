@@ -26,7 +26,45 @@ video {
 }
 
 // Base styles
-body{
+body {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
+}
+
+header {
+    h3 {
+        font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
+    }
+}
+
+.totalBalance,
+.income,
+.expense {
+    position: relative;
+    height: 120px;
+
+    p {
+        font-size: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.625rem);
+        line-height: 4;
+    }
+
+    h3 {
+        font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
+    }
+
+    .info {
+        // background-color: rgba(255, 255, 255, 0.098);
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+.totalBalance {
+    .tBinfo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
