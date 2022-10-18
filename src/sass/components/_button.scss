@@ -42,6 +42,7 @@ $val in $colors {
         border-radius: 50%;
         background-color: $val;
         cursor: pointer;
+        z-index: 2;
     
         &:hover {
             background-color: lighten($val, 5);

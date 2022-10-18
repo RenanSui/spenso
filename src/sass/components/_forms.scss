@@ -1,11 +1,27 @@
 .myForm {
+    // positions
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    background-color: $primary;
     opacity: 0;
+    transform: translateX(-100%);
+
+    .myForm-nav {
+        justify-content: center;
+
+        span {
+            margin-right: auto;
+        }
+    }
+
+    .myFormBody {
+        height: 100vh;
+    }
 }
 
+// animations
 .hide {
     animation: slideOut 1s forwards;
 }
@@ -18,18 +34,21 @@
     0% {
         opacity: 1;
         transform: translateX(100%);
+        z-index: 3;
     }
 
     100% {
         opacity: 1;
         transform: translateX(0);
+        z-index: 3;
     }
 }
 
 @keyframes slideOut {
-    0%{
+    0% {
         opacity: 1;
         transform: translateX(0);
+        z-index: 3;
     }
 
     100% {

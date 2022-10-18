@@ -6,22 +6,18 @@ const myForm = document.querySelector('#myForm') as HTMLFormElement;
 showFormBtn.addEventListener('click', (): void => {
 	const form = myForm.classList;
 
-	// Only show form
-	if (form.contains('hide')) {
-		form.remove('hide');
-		form.add('show');
-	} else {
-		form.add('show');
-	}
+	// Show form
+	form.remove('hide');
+	form.add('show');
+
+	// Show form if do not contain hide and show class
+	if (!form.contains('hide') || !form.contains('show')) form.add('show');
 });
+
 hideFormBtn.addEventListener('click', (): void => {
 	const form = myForm.classList;
 
-	// Only remove form
-	if (form.contains('show')) {
-		form.remove('show');
-		form.add('hide');
-	} else {
-		form.add('show');
-	}
+	// Remove form
+	form.remove('show');
+	form.add('hide');
 });
