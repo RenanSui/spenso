@@ -1,0 +1,17 @@
+.myForm{
+
+}
+
+.hide{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+}
+
+.show{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+}

@@ -34,6 +34,8 @@ button {
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
+    position: relative;
+    overflow-x: hidden;
 }
 
 header {
@@ -86,7 +88,7 @@ header {
 }
 
 .totalBalance {
-    .tBinfo {
+    .tB-info {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -104,10 +106,20 @@ header {
     display: flex;
     align-items: center;
 
-    .transaction-icon {
+    .t-icon {
         width: 75px;
         height: 75px;
         margin: $base-margin * 1.50;
+        position: relative;
+
+        .iconify {
+            width: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
+            height: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .transaction-info {
@@ -119,19 +131,19 @@ header {
         justify-content: space-between;
 
         .transaction-title {
-            h3 {
+            .t-title {
                 font-size: $base-font-size;
                 font-weight: 500;
             }
         }
 
-        .transaction-value {
+        .t-value {
             font-size: $base-font-size;
             font-weight: 500;
             text-align: end;
         }
 
-        .transaction-date {
+        .t-date {
             font-size: $font-size-xsm;
             font-weight: 400;
             letter-spacing: 1.3px;

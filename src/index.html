@@ -31,9 +31,9 @@
 
         <!-- total balance container -->
         <div class="totalBalance bg-secondary bg-hover-secondary col-xs-12 m-2 p-4 rounded">
-            <div class="tBinfo">
-                <p class="text-gray">TOTAL BALANCE</p>
-                <h3 class="text-gray-3">$23,000</h3>
+            <div class="tB-info">
+                <p class="text-gray" id="tB-text">TOTAL BALANCE</p>
+                <h3 class="text-gray-3" id="tB-value">$23,000</h3>
             </div>
         </div>
 
@@ -44,8 +44,8 @@
                 </div>
             </div>
             <div class="info">
-                <p class="text-gray">TOTAL INCOME</p>
-                <h3 class="text-gray-3">+$23,000</h3>
+                <p class="text-gray" id="income-text ">TOTAL INCOME</p>
+                <h3 class="text-gray-3" id="income-value">+$23,000</h3>
             </div>
         </div>
 
@@ -55,30 +55,60 @@
                 <div class="red-circle-arrow-up"></div>
             </div>
             <div class="info">
-                <p class="text-gray">TOTAL EXPENSE</p>
-                <h3 class="text-gray-3">-$23,000</h3>
+                <p class="text-gray" id="expense-text">TOTAL EXPENSE</p>
+                <h3 class="text-gray-3" id="expense-value">-$23,000</h3>
             </div>
         </div>
     </section>
     <!-- end of info container -->
 
+    <!-- Formulary -->
+    <form class="myForm show">
+        <nav class="myForm-nav navbar-blue pl-3 pr-3 pt-3 pb-2">
+            <span>
+                <div class="chevron-left mr-auto ml-1"></div>
+            </span>
+            <h3 class="nav-title text-white text-hover-gray display-f">
+                Add Transaction
+            </h3>
+        </nav>
+    </form>
+
     <!-- transactions title -->
     <h4 class="ml-2 mt-3 mb-3 text-gray-3">Recent Transaction</h4>
-
     <!-- transaction history -->
     <section class="history container">
 
         <!-- individual transaction -->
         <div class="income-transaction bg-secondary bg-hover-secondary m-2 rounded" id="123">
             <!-- Icon -->
-            <div class="transaction-icon bg-tertiary rounded"></div>
+            <div class="t-icon bg-tertiary rounded">
+                <span class="iconify" data-icon="bi:cart-check" style="color: #F2F2F2"></span>
+            </div>
             <!-- Informations -->
             <div class="transaction-info row">
                 <div class="transaction-title mb-2">
-                    <h3 class="text-gray-3">RTX 3090</h3>
+                    <h3 class="t-title text-gray-3">RTX 3090</h3>
                 </div>
-                <h3 class="transaction-value text-red">-$154450</h3>
-                <p class="transaction-date text-gray-2 col-xs-12 ml-auto">Oct 17, 2022</p>
+                <h3 class="t-value text-red">-$1499</h3>
+                <p class="t-date text-gray-2 col-xs-12 ml-auto">Oct 17, 2022</p>
+            </div>
+        </div>
+        <!-- end of individual transaction -->
+
+        <!-- individual transaction -->
+        <div class="income-transaction bg-secondary bg-hover-secondary m-2 rounded" id="456">
+            <!-- Icon -->
+            <div class="t-icon bg-tertiary rounded">
+                <span class="iconify" data-icon="fluent-mdl2:money" style="color: #F2F2F2"></span>
+            </div>
+            <!-- Informations -->
+            <div class="transaction-info row">
+                <div class="transaction-title mb-2">
+                    <h3 class="t-title text-gray-3">Salary</h3>
+                </div>
+                <h3 class="t-value text-green">+$15099</h3>
+                <p class="t-date text-gray-2 col-xs-12 ml-auto">Oct 17, 2022</p>
             </div>
         </div>
         <!-- end of individual transaction -->
@@ -86,9 +116,9 @@
     </section>
 
     <!-- Add new transaction button -->
-    <!-- <button class="position-circle-plus">
+    <button class="position-circle-plus">
         <div class="circle-plus-blue"></div>
-    </button> -->
+    </button>
 
     <!-- test area -->
     <div class="chevron-down"></div>
@@ -97,7 +127,6 @@
 
     <!-- SCRIPTS -->
     <script src="./app.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
 </body>
 
