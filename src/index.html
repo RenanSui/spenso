@@ -12,8 +12,18 @@
 <body class="bg-primary text-white">
 
     <!-- navbar -->
-    <header class="navbar-secondary p-3">
-        <h3 class="nav-title text-hover-gray">Dashboard</h3>
+    <header class="navbar-secondary pl-3 pr-3 pt-3 pb-2">
+        <button class="nav-btn">
+            <h3 class="nav-title text-white text-hover-gray display-f">
+                Dashboard
+                <span>
+                    <div class="chevron-down mr-auto ml-1"></div>
+                </span>
+            </h3>
+
+            <span class="iconify ml-auto nav-lightbulb" data-icon="system-uicons:lightbulb-on"></span>
+            <span class="iconify ml-3 nav-menu" data-icon="bx:dots-vertical-rounded"></span>
+        </button>
     </header>
 
     <!-- info container -->
@@ -23,50 +33,72 @@
         <div class="totalBalance bg-secondary bg-hover-secondary col-xs-12 m-2 p-4 rounded">
             <div class="tBinfo">
                 <p class="text-gray">TOTAL BALANCE</p>
-                <h3>$23,000</h3>
+                <h3 class="text-gray-3">$23,000</h3>
             </div>
         </div>
 
         <!-- income container -->
         <div class="income bg-secondary bg-hover-secondary col-xs-5 ml-2 mr-2 p-3 rounded">
             <div class="icon">
-                <div class="green-circle-arrow-up">
-                    <div class="chevron-up"></div>
-                    <div class="line"></div>
+                <div class="green-circle-arrow-down">
                 </div>
             </div>
             <div class="info">
                 <p class="text-gray">TOTAL INCOME</p>
-                <h3>+$23,000</h3>
+                <h3 class="text-gray-3">+$23,000</h3>
             </div>
         </div>
 
         <!-- expense container -->
         <div class="expense bg-secondary bg-hover-secondary col-xs-5 ml-1 mr-2 p-3 rounded">
             <div class="icon">
-                <div class="red-circle-arrow-up">
-                    <div class="chevron-up"></div>
-                    <div class="line"></div>
-                </div>
+                <div class="red-circle-arrow-up"></div>
             </div>
             <div class="info">
                 <p class="text-gray">TOTAL EXPENSE</p>
-                <h3>-$23,000</h3>
+                <h3 class="text-gray-3">-$23,000</h3>
             </div>
         </div>
     </section>
+    <!-- end of info container -->
 
     <!-- transactions title -->
-    <h4 class="ml-2 mt-3 mb-3">Recent Transaction</h4>
+    <h4 class="ml-2 mt-3 mb-3 text-gray-3">Recent Transaction</h4>
 
     <!-- transaction history -->
-    <section class="history container"></section>
+    <section class="history container">
+
+        <!-- individual transaction -->
+        <div class="income-transaction bg-secondary bg-hover-secondary m-2 rounded" id="123">
+            <!-- Icon -->
+            <div class="transaction-icon bg-tertiary rounded"></div>
+            <!-- Informations -->
+            <div class="transaction-info row">
+                <div class="transaction-title mb-2">
+                    <h3 class="text-gray-3">RTX 3090</h3>
+                </div>
+                <h3 class="transaction-value text-red">-$154450</h3>
+                <p class="transaction-date text-gray-2 col-xs-12 ml-auto">Oct 17, 2022</p>
+            </div>
+        </div>
+        <!-- end of individual transaction -->
+
+    </section>
 
     <!-- Add new transaction button -->
-    <button class="btn-circle-blue">+</button>
+    <!-- <button class="position-circle-plus">
+        <div class="circle-plus-blue"></div>
+    </button> -->
 
+    <!-- test area -->
+    <div class="chevron-down"></div>
+    <div class="chevron-left"></div>
+    <div class="chevron-up"></div>
+
+    <!-- SCRIPTS -->
     <script src="./app.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
 </body>
 
 </html>

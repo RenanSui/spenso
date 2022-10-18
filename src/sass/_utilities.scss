@@ -62,7 +62,8 @@ $utilities: (
             "2": $base-margin * 2,
             "3": $base-margin * 4,
             "4": $base-margin * 6,
-            "5": $base-margin * 8),
+            "5": $base-margin * 8,
+            "auto": auto),
     ),
 
     "margin-right": ("prefix": "mr",
@@ -71,7 +72,8 @@ $utilities: (
             "2": $base-margin * 2,
             "3": $base-margin * 4,
             "4": $base-margin * 6,
-            "5": $base-margin * 8),
+            "5": $base-margin * 8,
+            "auto": auto),
     ),
 
     "margin-top": ("prefix": "mt",
@@ -132,6 +134,6 @@ $map in $utilities {
     }
 }
 
-.rounded{
+.rounded {
     border-radius: $base-border-radius;
 }

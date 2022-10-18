@@ -25,6 +25,11 @@ video {
     aspect-ratio: 16/9
 }
 
+button {
+    background: none;
+    border: none;
+}
+
 // Base styles
 body {
     font-family: 'Inter', sans-serif;
@@ -32,9 +37,25 @@ body {
 }
 
 header {
-    h3 {
+    .nav-title {
         font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+}
+
+.nav-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.iconify {
+    color: $white;
+    height: 24px;
+    width: 24px;
 }
 
 .totalBalance,
@@ -57,6 +78,10 @@ header {
         position: absolute;
         bottom: 20px;
         left: 20px;
+
+        h3 {
+            font-weight: 500;
+        }
     }
 }
 
@@ -66,5 +91,52 @@ header {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
+        h3 {
+            font-weight: 500;
+        }
     }
+}
+
+.income-transaction,
+.expense-transaction {
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    .transaction-icon {
+        width: 75px;
+        height: 75px;
+        margin: $base-margin * 1.50;
+    }
+
+    .transaction-info {
+        width: auto;
+        margin: $base-margin * 1.50;
+        margin-left: 0;
+
+        display: flex;
+        justify-content: space-between;
+
+        .transaction-title {
+            h3 {
+                font-size: $base-font-size;
+                font-weight: 500;
+            }
+        }
+
+        .transaction-value {
+            font-size: $base-font-size;
+            font-weight: 500;
+            text-align: end;
+        }
+
+        .transaction-date {
+            font-size: $font-size-xsm;
+            font-weight: 400;
+            letter-spacing: 1.3px;
+            text-align: end;
+        }
+    }
+
 }

@@ -19,8 +19,10 @@ $grid-gaps: (
 }
 
 .row {
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
+    flex-grow: 1;
 }
 
 // justify content classes
