@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script defer src="js/app.js"></script>
 </head>
 
 <body class="bg-primary text-white">
@@ -63,10 +64,10 @@
     <!-- end of info container -->
 
     <!-- Formulary -->
-    <form class="myForm show">
+    <form class="myForm" id="myForm">
         <nav class="myForm-nav navbar-blue pl-3 pr-3 pt-3 pb-2">
             <span>
-                <div class="chevron-left mr-auto ml-1"></div>
+                <div class="chevron-left mr-auto ml-1" id="hideFormBtn"></div>
             </span>
             <h3 class="nav-title text-white text-hover-gray display-f">
                 Add Transaction
@@ -116,7 +117,7 @@
     </section>
 
     <!-- Add new transaction button -->
-    <button class="position-circle-plus">
+    <button class="position-circle-plus" id="showFormBtn">
         <div class="circle-plus-blue"></div>
     </button>
 
