@@ -35,10 +35,11 @@ body {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     position: relative;
+    height: 100vh;
+    overflow-x: hidden;
 }
 
 header {
-
     .nav-title {
         font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
         display: flex;
