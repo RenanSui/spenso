@@ -30,6 +30,13 @@ button {
     border: none;
 }
 
+.iconify {
+    color: $white;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
 // Base styles
 body {
     font-family: 'Inter', sans-serif;
@@ -39,6 +46,7 @@ body {
     overflow-x: hidden;
 }
 
+/****header and nav****/
 header {
     .nav-title {
         font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
@@ -53,13 +61,6 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
-}
-
-.iconify {
-    color: $white;
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
 }
 
 .totalBalance,
