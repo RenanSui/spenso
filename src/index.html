@@ -73,7 +73,25 @@
                 Add Transaction
             </h3>
         </nav>
-        <div class="myFormBody bg-white"></div>
+        <div class="myFormBody bg-primary p-3">
+            <!-- title -->
+            <input type="text" class="myForm-title col-xs-12" id="myForm-title" placeholder="Title" required
+                autocomplete="off">
+            <!-- amount -->
+            <input type="number" class="myForm-amount col-xs-12" name="myForm-amount" id="myForm-amount"
+                placeholder="Amount" required utocomplete="off">
+            <!-- Transaction type -->
+            <div class="custom-select">
+                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type">
+                    <option value="" disabled selected hidden>Transaction Type</option>
+                    <option value="income">income</option>
+                    <option value="expense">expense</option>
+                </select>
+            </div>
+            <!-- note -->
+            <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" utocomplete="off">
+            <button type="submit" class="btn-blue text-gray-3 bg-hover-blue col-xs-12">ADD TRANSACTION</button>
+        </div>
     </form>
 
     <!-- transactions title -->

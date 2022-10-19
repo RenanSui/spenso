@@ -6,6 +6,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    letter-spacing: 1.15px;
 }
 
 ul {
@@ -28,6 +29,11 @@ video {
 button {
     background: none;
     border: none;
+}
+
+input{
+    border: 0;
+    background: 0;
 }
 
 .iconify {
@@ -149,7 +155,7 @@ header {
         .t-date {
             font-size: $font-size-xsm;
             font-weight: 400;
-            letter-spacing: 1.3px;
+            letter-spacing: 1.5px;
             text-align: end;
         }
     }
