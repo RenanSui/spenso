@@ -75,18 +75,21 @@
         </nav>
         <div class="myFormBody bg-primary p-3">
             <!-- title -->
-            <input type="text" class="myForm-title col-xs-12" id="myForm-title" placeholder="Title" required
+            <input type="text" class="myForm-title col-xs-12 bg-hover-secondary" id="myForm-title" placeholder="Title" required
                 autocomplete="off">
             <!-- amount -->
             <input type="number" class="myForm-amount col-xs-12" name="myForm-amount" id="myForm-amount"
                 placeholder="Amount" required utocomplete="off">
             <!-- Transaction type -->
             <div class="custom-select">
-                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type">
+                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type" required>
                     <option value="" disabled selected hidden>Transaction Type</option>
-                    <option value="income">income</option>
-                    <option value="expense">expense</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
                 </select>
+                <div class="custom-arrow">
+                    <span class="chevron-down"></span>
+                </div>
             </div>
             <!-- note -->
             <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" utocomplete="off">
