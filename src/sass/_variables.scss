@@ -46,8 +46,8 @@ $base-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 
 // font sizes
 $base-font-size: 1rem;
-$font-size-xsm: $base-font-size * 0.50;
-$font-size-sm: $base-font-size * 0.75;
+$font-size-xsm: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.625rem);;
+$font-size-sm: clamp(0.625rem, -0.1023rem + 3.6364vw, 0.75rem);;
 $font-size-lg: $base-font-size * 1.5;
 $font-size-xl: $base-font-size * 2;
 $font-size-xxl: $base-font-size * 3;

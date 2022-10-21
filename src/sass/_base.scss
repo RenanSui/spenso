@@ -116,8 +116,8 @@ header {
     align-items: center;
 
     .t-icon {
-        width: 75px;
-        height: 75px;
+        min-width: 75px;
+        min-height: 75px;
         margin: $base-margin * 1.50;
         position: relative;
 
@@ -152,11 +152,18 @@ header {
             text-align: end;
         }
 
+        .t-tag{
+            font-size: $font-size-sm;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+        }
+
         .t-date {
             font-size: $font-size-xsm;
             font-weight: 400;
             letter-spacing: 1.5px;
             text-align: end;
+            align-self: center;
         }
     }
 

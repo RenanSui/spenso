@@ -26,7 +26,7 @@
         }
     }
 
-    .myFormBody {
+    .myForm-body {
         height: 100%;
         position: fixed;
         overflow-x: hidden;
@@ -39,7 +39,7 @@
         flex-flow: column;
 
         input {
-            padding: 1.25rem 0 1.25rem 1.25rem;
+            padding: 1.25rem 1.25rem 1.25rem 1.25rem;
             margin-bottom: 40px;
             border-radius: 8px 8px 0px 0px;
             background-color: $secondary;
@@ -64,6 +64,45 @@
             font-size: 14px;
             letter-spacing: 1.25px;
             max-height: 50px;
+        }
+
+        .custom-date {
+            position: relative;
+
+            .myForm-date {
+                padding-top: 29px;
+                padding-bottom: 29px;
+                width: 100%;
+                color: $gray-4;
+
+                &::-webkit-calendar-picker-indicator {
+                    background: transparent;
+                    bottom: 0;
+                    color: transparent;
+                    cursor: pointer;
+                    height: auto;
+                    left: 0;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: auto;
+                }
+            }
+
+            .iconify{
+                position: absolute;
+                top: 20%;
+                right: 10px;
+                z-index: 5;
+            }
+
+            .block{
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                top: 15%;
+                right: 2px;
+            }
         }
     }
 }
