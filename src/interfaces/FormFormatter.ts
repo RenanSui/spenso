@@ -6,3 +6,14 @@ export default interface formFormatter {
 	date: string;
 	amountString: string;
 }
+
+export interface formFormatterArgs {
+	(
+		title: string,
+		amountNumber: number,
+		note: string,
+		type: string,
+		date: string,
+		amountString: string
+	);
+}

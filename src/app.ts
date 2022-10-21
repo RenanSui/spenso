@@ -14,6 +14,7 @@ const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
 myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
 
+	// get and destructure data
 	const {
 		title,
 		amountNumber,
@@ -22,8 +23,20 @@ myForm.addEventListener('submit', (e): void => {
 		date,
 		amountString,
 	}: FormFormatter = getFormData('form');
-	const NEW_Transaction = new Transaction(title, amountNumber, note, type, date);
+
+	// create new transaction
+	const NEW_Transaction = new Transaction(
+		title,
+		amountNumber,
+		note,
+		type,
+		date,
+		amountString,
+	);
+
+	// add new transaction
 	NEW_Transaction.printFormat();
+	NEW_Transaction.NewTransaction();
 
 	// Reset form
 	RESET_Form();
@@ -31,7 +44,6 @@ myForm.addEventListener('submit', (e): void => {
 	// Remove form
 	SHOW_HIDE_FormBtn('hide');
 });
-
 
 // SHOW, HIDE and RESET Form
 showFormBtn.addEventListener('click', (): void => {
@@ -54,17 +66,14 @@ const SHOW_HIDE_FormBtn = (action: string): void => {
 		// Show form
 		form.remove('hide');
 		form.add('show');
+		RESET_Form();
 	} else {
 		// Remove form
 		form.remove('show');
 		form.add('hide');
+		RESET_Form();
 	}
 };
-
-
-
-
-
 
 // make the balance, income and expense be updated automatically using localStorage
 

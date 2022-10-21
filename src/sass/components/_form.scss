@@ -10,7 +10,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0;
+    z-index: 3;
     transform: translateX(-100%);
 
     .myForm-nav {
@@ -164,19 +164,16 @@
     0% {
         opacity: 0;
         transform: translateX(0);
-        z-index: 3;
     }
 
     1% {
         opacity: 1;
         transform: translateX(100%);
-        z-index: 3;
     }
 
     100% {
         opacity: 1;
         transform: translateX(0);
-        z-index: 3;
     }
 }
 
@@ -184,7 +181,6 @@
     0% {
         opacity: 1;
         transform: translateX(0);
-        z-index: 3;
     }
 
     100% {
