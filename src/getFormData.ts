@@ -21,7 +21,6 @@ const getFormData = (action: string): FormFormatter => {
 		note,
 		type,
 		date,
-		amountString,
 	}: FormFormatter = formData;
 
 	// return data
@@ -31,7 +30,6 @@ const getFormData = (action: string): FormFormatter => {
 		note: note,
 		type: type,
 		date: date,
-		amountString: amountString,
 	};
 };
 

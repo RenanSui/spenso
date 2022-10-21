@@ -17,9 +17,6 @@ const ReturnEditFormData = (): FormFormatter => {
 	const note: string = myFormNote.value;
 	const type: string = myFormType.value;
 	const date: string = myFormDate.value;
-	const amountString: string = parseInt(myFormAmount.value).toLocaleString(
-		'en-US'
-	);
 
 	return {
 		title: title,
@@ -27,7 +24,6 @@ const ReturnEditFormData = (): FormFormatter => {
 		note: note,
 		type: type,
 		date: date,
-		amountString: amountString,
 	};
 };
 

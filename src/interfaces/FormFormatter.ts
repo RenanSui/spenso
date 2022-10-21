@@ -4,7 +4,6 @@ export default interface formFormatter {
 	note: string;
 	type: string;
 	date: string;
-	amountString: string;
 }
 
 export interface formFormatterArgs {
@@ -13,7 +12,6 @@ export interface formFormatterArgs {
 		amountNumber: number,
 		note: string,
 		type: string,
-		date: string,
-		amountString: string
+		date: string
 	);
 }

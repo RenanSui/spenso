@@ -21,7 +21,6 @@ myForm.addEventListener('submit', (e): void => {
 		note,
 		type,
 		date,
-		amountString,
 	}: FormFormatter = getFormData('form');
 
 	// create new transaction
@@ -31,7 +30,6 @@ myForm.addEventListener('submit', (e): void => {
 		note,
 		type,
 		date,
-		amountString,
 	);
 
 	// add new transaction
