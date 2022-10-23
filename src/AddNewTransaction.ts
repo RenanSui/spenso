@@ -9,8 +9,13 @@ const AddNewTransaction: formFormatterArgs = (
 	type,
 	date
 ): void => {
+	// get local storage history data
 	const history = getLocalStorage();
+
+	// get random id
 	const id = createRandomId();
+
+	// adding data inside variable
 	const transactionData = {
 		id: id,
 		title: title,
@@ -20,7 +25,10 @@ const AddNewTransaction: formFormatterArgs = (
 		date: formatDate(date),
 	};
 
+	// push item to the beginning of the array
 	history.unshift(transactionData);
+
+	// set item to the local Storage history
 	localStorage.setItem('history', JSON.stringify(history));
 };
 

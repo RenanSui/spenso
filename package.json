@@ -16,7 +16,7 @@
 		"serve": "browser-sync start --server public --files public",
 		"start": "npm-run-all copy --parallel watch serve",
 		"build": "npm-run-all copy:html build:*",
-		"postbuild": "postcss public/css/*.css -u autoprefixer cssnano --no-map & npx purgecss --css public/css/*.css css/palette.css --content public/index.html --output public/css/"
+		"postbuild": "postcss public/css/*.css -u autoprefixer cssnano --no-map & npx purgecss --css public/css/*.css css/palette.css --content public/index.html --output public/css/ & npx tsc --build"
 	},
 	"dependencies": {
 		"autoprefixer": "^10.4.2",
