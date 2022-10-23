@@ -17,12 +17,12 @@ jobs:
           node-version: '16.16.0'
       
       - name: Install
-        run: i
+        run: |
           npm ci
           npm run build
           
       - name: Deploy
-        uses: RenanSui/expense-tracker
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: public
           branch: gh-pages
