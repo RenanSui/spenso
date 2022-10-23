@@ -3,6 +3,7 @@ import getFormData from './getFormData.js';
 import FormFormatter from './interfaces/FormFormatter.js';
 import { RESET_Form, RESET_EditForm } from './ResetForm.js';
 import RENDER_History from './renderHistory.js';
+import RENDER_Totals from './renderTotals.js';
 
 // form elements
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
@@ -13,6 +14,7 @@ const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
 
 // Call render
 RENDER_History();
+RENDER_Totals();
 
 // event on submit form and preventdefault
 myForm.addEventListener('submit', (e): void => {
@@ -40,6 +42,9 @@ myForm.addEventListener('submit', (e): void => {
 
 	// render the list history
 	RENDER_History();
+
+	// render totals
+	RENDER_Totals();
 
 	// Remove form
 	SHOW_HIDE_FormBtn('hide');
