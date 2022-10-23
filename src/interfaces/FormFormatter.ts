@@ -4,6 +4,7 @@ export default interface formFormatter {
 	note: string;
 	type: string;
 	date: string;
+	tag: string;
 }
 
 export interface formFormatterArgs {
@@ -12,7 +13,8 @@ export interface formFormatterArgs {
 		amountNumber: number,
 		note: string,
 		type: string,
-		date: string
+		date: string,
+		tag: string,
 	);
 }
 
@@ -23,4 +25,5 @@ export interface returnLocalStorage {
 	type: string;
 	date: string;
 	id: number;
+	tag: string;
 }

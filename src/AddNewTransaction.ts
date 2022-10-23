@@ -7,7 +7,8 @@ const AddNewTransaction: formFormatterArgs = (
 	amountNumber,
 	note,
 	type,
-	date
+	date,
+	tag,
 ): void => {
 	// get local storage history data
 	const history: Array<returnLocalStorage> = getLocalStorage();
@@ -20,6 +21,7 @@ const AddNewTransaction: formFormatterArgs = (
 		note: note,
 		type: type,
 		date: formatDate(date),
+		tag: tag,
 	};
 
 	// push item to the beginning of the array

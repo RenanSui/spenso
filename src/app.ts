@@ -21,7 +21,7 @@ myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
 
 	// get and destructure data
-	const { title, amountNumber, note, type, date }: FormFormatter =
+	const { title, amountNumber, note, type, date, tag }: FormFormatter =
 		getFormData('form');
 
 	// create new transaction
@@ -30,7 +30,8 @@ myForm.addEventListener('submit', (e): void => {
 		amountNumber,
 		note,
 		type,
-		date
+		date,
+		tag
 	);
 
 	// add new transaction

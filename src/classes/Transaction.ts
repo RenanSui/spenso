@@ -7,6 +7,7 @@ export default class Transaction {
 		public note: string,
 		public type: string,
 		public date: string,
+		public tag: string,
 	) {}
 
 	printFormat(): void {
@@ -15,7 +16,8 @@ export default class Transaction {
 	    ${this.amountNumber},
 	    ${this.note},
 	    ${this.type},
-	    ${this.date},`);
+	    ${this.date},
+		${this.tag}`);
 	}
 
 	NewTransaction(): void {
@@ -25,6 +27,7 @@ export default class Transaction {
 			this.note,
 			this.type,
 			this.date,
+			this.tag,
 		);
 	}
 

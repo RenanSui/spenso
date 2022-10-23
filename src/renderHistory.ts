@@ -15,7 +15,7 @@ const RENDER_History = () => {
 	let newHistory = currentHistory
 		.map(() => {
 			// destructure current local storage
-			const { id, title, note, type, date, amountNumber } = currentHistory[counter];
+			const { id, title, note, type, date, amountNumber, tag } = currentHistory[counter];
 
 			// expense or income variables
 			let value = '';
@@ -53,7 +53,7 @@ const RENDER_History = () => {
                 <!-- info value -->
                 <h3 class="t-value text-${color} col-xs-5">${value}</h3>
                 <!-- info tag -->
-                <p class="t-tag text-gray-2 col-xs-5">Entertainment</p>
+                <p class="t-tag text-gray-2 col-xs-5">${tag}</p>
                 <!-- info date -->
                 <p class="t-date text-gray-2 col-xs-5 ml-auto">${date}</p>
             </div>
