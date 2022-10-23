@@ -1,0 +1,28 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{github.ref}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Configure Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.16.0'
+      
+      - name: Install
+        run: I
+          npm ci
+          npm run build
+          
+      - name: Deploy
+        uses: RenanSui/github-pages-deploy-action@v4
+        with:
+          folder: public
+          branch: gh-pages
