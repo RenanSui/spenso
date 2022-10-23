@@ -3,6 +3,7 @@ import FormFormatter from './interfaces/FormFormatter.js';
 import ReturnFormData from './ReturnFormData.js';
 import ReturnEditFormData from './ReturnEditFormData.js';
 
+
 const getFormData = (action: string): FormFormatter => {
 	// data variable
 	let formData: FormFormatter;
@@ -21,7 +22,8 @@ const getFormData = (action: string): FormFormatter => {
 		note,
 		type,
 		date,
-		tag
+		id,
+		tag,
 	}: FormFormatter = formData;
 
 	// return data
@@ -31,6 +33,7 @@ const getFormData = (action: string): FormFormatter => {
 		note: note,
 		type: type,
 		date: date,
+		id: id,
 		tag: tag,
 	};
 };

@@ -1,6 +1,6 @@
-import { returnLocalStorage } from './interfaces/FormFormatter.js';
+import formFormatter from './interfaces/FormFormatter.js';
 
-const getLocalStorage = (): Array<returnLocalStorage> => {
+const getLocalStorage = (): Array<formFormatter> => {
 	// return the current history
 	return localStorage.getItem('history')
 		? JSON.parse(localStorage.getItem('history'))

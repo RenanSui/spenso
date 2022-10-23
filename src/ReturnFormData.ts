@@ -26,8 +26,17 @@ const ReturnFormData = (): FormFormatter => {
 		note: note,
 		type: type,
 		date: date,
+		id: createRandomId(),
 		tag: tag,
 	};
+};
+
+// create random id
+const createRandomId = (): number => {
+	// generate miliseconds date id
+	const id = Date.now();
+	// return the id
+	return id;
 };
 
 export default ReturnFormData;

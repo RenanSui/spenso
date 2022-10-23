@@ -18,6 +18,7 @@ const ReturnEditFormData = (): FormFormatter => {
 	const note: string = myFormNote.value;
 	const type: string = myFormType.value;
 	const date: string = myFormDate.value;
+	const id: number = parseInt(myFormDate.value); // Enviar o ID por argumentos com o event target ou event current target
 	const tag: string = myFormTag.value;
 
 	return {
@@ -26,6 +27,7 @@ const ReturnEditFormData = (): FormFormatter => {
 		note: note,
 		type: type,
 		date: date,
+		id: id,
 		tag: tag,
 	};
 };

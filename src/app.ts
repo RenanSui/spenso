@@ -9,6 +9,7 @@ import RENDER_Totals from './renderTotals.js';
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
 const showFormBtn = document.querySelector('#showFormBtn') as HTMLButtonElement;
 const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
+const historyContainer = document.querySelector('#history');
 
 // details elements
 
@@ -21,7 +22,7 @@ myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
 
 	// get and destructure data
-	const { title, amountNumber, note, type, date, tag }: FormFormatter =
+	const { title, amountNumber, note, type, date, id, tag }: FormFormatter =
 		getFormData('form');
 
 	// create new transaction
@@ -31,6 +32,7 @@ myForm.addEventListener('submit', (e): void => {
 		note,
 		type,
 		date,
+		id,
 		tag
 	);
 
@@ -49,6 +51,19 @@ myForm.addEventListener('submit', (e): void => {
 
 	// Remove form
 	SHOW_HIDE_FormBtn('hide');
+});
+
+// event on submit form edit
+
+// event on history container click
+historyContainer.addEventListener('click', (e): void => {
+
+	// pointer-event: none
+	// WHAT IN THE ACTUAL FUCK
+	// get id for DETAILS page
+	const eventTarget = e.target as HTMLElement
+	const parentElement1 = eventTarget as HTMLDivElement
+	console.log(parentElement1.id);
 });
 
 // SHOW, HIDE and RESET Form

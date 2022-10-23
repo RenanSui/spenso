@@ -7,6 +7,7 @@ export default class Transaction {
 		public note: string,
 		public type: string,
 		public date: string,
+		public id: number,
 		public tag: string,
 	) {}
 
@@ -27,6 +28,7 @@ export default class Transaction {
 			this.note,
 			this.type,
 			this.date,
+			this.id,
 			this.tag,
 		);
 	}

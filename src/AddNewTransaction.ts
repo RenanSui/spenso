@@ -1,6 +1,6 @@
 import formatDate from './formatDate.js';
 import getLocalStorage from './getLocalStorage.js';
-import { formFormatterArgs, returnLocalStorage } from './interfaces/FormFormatter.js';
+import formFormatter, { formFormatterArgs } from './interfaces/FormFormatter.js';
 
 const AddNewTransaction: formFormatterArgs = (
 	title,
@@ -8,19 +8,20 @@ const AddNewTransaction: formFormatterArgs = (
 	note,
 	type,
 	date,
+	id,
 	tag,
 ): void => {
 	// get local storage history data
-	const history: Array<returnLocalStorage> = getLocalStorage();
+	const history: Array<formFormatter> = getLocalStorage();
 
 	// adding data inside variable
-	const transactionData: returnLocalStorage = {
-		id: createRandomId(),
+	const transactionData: formFormatter = {
 		title: title,
 		amountNumber: amountNumber,
 		note: note,
 		type: type,
 		date: formatDate(date),
+		id: id,
 		tag: tag,
 	};
 

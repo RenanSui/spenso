@@ -4,9 +4,11 @@ export default interface formFormatter {
 	note: string;
 	type: string;
 	date: string;
+	id: number;
 	tag: string;
 }
 
+// interface arguments
 export interface formFormatterArgs {
 	(
 		title: string,
@@ -14,16 +16,8 @@ export interface formFormatterArgs {
 		note: string,
 		type: string,
 		date: string,
-		tag: string,
+		id: number,
+		tag: string
 	);
 }
 
-export interface returnLocalStorage {
-	title: string;
-	amountNumber: number;
-	note: string;
-	type: string;
-	date: string;
-	id: number;
-	tag: string;
-}

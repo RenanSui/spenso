@@ -120,6 +120,7 @@ header {
         min-height: 75px;
         margin: $base-margin * 1.50;
         position: relative;
+        pointer-events: none;
 
         .iconify {
             width: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
@@ -128,6 +129,7 @@ header {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            pointer-events: none;
         }
     }
 
@@ -138,6 +140,7 @@ header {
 
         display: flex;
         justify-content: space-between;
+        pointer-events: none;
 
         .transaction-title {
             .t-title {

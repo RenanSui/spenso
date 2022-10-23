@@ -1,12 +1,12 @@
 import getLocalStorage from './getLocalStorage.js';
-import { returnLocalStorage } from './interfaces/FormFormatter.js';
+import formFormatter from './interfaces/FormFormatter.js';
 
 // elements
 const history = document.querySelector('#history');
 
 const RENDER_History = () => {
 	// get the current local storage
-	const currentHistory: Array<returnLocalStorage> = getLocalStorage();
+	const currentHistory: Array<formFormatter> = getLocalStorage();
 
 	// counter state
 	let counter: number = 0;
