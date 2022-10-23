@@ -22,7 +22,7 @@ jobs:
           npm run build
           
       - name: Deploy
-        uses: RenanSui/expense-tracker@v3
+        uses: JamesIves/github-pages-deploy-actions@v4
         with:
           folder: public
           branch: gh-pages
