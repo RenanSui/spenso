@@ -9,6 +9,8 @@ const showFormBtn = document.querySelector('#showFormBtn') as HTMLButtonElement;
 const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
 // details elements
 
+console.log('funcionando')
+
 // todo
 // event on submit form and preventdefault
 myForm.addEventListener('submit', (e): void => {
