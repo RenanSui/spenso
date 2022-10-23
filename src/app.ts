@@ -85,4 +85,3 @@ const SHOW_HIDE_FormBtn = (action: string): void => {
 
 // dark and white theme
 // drop down menu on the header title: all income or all expense or total balance
-// click event on balance, income, expense or individual transactions and filter localStorage result
