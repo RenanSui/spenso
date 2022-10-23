@@ -1,5 +1,6 @@
-// export const numero2 = numero3? numero3 : 20
-const getLocalStorage = (): Array<Object> => {
+import { returnLocalStorage } from './interfaces/FormFormatter.js';
+
+const getLocalStorage = (): Array<returnLocalStorage> => {
 	// return the current history
 	return localStorage.getItem('history')
 		? JSON.parse(localStorage.getItem('history'))
@@ -7,3 +8,18 @@ const getLocalStorage = (): Array<Object> => {
 };
 
 export default getLocalStorage;
+
+// const getLocalStorage = (): Array<Object>
+
+// const getLocalStorage = () => {
+// 	// return the current history
+// 	return localStorage.getItem('history')
+// 		? JSON.parse(localStorage.getItem('history'))
+// 		: [];
+// };
+
+// const currentLocalStorage = getLocalStorage();
+
+// const counter = 0;
+
+// const { id } = currentLocalStorage[counter]

@@ -15,3 +15,12 @@ export interface formFormatterArgs {
 		date: string
 	);
 }
+
+export interface returnLocalStorage {
+	title: string;
+	amountNumber: number;
+	note: string;
+	type: string;
+	date: string;
+	id: number;
+}

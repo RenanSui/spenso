@@ -1,6 +1,6 @@
 import formatDate from './formatDate.js';
 import getLocalStorage from './getLocalStorage.js';
-import { formFormatterArgs } from './interfaces/FormFormatter.js';
+import { formFormatterArgs, returnLocalStorage } from './interfaces/FormFormatter.js';
 
 const AddNewTransaction: formFormatterArgs = (
 	title,
@@ -10,14 +10,11 @@ const AddNewTransaction: formFormatterArgs = (
 	date
 ): void => {
 	// get local storage history data
-	const history = getLocalStorage();
-
-	// get random id
-	const id = createRandomId();
+	const history: Array<returnLocalStorage> = getLocalStorage();
 
 	// adding data inside variable
-	const transactionData = {
-		id: id,
+	const transactionData: returnLocalStorage = {
+		id: createRandomId(),
 		title: title,
 		amountNumber: amountNumber,
 		note: note,
@@ -33,9 +30,9 @@ const AddNewTransaction: formFormatterArgs = (
 };
 
 // create random id
-const createRandomId = (): string => {
+const createRandomId = (): number => {
 	// generate miliseconds date id
-	const id = Date.now().toString();
+	const id = Date.now();
 	// return the id
 	return id;
 };

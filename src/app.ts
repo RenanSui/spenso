@@ -2,28 +2,25 @@ import Transaction from './classes/Transaction.js';
 import getFormData from './getFormData.js';
 import FormFormatter from './interfaces/FormFormatter.js';
 import { RESET_Form, RESET_EditForm } from './ResetForm.js';
+import RENDER_History from './renderHistory.js';
 
 // form elements
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
 const showFormBtn = document.querySelector('#showFormBtn') as HTMLButtonElement;
 const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
+
 // details elements
 
-console.log('funcionando')
+// Call render
+RENDER_History();
 
-// todo
 // event on submit form and preventdefault
 myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
 
 	// get and destructure data
-	const {
-		title,
-		amountNumber,
-		note,
-		type,
-		date,
-	}: FormFormatter = getFormData('form');
+	const { title, amountNumber, note, type, date }: FormFormatter =
+		getFormData('form');
 
 	// create new transaction
 	const NEW_Transaction = new Transaction(
@@ -31,7 +28,7 @@ myForm.addEventListener('submit', (e): void => {
 		amountNumber,
 		note,
 		type,
-		date,
+		date
 	);
 
 	// add new transaction
@@ -40,6 +37,9 @@ myForm.addEventListener('submit', (e): void => {
 
 	// Reset form
 	RESET_Form();
+
+	// render the list history
+	RENDER_History();
 
 	// Remove form
 	SHOW_HIDE_FormBtn('hide');
