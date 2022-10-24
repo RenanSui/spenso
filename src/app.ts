@@ -47,8 +47,16 @@ myForm.addEventListener('submit', (e): void => {
 	let currentId = 0;
 
 	// get and destructure data
-	const { title, amountNumber, note, type, date, id, tag, createdAt }: FormFormatter =
-		getFormData('form', currentId);
+	const {
+		title,
+		amountNumber,
+		note,
+		type,
+		date,
+		id,
+		tag,
+		createdAt,
+	}: FormFormatter = getFormData('form', currentId);
 
 	// create new transaction
 	const NEW_Transaction = new Transaction(
@@ -86,8 +94,16 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 	const currentId = parseInt(getId_LocalStorage());
 
 	// get and destructure data
-	let { title, amountNumber, note, type, date, id, tag, createdAt }: FormFormatter =
-		getFormData('editForm', currentId);
+	let {
+		title,
+		amountNumber,
+		note,
+		type,
+		date,
+		id,
+		tag,
+		createdAt,
+	}: FormFormatter = getFormData('editForm', currentId);
 
 	// create new transaction
 	const NEW_Transaction = new Transaction(
@@ -104,6 +120,12 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 	// add new transaction
 	NEW_Transaction.printFormat();
 	NEW_Transaction.EditTransaction();
+
+	// render the list history
+	RENDER_History();
+
+	// render totals
+	RENDER_Totals();
 
 	// hide edit form
 	SHOW_HIDE_Edit('hide');
