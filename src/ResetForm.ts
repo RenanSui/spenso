@@ -1,4 +1,4 @@
-// elements
+// form elements
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
 const myFormTitle = myForm.querySelector('#myForm-title') as HTMLInputElement;
 const myFormAmount = myForm.querySelector(

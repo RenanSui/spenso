@@ -2,7 +2,7 @@ import formatDate from './formatDate.js';
 import getLocalStorage from './getLocalStorage.js';
 import formFormatter, { formFormatterArgs } from './interfaces/FormFormatter.js';
 
-const AddNewTransaction: formFormatterArgs = (
+export const AddNewTransaction: formFormatterArgs = (
 	title,
 	amountNumber,
 	note,
@@ -32,6 +32,12 @@ const AddNewTransaction: formFormatterArgs = (
 	localStorage.setItem('history', JSON.stringify(history));
 };
 
+export const AddNewId_LocalStorage = (id: string): void => {
+	// set item to the local Storage currentId
+	localStorage.setItem('currentId', JSON.stringify(id));
+}
+
+// **id handlers**
 // create random id
 const createRandomId = (): number => {
 	// generate miliseconds date id
@@ -40,5 +46,10 @@ const createRandomId = (): number => {
 	return id;
 };
 
-// export default
-export default AddNewTransaction;
+// get clicked element id
+export const getClickedElementId = (e: MouseEvent): string => {
+	const eventTarget = e.target as HTMLElement;
+	const parentElement = eventTarget as HTMLDivElement;
+	return parentElement.id
+}
+

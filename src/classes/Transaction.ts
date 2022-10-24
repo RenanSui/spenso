@@ -1,4 +1,4 @@
-import AddNewTransaction from '../AddNewTransaction.js';
+import { AddNewTransaction } from '../AddNewTransaction.js';
 
 export default class Transaction {
 	constructor(

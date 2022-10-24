@@ -7,6 +7,12 @@ const getLocalStorage = (): Array<formFormatter> => {
 		: [];
 };
 
+export const getId_LocalStorage = (): string => {
+	return localStorage.getItem('currentId')
+		? JSON.parse(localStorage.getItem('currentId'))
+		: { id: '0' };
+}
+
 export const getTotals = () => {
 	return localStorage.getItem('totals')
 		? JSON.parse(localStorage.getItem('totals'))

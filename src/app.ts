@@ -4,7 +4,15 @@ import FormFormatter from './interfaces/FormFormatter.js';
 import { RESET_Form, RESET_Details, RESET_EditForm } from './ResetForm.js';
 import RENDER_History from './renderHistory.js';
 import RENDER_Totals from './renderTotals.js';
-import { SHOW_HIDE_Form, SHOW_HIDE_Details, SHOW_HIDE_Edit } from './Show_Hide_Functions.js';
+import {
+	SHOW_HIDE_Form,
+	SHOW_HIDE_Details,
+	SHOW_HIDE_Edit,
+} from './Show_Hide_Functions.js';
+import {
+	AddNewId_LocalStorage,
+	getClickedElementId,
+} from './AddNewTransaction.js';
 
 // form elements
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
@@ -13,7 +21,6 @@ const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
 
 // details elements
 const historyContainer = document.querySelector('#history') as HTMLDivElement;
-const detailsContainer = document.querySelector('#details') as HTMLDivElement;
 const hideDetailsBtn = document.querySelector(
 	'#hideDetailsBtn'
 ) as HTMLButtonElement;
@@ -62,20 +69,28 @@ myForm.addEventListener('submit', (e): void => {
 
 // event on submit form edit
 
+// SHOW and HIDE editForm
+
 // SHOW and HIDE details Form
 historyContainer.addEventListener('click', (e): void => {
-	// event on history container click
 	// get id for DETAILS page
-	const eventTarget = e.target as HTMLElement;
-	const parentElement1 = eventTarget as HTMLDivElement;
-	console.log(parentElement1.id);
+	const id = getClickedElementId(e);
+	console.log(id);
 
+	// value id to currentId local storage
+	AddNewId_LocalStorage(id);
+
+	// show details
 	SHOW_HIDE_Details('show');
 });
 
 hideDetailsBtn.addEventListener('click', (): void => {
+	// value '0' to currentId local storage
+	AddNewId_LocalStorage('0');
+
+	// hide details
 	SHOW_HIDE_Details('hide');
-})
+});
 
 // SHOW, HIDE and RESET Form
 showFormBtn.addEventListener('click', (): void => {
