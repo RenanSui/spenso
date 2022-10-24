@@ -10,6 +10,9 @@ const detailsContainer = document.querySelector('#details') as HTMLDivElement;
 // edit elements
 const myFormEdit = document.querySelector('#myForm-Edit') as HTMLFormElement;
 
+// modal element
+const modal = document.querySelector('#modal') as HTMLDivElement;
+
 // form functions
 export const SHOW_HIDE_Form = (action: string): void => {
 	// get the classList of the form
@@ -17,6 +20,8 @@ export const SHOW_HIDE_Form = (action: string): void => {
 
 	// Show form if do not contain hide and show class
 	if (!form.contains('hide') || !form.contains('show')) form.add('show');
+
+	modal.classList.toggle('modal')
 
 	// show or hide conditionals
 	if (action === 'show') {
@@ -40,6 +45,8 @@ export const SHOW_HIDE_Details = (action: string): void => {
 	// Show form if do not contain hide and show class
 	if (!form.contains('hide') || !form.contains('show')) form.add('show');
 
+	modal.classList.toggle('modal')
+
 	// show or hide conditionals
 	if (action === 'show') {
 		// Show form
@@ -61,6 +68,8 @@ export const SHOW_HIDE_Edit = (action: string): void => {
 
 	// Show form if do not contain hide and show class
 	if (!form.contains('hide') || !form.contains('show')) form.add('show');
+
+	modal.classList.toggle('modal')
 
 	// show or hide conditionals
 	if (action === 'show') {

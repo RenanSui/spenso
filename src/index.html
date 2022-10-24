@@ -12,20 +12,24 @@
 
 <body class="bg-primary text-white">
 
-    <!-- navbar -->
-    <header class="navbar-secondary pl-3 pr-3 pt-3 pb-2">
-        <button class="nav-btn">
-            <h3 class="nav-title text-white text-hover-gray display-f">
-                Overall
-                <span>
-                    <div class="chevron-down mr-auto ml-1"></div>
-                </span>
-            </h3>
+    <div class="containerModal" id="modal"></div>
 
-            <span class="iconify ml-auto nav-lightbulb" data-icon="system-uicons:lightbulb-on"></span>
-            <span class="iconify ml-3 nav-menu" data-icon="bx:dots-vertical-rounded"></span>
-        </button>
-    </header>
+    <!-- navbar -->
+    <span class="navbar-secondary">
+        <header class="navbar-secondary pl-3 pr-3 pt-3 pb-2 container">
+            <button class="nav-btn">
+                <h3 class="nav-title text-white text-hover-gray display-f">
+                    Overall
+                    <span>
+                        <div class="chevron-down mr-auto ml-1"></div>
+                    </span>
+                </h3>
+
+                <span class="iconify ml-auto nav-lightbulb" data-icon="system-uicons:lightbulb-on"></span>
+                <span class="iconify ml-3 nav-menu" data-icon="bx:dots-vertical-rounded"></span>
+            </button>
+        </header>
+    </span>
 
     <!-- info container -->
     <section class="info row justify-center container">
@@ -124,7 +128,7 @@
             <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" autocomplete="off">
             <button type="submit" class="btn-blue text-gray-3 bg-hover-blue col-xs-12">ADD TRANSACTION</button>
         </div>
-    </form>
+    </form> 
 
     <!-- edit formulary -->
     <form class="myForm" id="myForm-Edit">
@@ -191,7 +195,13 @@
     </form>
 
     <!-- transactions title -->
-    <h4 class="ml-2 mt-3 mb-3 text-gray-3">Recent Transaction</h4>
+    <div class="container containerTitle">
+        <h4 class="ml-2 mt-3 mb-3 text-gray-3 recentTitle">Recent Transaction</h4>
+        <!-- Add new transaction button -->
+        <button class="position-circle-plus" id="showFormBtn">
+            <div class="circle-plus-blue"></div>
+        </button>
+    </div>
 
     <!-- transaction history -->
     <section class="history container" id="history">
@@ -243,9 +253,9 @@
     </section>
 
     <!-- Add new transaction button -->
-    <button class="position-circle-plus" id="showFormBtn">
+    <!-- <button class="position-circle-plus" id="showFormBtn">
         <div class="circle-plus-blue"></div>
-    </button>
+    </button> -->
 
     <!-- details of transaction -->
     <section class="details" id="details">
@@ -314,8 +324,6 @@
     </section>
 
     <!-- test area -->
-    <span class="iconify" data-icon="octicon:trash-24"></span>
-    <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
     <span class="hide show showEdit hideEdit display-n"></span>
 
     <!-- SCRIPTS -->
