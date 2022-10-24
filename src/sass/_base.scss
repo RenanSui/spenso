@@ -48,8 +48,11 @@ body {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     position: relative;
-    height: 100vh;
-    overflow-x: hidden;
+    height: 100%;
+}
+
+.overflow-hidden{
+    overflow: hidden;
 }
 
 .containerModal {
@@ -120,6 +123,7 @@ header {
         justify-content: center;
         align-items: center;
     }
+    
 }
 
 .nav-btn {
