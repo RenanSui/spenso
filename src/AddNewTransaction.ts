@@ -16,13 +16,13 @@ const AddNewTransaction: formFormatterArgs = (
 
 	// adding data inside variable
 	const transactionData: formFormatter = {
+		id: createRandomId(),
 		title: title,
 		amountNumber: amountNumber,
-		note: note,
-		type: type,
 		date: formatDate(date),
-		id: id,
+		type: type,
 		tag: tag,
+		note: note,
 	};
 
 	// push item to the beginning of the array

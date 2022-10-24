@@ -17,12 +17,10 @@ const calculateTotals = (): IgetTotals => {
 
 	// totals local storage
 	let totals = getTotals();
-	console.log(`totals: ${JSON.stringify(totals)}`);
 
 	// loop through history local storage and return values
 	history.map(() => {
 		const { amountNumber } = history[counter];
-		console.log(`amount${counter}: ${amountNumber}`);
 		if (history[counter].type === 'Expense') expenseVar += amountNumber;
 		if (history[counter].type === 'Income') incomeVar += amountNumber;
 		counter++;
@@ -38,7 +36,6 @@ const calculateTotals = (): IgetTotals => {
 	// set calculated totals to localStorage totals
 	let totalsCalculated = totals;
 	localStorage.setItem('totals', JSON.stringify(totalsCalculated));
-	console.log(`total calculated: ${JSON.stringify(totalsCalculated)}`);
 
 	return { balance, income, expense };
 };

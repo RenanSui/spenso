@@ -17,6 +17,10 @@ export const RESET_Form = (): void => {
 	myFormDate.value = '';
 };
 
+export const RESET_Details = (): void => {
+	console.log('oi')
+}
+
 export const RESET_EditForm = (): void => {
 	console.log('oi')
 }

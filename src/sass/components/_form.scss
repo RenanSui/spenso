@@ -13,6 +13,9 @@
     transform: translateX(-100%);
 
     .myForm-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
         justify-content: center;
 
         span {
@@ -88,14 +91,14 @@
                 }
             }
 
-            .iconify{
+            .iconify {
                 position: absolute;
                 top: 20%;
                 right: 10px;
                 z-index: 5;
             }
 
-            .block{
+            .block {
                 width: 32px;
                 height: 32px;
                 position: absolute;
@@ -166,7 +169,7 @@
     }
 
     1% {
-        opacity: 1;
+        opacity: 0;
         transform: translateX(100%);
     }
 

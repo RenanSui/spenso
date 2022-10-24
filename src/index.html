@@ -186,11 +186,11 @@
     </button>
 
     <!-- details of transaction -->
-    <section class="details">
+    <section class="details" id="details">
         <!-- Details Header -->
         <nav class="details-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
             <span>
-                <div class="chevron-left" id="hideFormBtn"></div>
+                <div class="chevron-left" id="hideDetailsBtn"></div>
             </span>
             <h3 class="nav-title text-white text-hover-gray mr-auto ml-auto">
                 Details
@@ -201,37 +201,60 @@
         <!-- Details Body -->
         <div class="details-body bg-primary p-3">
             <!-- title -->
-            <p>title</p>
-            <h1>CashBack Offer</h1>
+            <div class="title-container">
+                <h1>title</h1>
+                <p>Samsung Level Earphones</p>
+            </div>
 
             <!-- amount -->
-            <p>Amount</p>
-            <h1>$30</h1>
+            <div class="amount-container">
+                <h1>Amount</h1>
+                <p>2,390</p>
+            </div>
 
             <!-- Transaction Type -->
-            <p>Transaction Type</p>
-            <h1>CashBack Offer</h1>
+            <div class="type-container">
+                <h1>Transaction Type</h1>
+                <p>Expense</p>
+            </div>
+
+            <!-- Tag -->
+            <div class="tag-container">
+                <h1>Tag</h1>
+                <p>Personal Spending</p>
+            </div>
 
             <!-- When -->
-            <p>title</p>
-            <h1>CashBack Offer</h1>
+            <div class="when-container">
+                <h1>When</h1>
+                <p>02/06/2022</p>
+            </div>
 
             <!-- Note -->
-            <p>title</p>
-            <h1>CashBack Offer</h1>
+            <div class="note-container">
+                <h1>Note</h1>
+                <p>I Spent to buy domain for my new startup</p>
+            </div>
 
             <!-- Created At -->
-            <p>title</p>
-            <h1>CashBack Offer</h1>
+            <div class="createdAt-container">
+                <h1>Created At</h1>
+                <p>Oct 21, 2022 4:22:14 AM</p>
+            </div>
+        </div>
 
-            <button>Edit</button>
+        <div class="detailsBtn-container">
+            <button class="detailsBtn bg-hover-blue bg-blue" id="detailsBtn">
+                <span class="iconify" data-icon="clarity:pencil-line" data-width="24" data-height="24"></span>
+                Edit
+            </button>
         </div>
     </section>
 
     <!-- test area -->
     <span class="iconify" data-icon="octicon:trash-24"></span>
     <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
-    <span class="hide show display-n"></span>
+    <span class="hide show showEdit hideEdit display-n"></span>
 
     <!-- SCRIPTS -->
     <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
