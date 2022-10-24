@@ -8,6 +8,10 @@ const RENDER_History = () => {
 	// get the current local storage
 	const currentHistory: Array<formFormatter> = getLocalStorage();
 
+	defaultRender(currentHistory)
+};
+
+export const defaultRender = (currentHistory: Array<formFormatter>) => {
 	// counter state
 	let counter: number = 0;
 
@@ -64,6 +68,6 @@ const RENDER_History = () => {
 		.join('');
 
 	history.innerHTML = newHistory;
-};
+}
 
 export default RENDER_History;

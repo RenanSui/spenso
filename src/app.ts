@@ -17,6 +17,8 @@ import {
 } from './AddNewTransaction.js';
 import { getId_LocalStorage } from './getLocalStorage.js';
 import { renderFormValues } from './renderFormValues.js';
+import { DeleteForms } from './DeleteForm.js';
+import { renderFilteredHistory } from './renderFilteredHistory.js';
 
 // form elements
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
@@ -36,10 +38,22 @@ const hideEditFormBtn = document.querySelector(
 	'#hideEditFormBtn'
 ) as HTMLButtonElement;
 
+// delete elements
+const deleteBtn = document.querySelector('#deleteBtn');
+
+// info containers
+const totalBalance = document.querySelector('#totalBalance') as HTMLDivElement;
+const totalIncome = document.querySelector('#totalIncome') as HTMLDivElement;
+const totalExpense = document.querySelector('#totalExpense') as HTMLDivElement;
+
 // Call render
 RENDER_History();
 RENDER_Totals();
-
+/*
+ *
+ *
+ *
+ */
 // event on submit form and preventdefault
 myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
@@ -127,10 +141,36 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 	// render totals
 	RENDER_Totals();
 
+	// value '0' to currentId local storage
+	AddNewId_LocalStorage('0');
+
 	// hide edit form
 	SHOW_HIDE_Edit('hide');
 });
 
+// delete button individually
+deleteBtn.addEventListener('click', (e) => {
+	const currentId = parseInt(getId_LocalStorage());
+	console.log('Delete id: ' + currentId);
+	DeleteForms(currentId);
+
+	// render the list history
+	RENDER_History();
+
+	// render totals
+	RENDER_Totals();
+
+	// value '0' to currentId local storage
+	AddNewId_LocalStorage('0');
+
+	// hide details
+	SHOW_HIDE_Details('hide');
+});
+/*
+ *
+ *
+ *
+ */
 // SHOW and HIDE editForm
 showEditBtn.addEventListener('click', (): void => {
 	const currentId = parseInt(getId_LocalStorage());
@@ -171,8 +211,26 @@ showFormBtn.addEventListener('click', (): void => {
 hideFormBtn.addEventListener('click', (): void => {
 	SHOW_HIDE_Form('hide');
 });
-
-// make the balance, income and expense be updated automatically using localStorage
+/*
+ *
+ *
+ *
+ */
+// balance, income and expense filter
+totalBalance.addEventListener('click', () => {
+	renderFilteredHistory('Balance');
+});
+totalIncome.addEventListener('click', () => {
+	renderFilteredHistory('Income');
+});
+totalExpense.addEventListener('click', () => {
+	renderFilteredHistory('Expense');
+});
+/*
+ *
+ *
+ *
+ */
 
 // dark and white theme
 // drop down menu on the header title: all income or all expense or total balance
