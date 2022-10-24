@@ -9,7 +9,8 @@ export default class Transaction {
 		public type: string,
 		public date: string,
 		public id: number,
-		public tag: string
+		public tag: string,
+		public createdAt: string
 	) {}
 
 	printFormat(): void {
@@ -20,7 +21,8 @@ export default class Transaction {
 	    ${this.type},
 	    ${this.date},
 		${this.id},
-		${this.tag}`);
+		${this.tag},
+		${this.createdAt}`);
 	}
 
 	NewTransaction(): void {
@@ -31,7 +33,8 @@ export default class Transaction {
 			this.type,
 			this.date,
 			this.id,
-			this.tag
+			this.tag,
+			this.createdAt
 		);
 	}
 
@@ -43,7 +46,8 @@ export default class Transaction {
 			this.type,
 			this.date,
 			this.id,
-			this.tag
+			this.tag,
+			this.createdAt
 		);
 	}
 }

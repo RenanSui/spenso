@@ -4,13 +4,13 @@ import ReturnFormData from './ReturnFormData.js';
 import ReturnEditFormData from './ReturnEditFormData.js';
 
 
-const getFormData = (action: string): FormFormatter => {
+const getFormData = (action: string, currentId: number): FormFormatter => {
 	// data variable
 	let formData: FormFormatter;
 
 	// data conditionals
 	if (action === 'form') formData = ReturnFormData();
-	if (action === 'editForm') formData = ReturnEditFormData();
+	if (action === 'editForm') formData = ReturnEditFormData(currentId);
 	if (action !== 'form' && action !== 'editForm') {
 		console.log('return data not specified for forms');
 	}
@@ -24,7 +24,10 @@ const getFormData = (action: string): FormFormatter => {
 		date,
 		id,
 		tag,
+		createdAt
 	}: FormFormatter = formData;
+
+	console.log(createdAt)
 
 	// return data
 	return {
@@ -35,6 +38,7 @@ const getFormData = (action: string): FormFormatter => {
 		date: date,
 		id: id,
 		tag: tag,
+		createdAt: createdAt,
 	};
 };
 

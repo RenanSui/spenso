@@ -1,4 +1,5 @@
 // imports
+import { formatFullDate } from './formatDate.js';
 import FormFormatter from './interfaces/FormFormatter.js';
 
 // elements
@@ -19,6 +20,7 @@ const ReturnFormData = (): FormFormatter => {
 	const type: string = myFormType.value;
 	const date: string = myFormDate.value;
 	const tag: string = myFormTag.value;
+	const createdAt: string = formatFullDate();
 
 	return {
 		title: title,
@@ -28,6 +30,7 @@ const ReturnFormData = (): FormFormatter => {
 		date: date,
 		id: createRandomId(),
 		tag: tag,
+		createdAt: createdAt,
 	};
 };
 

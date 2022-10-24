@@ -1,4 +1,5 @@
 // imports
+import { getValuesById } from './getLocalStorage.js';
 import FormFormatter from './interfaces/FormFormatter.js';
 
 // elements
@@ -11,15 +12,16 @@ const myFormDate = myForm.querySelector('#myForm-date') as HTMLInputElement;
 const myFormNote = myForm.querySelector('#myForm-note') as HTMLInputElement;
 
 // functions
-const ReturnEditFormData = (): FormFormatter => {
+const ReturnEditFormData = (currentId: number): FormFormatter => {
 	// form data
 	const title: string = myFormTitle.value.toString();
 	const amountNumber: number = parseInt(myFormAmount.value); // number
 	const note: string = myFormNote.value;
 	const type: string = myFormType.value;
 	const date: string = myFormDate.value;
-	const id: number = parseInt(myFormDate.value); // Enviar o ID por argumentos com o event target ou event current target
+	const id: number = currentId;
 	const tag: string = myFormTag.value;
+	const createdAt: any = getValuesById(id)[0].createdAt;
 
 	return {
 		title: title,
@@ -29,6 +31,7 @@ const ReturnEditFormData = (): FormFormatter => {
 		date: date,
 		id: id,
 		tag: tag,
+		createdAt: createdAt,
 	};
 };
 

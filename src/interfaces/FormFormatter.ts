@@ -6,6 +6,7 @@ export default interface formFormatter {
 	date: string;
 	id: number;
 	tag: string;
+	createdAt: string;
 }
 
 // interface arguments
@@ -17,7 +18,8 @@ export interface formFormatterArgs {
 		type: string,
 		date: string,
 		id: number,
-		tag: string
+		tag: string,
+		createdAt: string,
 	);
 }
 

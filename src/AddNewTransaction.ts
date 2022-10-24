@@ -10,19 +10,21 @@ export const AddNewTransaction: formFormatterArgs = (
 	date,
 	id,
 	tag,
+	createdAt,
 ): void => {
 	// get local storage history data
 	const history: Array<formFormatter> = getLocalStorage();
 
 	// adding data inside variable
 	const transactionData: formFormatter = {
-		id: createRandomId(),
+		id: id,
 		title: title,
 		amountNumber: amountNumber,
 		date: formatDate(date),
 		type: type,
 		tag: tag,
 		note: note,
+		createdAt: createdAt
 	};
 
 	// push item to the beginning of the array

@@ -5,8 +5,16 @@ import FormFormatter from './interfaces/FormFormatter.js';
 import { RESET_Form, RESET_Details, RESET_EditForm } from './ResetForm.js';
 import RENDER_History from './renderHistory.js';
 import RENDER_Totals from './renderTotals.js';
-import {SHOW_HIDE_Form, SHOW_HIDE_Details, SHOW_HIDE_Edit,} from './Show_Hide_Functions.js';
-import {AddNewId_LocalStorage, getClickedElementId,} from './AddNewTransaction.js';
+import { RENDER_Details } from './renderDetails.js';
+import {
+	SHOW_HIDE_Form,
+	SHOW_HIDE_Details,
+	SHOW_HIDE_Edit,
+} from './Show_Hide_Functions.js';
+import {
+	AddNewId_LocalStorage,
+	getClickedElementId,
+} from './AddNewTransaction.js';
 import { getId_LocalStorage } from './getLocalStorage.js';
 import { renderFormValues } from './renderFormValues.js';
 
@@ -28,8 +36,6 @@ const hideEditFormBtn = document.querySelector(
 	'#hideEditFormBtn'
 ) as HTMLButtonElement;
 
-// details elements
-
 // Call render
 RENDER_History();
 RENDER_Totals();
@@ -38,9 +44,11 @@ RENDER_Totals();
 myForm.addEventListener('submit', (e): void => {
 	e.preventDefault();
 
+	let currentId = 0;
+
 	// get and destructure data
-	const { title, amountNumber, note, type, date, id, tag }: FormFormatter =
-		getFormData('form');
+	const { title, amountNumber, note, type, date, id, tag, createdAt }: FormFormatter =
+		getFormData('form', currentId);
 
 	// create new transaction
 	const NEW_Transaction = new Transaction(
@@ -50,7 +58,8 @@ myForm.addEventListener('submit', (e): void => {
 		type,
 		date,
 		id,
-		tag
+		tag,
+		createdAt
 	);
 
 	// add new transaction
@@ -77,8 +86,8 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 	const currentId = parseInt(getId_LocalStorage());
 
 	// get and destructure data
-	let { title, amountNumber, note, type, date, id, tag }: FormFormatter =
-		getFormData('editForm');
+	let { title, amountNumber, note, type, date, id, tag, createdAt }: FormFormatter =
+		getFormData('editForm', currentId);
 
 	// create new transaction
 	const NEW_Transaction = new Transaction(
@@ -87,8 +96,9 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 		note,
 		type,
 		date,
-		(id = currentId),
-		tag
+		id,
+		tag,
+		createdAt
 	);
 
 	// add new transaction
@@ -96,7 +106,7 @@ myFormEdit.addEventListener('submit', (e: MouseEvent): void => {
 	NEW_Transaction.EditTransaction();
 
 	// hide edit form
-	SHOW_HIDE_Edit('hide')
+	SHOW_HIDE_Edit('hide');
 });
 
 // SHOW and HIDE editForm
@@ -116,9 +126,9 @@ historyContainer.addEventListener('click', (e): void => {
 	// get id for DETAILS page
 	const id = getClickedElementId(e);
 	console.log(id);
-	// renderDetails(id);
+	RENDER_Details(parseInt(id));
 
-	// value id to currentId local storage
+	// set the value id to currentId local storage / state management
 	AddNewId_LocalStorage(id);
 
 	// show details
