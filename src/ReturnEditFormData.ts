@@ -2,7 +2,7 @@
 import FormFormatter from './interfaces/FormFormatter.js';
 
 // elements
-const myForm = document.querySelector('#myForm') as HTMLFormElement;
+const myForm = document.querySelector('#myForm-Edit') as HTMLFormElement;
 const myFormTitle = myForm.querySelector('#myForm-title') as HTMLInputElement;
 const myFormAmount = myForm.querySelector('#myForm-amount') as HTMLInputElement;
 const myFormType = myForm.querySelector('#myForm-type') as HTMLInputElement;

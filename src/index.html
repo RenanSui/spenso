@@ -115,7 +115,7 @@
             </div>
             <!-- When date -->
             <div class="custom-date">
-                <input type="text" class="myForm-date" id="myForm-date" required placeholder="When - DD/MM/YYYY"
+                <input type="text" class="myForm-date" id="myForm-date" required placeholder="When - MM/DD/YYYY"
                     onmouseover="(this.type='date')">
                 <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
                 <span class="block bg-secondary"></span>
@@ -127,6 +127,68 @@
     </form>
 
     <!-- edit formulary -->
+    <form class="myForm" id="myForm-Edit">
+
+        <!-- Form Header -->
+        <nav class="myForm-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
+            <span>
+                <div class="chevron-left" id="hideEditFormBtn"></div>
+            </span>
+            <h3 class="nav-title text-white text-hover-gray mr-auto">
+                Edit Transaction
+            </h3>
+        </nav>
+
+        <!-- Form Body -->
+        <div class="myForm-body bg-primary p-3">
+            <!-- title -->
+            <input type="text" class="myForm-title col-xs-12 bg-hover-secondary " id="myForm-title" placeholder="Title"
+                required autocomplete="off">
+            <!-- amount -->
+            <input type="number" class="myForm-amount col-xs-12" name="myForm-amount" id="myForm-amount"
+                placeholder="Amount" required autocomplete="off">
+            <!-- Transaction type -->
+            <div class="custom-select">
+                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type" required>
+                    <option value="" disabled selected hidden>Transaction Type</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+                <div class="custom-arrow">
+                    <span class="chevron-down"></span>
+                </div>
+            </div>
+            <!-- tag -->
+            <div class="custom-select">
+                <select name="myForm-tag" class="myForm-tag col-xs-12" id="myForm-tag" required>
+                    <option value="" disabled selected hidden>Tag</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Food">Food</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Saving & Debts">Saving & Debts</option>
+                    <option value="Personal Spending">Personal Spending</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                </select>
+                <div class="custom-arrow">
+                    <span class="chevron-down"></span>
+                </div>
+            </div>
+            <!-- When date -->
+            <div class="custom-date">
+                <input type="text" class="myForm-date" id="myForm-date" required placeholder="When - MM/DD/YYYY"
+                    onmouseover="(this.type='date')">
+                <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
+                <span class="block bg-secondary"></span>
+            </div>
+            <!-- note -->
+            <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" autocomplete="off">
+            <button type="submit" class="btn-blue text-gray-3 bg-hover-blue col-xs-12">ADD TRANSACTION</button>
+        </div>
+    </form>
 
     <!-- transactions title -->
     <h4 class="ml-2 mt-3 mb-3 text-gray-3">Recent Transaction</h4>
@@ -244,7 +306,7 @@
         </div>
 
         <div class="detailsBtn-container">
-            <button class="detailsBtn bg-hover-blue bg-blue" id="detailsBtn">
+            <button class="detailsBtn bg-hover-blue bg-blue" id="showEditBtn">
                 <span class="iconify" data-icon="clarity:pencil-line" data-width="24" data-height="24"></span>
                 Edit
             </button>

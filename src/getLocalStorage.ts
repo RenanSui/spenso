@@ -11,7 +11,20 @@ export const getId_LocalStorage = (): string => {
 	return localStorage.getItem('currentId')
 		? JSON.parse(localStorage.getItem('currentId'))
 		: { id: '0' };
-}
+};
+
+export const getValuesById = (id: number): formFormatter => {
+	const history = localStorage.getItem('history')
+		? JSON.parse(localStorage.getItem('history'))
+		: []
+	;
+	
+	const valuesById = history.filter( (item: { id: number; }) => {
+		return item.id === id;
+	})
+
+	return valuesById;
+};
 
 export const getTotals = () => {
 	return localStorage.getItem('totals')
