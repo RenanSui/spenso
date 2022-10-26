@@ -193,7 +193,7 @@
 
     1% {
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(-100%);
     }
 
     100% {
@@ -219,37 +219,5 @@
         width: 414px;
         height: 100%;
         position: fixed;
-    }
-}
-
-@media only screen and (min-width: 800px) {
-
-    @keyframes slideIn {
-        0% {
-            opacity: 0;
-            transform: translateX(0);
-        }
-    
-        1% {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-    
-        100% {
-            opacity: 1;
-            transform: translateX(0%);
-        }
-    }
-    
-    @keyframes slideOut {
-        0% {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    
-        100% {
-            opacity: 0;
-            transform: translateX(-100%);
-        }
     }
 }
