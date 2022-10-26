@@ -36,7 +36,7 @@
         right: 0;
 
         // hide scrollbar
-        &::-webkit-scrollbar{
+        &::-webkit-scrollbar {
             width: 0;
             height: 0;
         }
@@ -57,12 +57,31 @@
             font-weight: 400;
             letter-spacing: 1.15px;
 
+            // users
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+
             &::placeholder {
                 font-size: 16px;
                 font-weight: 400;
                 letter-spacing: 1.15px;
                 color: $gray-4;
             }
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            appearance: textfield;
         }
 
         button {
@@ -192,5 +211,45 @@
     100% {
         opacity: 0;
         transform: translateX(-100%);
+    }
+}
+
+@media only screen and (min-width: 414px) {
+    .myForm {
+        width: 414px;
+        height: 100%;
+        position: fixed;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateX(0);
+        }
+    
+        1% {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    
+    @keyframes slideOut {
+        0% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    
+        100% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
     }
 }

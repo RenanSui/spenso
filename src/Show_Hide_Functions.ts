@@ -16,6 +16,12 @@ const modal = document.querySelector('#modal') as HTMLDivElement;
 // body
 const bodyElement = document.querySelector('#body') as HTMLBodyElement;
 
+modal.addEventListener('click', () => {
+	SHOW_HIDE_Form('hide');
+	SHOW_HIDE_Edit('hide');
+	SHOW_HIDE_Details('hide');
+});
+
 // form functions
 export const SHOW_HIDE_Form = (action: string): void => {
 	// get the classList of the form
@@ -61,7 +67,6 @@ export const SHOW_HIDE_Details = (action: string): void => {
 		form.add('show');
 		RESET_Form();
 		body.add('overflow-hidden');
-
 	} else {
 		// Remove form
 		form.remove('show');
@@ -89,7 +94,6 @@ export const SHOW_HIDE_Edit = (action: string): void => {
 		form.add('show');
 		RESET_Form();
 		body.add('overflow-hidden');
-
 	} else {
 		// Remove form
 		form.remove('show');

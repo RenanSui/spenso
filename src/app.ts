@@ -24,6 +24,7 @@ import { renderFilteredHistory } from './renderFilteredHistory.js';
 const myForm = document.querySelector('#myForm') as HTMLFormElement;
 const showFormBtn = document.querySelector('#showFormBtn') as HTMLButtonElement;
 const hideFormBtn = document.querySelector('#hideFormBtn') as HTMLButtonElement;
+const myFormDate = document.querySelector('#myForm-date') as HTMLButtonElement;
 
 // details elements
 const historyContainer = document.querySelector('#history') as HTMLDivElement;
@@ -234,3 +235,7 @@ totalExpense.addEventListener('click', () => {
 
 // dark and white theme
 // drop down menu on the header title: all income or all expense or total balance
+
+// myFormDate.addEventListener('mouseenter', () => {
+// 	myFormDate.type = 'date'
+// })

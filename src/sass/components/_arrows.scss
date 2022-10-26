@@ -91,11 +91,12 @@
 // must be used as container of the circle-plus if position absolute
 .position-circle-plus {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
     background: none;
     border: none;
     border-radius: 50%;
+    top: auto;
+    bottom: 30px;
+    right: 30px;
 }
 
 // .circle-plus {
