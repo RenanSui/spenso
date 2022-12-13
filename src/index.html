@@ -1,334 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Expense Tracker</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<script type="module" defer src="./js/app.js"></script>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script type="module" defer src="./js/app.js"></script>
-</head>
+	<body class="bg-primary text-white" id="body">
+		<!-- modal container -->
+		<div class="containerModal" id="modal"></div>
 
-<body class="bg-primary text-white" id="body">
+		<!-- navbar -->
+		<span class="navbar-secondary">
+			<header class="navbar-secondary pl-3 pr-3 pt-3 pb-2 container">
+				<button class="nav-btn">
+					<h3
+						class="header-title nav-title text-white text-hover-gray display-f"
+					>
+						Overall
+						<span class="dropdown-icon">
+							<div class="chevron-down mr-auto ml-1"></div>
+						</span>
+					</h3>
 
-    <!-- modal container -->
-    <div class="containerModal" id="modal"></div>
+					<!-- <span class="iconify ml-auto nav-lightbulb" data-icon="system-uicons:lightbulb-on"></span>
+                <span class="iconify ml-3 nav-menu" data-icon="bx:dots-vertical-rounded"></span> -->
+				</button>
+			</header>
+			<div class="nav-dropdown">
+                <h1 class="dropdown-overall">Overall</h1>
+                <h1 class="dropdown-income">Income</h1>
+                <h1 class="dropdown-expense">Expenses</h1>
+			</div>
+		</span>
 
-    <!-- navbar -->
-    <span class="navbar-secondary">
-        <header class="navbar-secondary pl-3 pr-3 pt-3 pb-2 container">
-            <button class="nav-btn">
-                <h3 class="nav-title text-white text-hover-gray display-f">
-                    Overall
-                    <span>
-                        <div class="chevron-down mr-auto ml-1"></div>
-                    </span>
-                </h3>
+		<!-- info container -->
+		<section class="info row justify-center container">
+			<!-- total balance container -->
+			<div
+				class="totalBalance bg-secondary bg-hover-secondary col-xs-12 m-2 p-4 rounded"
+				id="totalBalance"
+			>
+				<div class="tB-info">
+					<p class="text-gray" id="tB-text">TOTAL BALANCE</p>
+					<h3 class="text-gray-3" id="tB-value">$23,000</h3>
+				</div>
+			</div>
 
-                <span class="iconify ml-auto nav-lightbulb" data-icon="system-uicons:lightbulb-on"></span>
-                <span class="iconify ml-3 nav-menu" data-icon="bx:dots-vertical-rounded"></span>
-            </button>
-        </header>
-    </span>
+			<!-- income container -->
+			<div
+				class="income bg-secondary bg-hover-secondary col-xs-5 ml-2 mr-2 p-3 rounded"
+				id="totalIncome"
+			>
+				<div class="icon">
+					<div class="green-circle-arrow-down"></div>
+				</div>
+				<div class="info">
+					<p class="text-gray" id="income-text ">TOTAL INCOME</p>
+					<h3 class="text-gray-3" id="income-value">+$23,000</h3>
+				</div>
+			</div>
 
-    <!-- info container -->
-    <section class="info row justify-center container">
+			<!-- expense container -->
+			<div
+				class="expense bg-secondary bg-hover-secondary col-xs-5 ml-1 mr-2 p-3 rounded"
+				id="totalExpense"
+			>
+				<div class="icon">
+					<div class="red-circle-arrow-up"></div>
+				</div>
+				<div class="info">
+					<p class="text-gray" id="expense-text">TOTAL EXPENSE</p>
+					<h3 class="text-gray-3" id="expense-value">-$23,000</h3>
+				</div>
+			</div>
+		</section>
 
-        <!-- total balance container -->
-        <div class="totalBalance bg-secondary bg-hover-secondary col-xs-12 m-2 p-4 rounded" id="totalBalance">
-            <div class="tB-info">
-                <p class="text-gray" id="tB-text">TOTAL BALANCE</p>
-                <h3 class="text-gray-3" id="tB-value">$23,000</h3>
-            </div>
-        </div>
+		<!-- Formulary -->
+		<form class="myForm" id="myForm">
+			<!-- Form Header -->
+			<nav class="myForm-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
+				<span>
+					<div class="chevron-left" id="hideFormBtn"></div>
+				</span>
+				<h3 class="nav-title text-white text-hover-gray mr-auto">
+					Add Transaction
+				</h3>
+			</nav>
 
-        <!-- income container -->
-        <div class="income bg-secondary bg-hover-secondary col-xs-5 ml-2 mr-2 p-3 rounded" id="totalIncome">
-            <div class="icon">
-                <div class="green-circle-arrow-down">
-                </div>
-            </div>
-            <div class="info">
-                <p class="text-gray" id="income-text ">TOTAL INCOME</p>
-                <h3 class="text-gray-3" id="income-value">+$23,000</h3>
-            </div>
-        </div>
+			<!-- Form Body -->
+			<div class="myForm-body bg-primary p-3">
+				<!-- title -->
+				<input
+					type="text"
+					class="myForm-title col-xs-12 bg-hover-secondary"
+					id="myForm-title"
+					placeholder="Title"
+					required
+					autocomplete="off"
+				/>
+				<!-- amount -->
+				<input
+					type="number"
+					class="myForm-amount col-xs-12"
+					name="myForm-amount"
+					id="myForm-amount"
+					placeholder="Amount"
+					required
+					autocomplete="off"
+				/>
+				<!-- Transaction type -->
+				<div class="custom-select">
+					<select
+						name="myForm-type"
+						class="myForm-type col-xs-12"
+						id="myForm-type"
+						required
+					>
+						<option value="" disabled selected hidden>
+							Transaction Type
+						</option>
+						<option value="Income">Income</option>
+						<option value="Expense">Expense</option>
+					</select>
+					<div class="custom-arrow">
+						<span class="chevron-down"></span>
+					</div>
+				</div>
+				<!-- tag -->
+				<div class="custom-select">
+					<select
+						name="myForm-tag"
+						class="myForm-tag col-xs-12"
+						id="myForm-tag"
+						required
+					>
+						<option value="" disabled selected hidden>Tag</option>
+						<option value="Housing">Housing</option>
+						<option value="Transportation">Transportation</option>
+						<option value="Food">Food</option>
+						<option value="Utilities">Utilities</option>
+						<option value="Insurance">Insurance</option>
+						<option value="Healthcare">Healthcare</option>
+						<option value="Saving & Debts">Saving & Debts</option>
+						<option value="Personal Spending">
+							Personal Spending
+						</option>
+						<option value="Entertainment">Entertainment</option>
+						<option value="Miscellaneous">Miscellaneous</option>
+					</select>
+					<div class="custom-arrow">
+						<span class="chevron-down"></span>
+					</div>
+				</div>
+				<!-- When date -->
+				<div class="custom-date">
+					<input
+						type="text"
+						class="myForm-date"
+						id="myForm-date"
+						required
+						placeholder="When - MM/DD/YYYY"
+						onmouseover="(this.type='date')"
+					/>
+					<span
+						class="iconify"
+						data-icon="fluent-mdl2:date-time-2"
+					></span>
+					<span class="block bg-secondary"></span>
+				</div>
+				<!-- note -->
+				<input
+					type="text"
+					class="myForm-note col-xs-12"
+					id="myForm-note"
+					placeholder="Note"
+					autocomplete="off"
+				/>
+				<button
+					type="submit"
+					class="btn-blue text-gray-3 bg-hover-blue col-xs-12"
+				>
+					ADD TRANSACTION
+				</button>
+			</div>
+		</form>
 
-        <!-- expense container -->
-        <div class="expense bg-secondary bg-hover-secondary col-xs-5 ml-1 mr-2 p-3 rounded" id="totalExpense">
-            <div class="icon">
-                <div class="red-circle-arrow-up"></div>
-            </div>
-            <div class="info">
-                <p class="text-gray" id="expense-text">TOTAL EXPENSE</p>
-                <h3 class="text-gray-3" id="expense-value">-$23,000</h3>
-            </div>
-        </div>
-    </section>
+		<!-- edit formulary -->
+		<form class="myForm" id="myForm-Edit">
+			<!-- Form Header -->
+			<nav class="myForm-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
+				<span>
+					<div class="chevron-left" id="hideEditFormBtn"></div>
+				</span>
+				<h3 class="nav-title text-white text-hover-gray mr-auto">
+					Edit Transaction
+				</h3>
+			</nav>
 
-    <!-- Formulary -->
-    <form class="myForm" id="myForm">
+			<!-- Form Body -->
+			<div class="myForm-body bg-primary p-3">
+				<!-- title -->
+				<input
+					type="text"
+					class="myForm-title col-xs-12 bg-hover-secondary"
+					id="myForm-title"
+					placeholder="Title"
+					required
+					autocomplete="off"
+				/>
+				<!-- amount -->
+				<input
+					type="number"
+					class="myForm-amount col-xs-12"
+					name="myForm-amount"
+					id="myForm-amount"
+					placeholder="Amount"
+					required
+					autocomplete="off"
+				/>
+				<!-- Transaction type -->
+				<div class="custom-select">
+					<select
+						name="myForm-type"
+						class="myForm-type col-xs-12"
+						id="myForm-type"
+						required
+					>
+						<option value="" disabled selected hidden>
+							Transaction Type
+						</option>
+						<option value="Income">Income</option>
+						<option value="Expense">Expense</option>
+					</select>
+					<div class="custom-arrow">
+						<span class="chevron-down"></span>
+					</div>
+				</div>
+				<!-- tag -->
+				<div class="custom-select">
+					<select
+						name="myForm-tag"
+						class="myForm-tag col-xs-12"
+						id="myForm-tag"
+						required
+					>
+						<option value="" disabled selected hidden>Tag</option>
+						<option value="Housing">Housing</option>
+						<option value="Transportation">Transportation</option>
+						<option value="Food">Food</option>
+						<option value="Utilities">Utilities</option>
+						<option value="Insurance">Insurance</option>
+						<option value="Healthcare">Healthcare</option>
+						<option value="Saving & Debts">Saving & Debts</option>
+						<option value="Personal Spending">
+							Personal Spending
+						</option>
+						<option value="Entertainment">Entertainment</option>
+						<option value="Miscellaneous">Miscellaneous</option>
+					</select>
+					<div class="custom-arrow">
+						<span class="chevron-down"></span>
+					</div>
+				</div>
+				<!-- When date -->
+				<div class="custom-date">
+					<input
+						type="text"
+						class="myForm-date"
+						id="myForm-date"
+						required
+						placeholder="When - MM/DD/YYYY"
+						onmouseover="(this.type='date')"
+					/>
+					<span
+						class="iconify"
+						data-icon="fluent-mdl2:date-time-2"
+					></span>
+					<span class="block bg-secondary"></span>
+				</div>
+				<!-- note -->
+				<input
+					type="text"
+					class="myForm-note col-xs-12"
+					id="myForm-note"
+					placeholder="Note"
+					autocomplete="off"
+				/>
+				<button
+					type="submit"
+					class="btn-blue text-gray-3 bg-hover-blue col-xs-12"
+				>
+					ADD TRANSACTION
+				</button>
+			</div>
+		</form>
 
-        <!-- Form Header -->
-        <nav class="myForm-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
-            <span>
-                <div class="chevron-left" id="hideFormBtn"></div>
-            </span>
-            <h3 class="nav-title text-white text-hover-gray mr-auto">
-                Add Transaction
-            </h3>
-        </nav>
+		<!-- transactions title -->
+		<div class="container containerTitle">
+			<h4 class="ml-2 mt-3 mb-3 text-gray-3 recentTitle">
+				Recent Transaction
+			</h4>
+			<!-- Add new transaction button -->
+			<button class="position-circle-plus" id="showFormBtn">
+				<div class="circle-plus-blue"></div>
+			</button>
+		</div>
 
-        <!-- Form Body -->
-        <div class="myForm-body bg-primary p-3">
-            <!-- title -->
-            <input type="text" class="myForm-title col-xs-12 bg-hover-secondary " id="myForm-title" placeholder="Title"
-                required autocomplete="off">
-            <!-- amount -->
-            <input type="number" class="myForm-amount col-xs-12" name="myForm-amount" id="myForm-amount"
-                placeholder="Amount" required autocomplete="off">
-            <!-- Transaction type -->
-            <div class="custom-select">
-                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type" required>
-                    <option value="" disabled selected hidden>Transaction Type</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-                <div class="custom-arrow">
-                    <span class="chevron-down"></span>
-                </div>
-            </div>
-            <!-- tag -->
-            <div class="custom-select">
-                <select name="myForm-tag" class="myForm-tag col-xs-12" id="myForm-tag" required>
-                    <option value="" disabled selected hidden>Tag</option>
-                    <option value="Housing">Housing</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Food">Food</option>
-                    <option value="Utilities">Utilities</option>
-                    <option value="Insurance">Insurance</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Saving & Debts">Saving & Debts</option>
-                    <option value="Personal Spending">Personal Spending</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-                <div class="custom-arrow">
-                    <span class="chevron-down"></span>
-                </div>
-            </div>
-            <!-- When date -->
-            <div class="custom-date">
-                <input type="text" class="myForm-date" id="myForm-date" required placeholder="When - MM/DD/YYYY"
-                    onmouseover="(this.type='date')">
-                <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
-                <span class="block bg-secondary"></span>
-            </div>
-            <!-- note -->
-            <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" autocomplete="off">
-            <button type="submit" class="btn-blue text-gray-3 bg-hover-blue col-xs-12">ADD TRANSACTION</button>
-        </div>
-    </form>
+		<!-- transaction history -->
+		<section class="history" id="history">
+			<!-- individual transaction -->
+			<div
+				class="income-transaction bg-secondary bg-hover-secondary m-2 rounded"
+				id="123"
+			>
+				<!-- Icon -->
+				<div class="t-icon bg-tertiary rounded">
+					<span class="iconify" data-icon="bi:cart-check"></span>
+				</div>
+				<!-- Informations -->
+				<div class="transaction-info row">
+					<!-- info title -->
+					<div class="transaction-title mb-2 col-xs-5">
+						<h3 class="t-title text-gray-3">RTX 3090</h3>
+					</div>
+					<!-- info value -->
+					<h3 class="t-value text-red col-xs-5">-$1499</h3>
+					<!-- info tag -->
+					<p class="t-tag text-gray-2 col-xs-5">Entertainment</p>
+					<!-- info date -->
+					<p class="t-date text-gray-2 col-xs-5 ml-auto">
+						Oct 17, 2022
+					</p>
+				</div>
+			</div>
+			<!-- end of individual transaction -->
 
-    <!-- edit formulary -->
-    <form class="myForm" id="myForm-Edit">
+			<!-- individual transaction -->
+			<div
+				class="income-transaction bg-secondary bg-hover-secondary m-2 rounded"
+				id="456"
+			>
+				<!-- Icon -->
+				<div class="t-icon bg-tertiary rounded">
+					<span class="iconify" data-icon="fluent-mdl2:money"></span>
+				</div>
+				<!-- Informations -->
+				<div class="transaction-info row">
+					<!-- info title -->
+					<div class="transaction-title mb-2 col-xs-5">
+						<h3 class="t-title text-gray-3">Salary</h3>
+					</div>
+					<!-- info amount -->
+					<h3 class="t-value text-green col-xs-5">+$15099</h3>
+					<!-- info tag -->
+					<p class="t-tag text-gray-2 col-xs-5">Entertainment</p>
+					<!-- info date -->
+					<p class="t-date text-gray-2 col-xs-12 ml-auto">
+						Oct 17, 2022
+					</p>
+				</div>
+			</div>
+			<!-- end of individual transaction -->
+		</section>
 
-        <!-- Form Header -->
-        <nav class="myForm-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
-            <span>
-                <div class="chevron-left" id="hideEditFormBtn"></div>
-            </span>
-            <h3 class="nav-title text-white text-hover-gray mr-auto">
-                Edit Transaction
-            </h3>
-        </nav>
-
-        <!-- Form Body -->
-        <div class="myForm-body bg-primary p-3">
-            <!-- title -->
-            <input type="text" class="myForm-title col-xs-12 bg-hover-secondary " id="myForm-title" placeholder="Title"
-                required autocomplete="off">
-            <!-- amount -->
-            <input type="number" class="myForm-amount col-xs-12" name="myForm-amount" id="myForm-amount"
-                placeholder="Amount" required autocomplete="off">
-            <!-- Transaction type -->
-            <div class="custom-select">
-                <select name="myForm-type" class="myForm-type col-xs-12" id="myForm-type" required>
-                    <option value="" disabled selected hidden>Transaction Type</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-                <div class="custom-arrow">
-                    <span class="chevron-down"></span>
-                </div>
-            </div>
-            <!-- tag -->
-            <div class="custom-select">
-                <select name="myForm-tag" class="myForm-tag col-xs-12" id="myForm-tag" required>
-                    <option value="" disabled selected hidden>Tag</option>
-                    <option value="Housing">Housing</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Food">Food</option>
-                    <option value="Utilities">Utilities</option>
-                    <option value="Insurance">Insurance</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Saving & Debts">Saving & Debts</option>
-                    <option value="Personal Spending">Personal Spending</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-                <div class="custom-arrow">
-                    <span class="chevron-down"></span>
-                </div>
-            </div>
-            <!-- When date -->
-            <div class="custom-date">
-                <input type="text" class="myForm-date" id="myForm-date" required placeholder="When - MM/DD/YYYY"
-                    onmouseover="(this.type='date')">
-                <span class="iconify" data-icon="fluent-mdl2:date-time-2"></span>
-                <span class="block bg-secondary"></span>
-            </div>
-            <!-- note -->
-            <input type="text" class="myForm-note col-xs-12" id="myForm-note" placeholder="Note" autocomplete="off">
-            <button type="submit" class="btn-blue text-gray-3 bg-hover-blue col-xs-12">ADD TRANSACTION</button>
-        </div>
-    </form>
-
-    <!-- transactions title -->
-    <div class="container containerTitle">
-        <h4 class="ml-2 mt-3 mb-3 text-gray-3 recentTitle">Recent Transaction</h4>
-        <!-- Add new transaction button -->
-        <button class="position-circle-plus" id="showFormBtn">
-            <div class="circle-plus-blue"></div>
-        </button>
-    </div>
-
-    <!-- transaction history -->
-    <section class="history" id="history">
-
-        <!-- individual transaction -->
-        <div class="income-transaction bg-secondary bg-hover-secondary m-2 rounded" id="123">
-            <!-- Icon -->
-            <div class="t-icon bg-tertiary rounded">
-                <span class="iconify" data-icon="bi:cart-check"></span>
-            </div>
-            <!-- Informations -->
-            <div class="transaction-info row">
-                <!-- info title -->
-                <div class="transaction-title mb-2 col-xs-5">
-                    <h3 class="t-title text-gray-3">RTX 3090</h3>
-                </div>
-                <!-- info value -->
-                <h3 class="t-value text-red col-xs-5">-$1499</h3>
-                <!-- info tag -->
-                <p class="t-tag text-gray-2 col-xs-5">Entertainment</p>
-                <!-- info date -->
-                <p class="t-date text-gray-2 col-xs-5 ml-auto">Oct 17, 2022</p>
-            </div>
-        </div>
-        <!-- end of individual transaction -->
-
-        <!-- individual transaction -->
-        <div class="income-transaction bg-secondary bg-hover-secondary m-2 rounded" id="456">
-            <!-- Icon -->
-            <div class="t-icon bg-tertiary rounded">
-                <span class="iconify" data-icon="fluent-mdl2:money"></span>
-            </div>
-            <!-- Informations -->
-            <div class="transaction-info row">
-                <!-- info title -->
-                <div class="transaction-title mb-2 col-xs-5">
-                    <h3 class="t-title text-gray-3">Salary</h3>
-                </div>
-                <!-- info amount -->
-                <h3 class="t-value text-green col-xs-5">+$15099</h3>
-                <!-- info tag -->
-                <p class="t-tag text-gray-2 col-xs-5">Entertainment</p>
-                <!-- info date -->
-                <p class="t-date text-gray-2 col-xs-12 ml-auto">Oct 17, 2022</p>
-            </div>
-        </div>
-        <!-- end of individual transaction -->
-
-    </section>
-
-    <!-- Add new transaction button -->
-    <!-- <button class="position-circle-plus" id="showFormBtn">
+		<!-- Add new transaction button -->
+		<!-- <button class="position-circle-plus" id="showFormBtn">
         <div class="circle-plus-blue"></div>
     </button> -->
 
-    <!-- details of transaction -->
-    <section class="details" id="details">
-        <!-- Details Header -->
-        <nav class="details-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
-            <span>
-                <div class="chevron-left" id="hideDetailsBtn"></div>
-            </span>
-            <h3 class="nav-title text-white text-hover-gray mr-auto ml-auto">
-                Details
-            </h3>
-            <span class="iconify" data-icon="octicon:trash-24" id="deleteBtn"></span>
-        </nav>
+		<!-- details of transaction -->
+		<section class="details" id="details">
+			<!-- Details Header -->
+			<nav class="details-nav navbar-secondary pl-3 pr-3 pt-3 pb-2">
+				<span>
+					<div class="chevron-left" id="hideDetailsBtn"></div>
+				</span>
+				<h3
+					class="nav-title text-white text-hover-gray mr-auto ml-auto"
+				>
+					Details
+				</h3>
+				<span
+					class="iconify"
+					data-icon="octicon:trash-24"
+					id="deleteBtn"
+				></span>
+			</nav>
 
-        <!-- Details Body -->
-        <div class="details-body bg-primary p-3" id="details-Body">
-            <!-- title -->
-            <div class="title-container">
-                <h1>title</h1>
-                <p id="details-Title">Samsung Level Earphones</p>
-            </div>
+			<!-- Details Body -->
+			<div class="details-body bg-primary p-3" id="details-Body">
+				<!-- title -->
+				<div class="title-container">
+					<h1>title</h1>
+					<p id="details-Title">Samsung Level Earphones</p>
+				</div>
 
-            <!-- amount -->
-            <div class="amount-container">
-                <h1>Amount</h1>
-                <p id="details-Amount">2,390</p>
-            </div>
+				<!-- amount -->
+				<div class="amount-container">
+					<h1>Amount</h1>
+					<p id="details-Amount">2,390</p>
+				</div>
 
-            <!-- Transaction Type -->
-            <div class="type-container">
-                <h1>Transaction Type</h1>
-                <p id="details-Type">Expense</p>
-            </div>
+				<!-- Transaction Type -->
+				<div class="type-container">
+					<h1>Transaction Type</h1>
+					<p id="details-Type">Expense</p>
+				</div>
 
-            <!-- Tag -->
-            <div class="tag-container">
-                <h1>Tag</h1>
-                <p id="details-Tag">Personal Spending</p>
-            </div>
+				<!-- Tag -->
+				<div class="tag-container">
+					<h1>Tag</h1>
+					<p id="details-Tag">Personal Spending</p>
+				</div>
 
-            <!-- When -->
-            <div class="when-container">
-                <h1>When</h1>
-                <p id="details-Date">02/06/2022</p>
-            </div>
+				<!-- When -->
+				<div class="when-container">
+					<h1>When</h1>
+					<p id="details-Date">02/06/2022</p>
+				</div>
 
-            <!-- Note -->
-            <div class="note-container">
-                <h1>Note</h1>
-                <p id="details-Note">I Spent to buy domain for my new startup</p>
-            </div>
+				<!-- Note -->
+				<div class="note-container">
+					<h1>Note</h1>
+					<p id="details-Note">
+						I Spent to buy domain for my new startup
+					</p>
+				</div>
 
-            <!-- Created At -->
-            <div class="createdAt-container">
-                <h1>Created At</h1>
-                <p id="details-CreatedAt">Oct 21, 2022 4:22:14 AM</p>
-            </div>
-        </div>
+				<!-- Created At -->
+				<div class="createdAt-container">
+					<h1>Created At</h1>
+					<p id="details-CreatedAt">Oct 21, 2022 4:22:14 AM</p>
+				</div>
+			</div>
 
-        <div class="detailsBtn-container">
-            <button class="detailsBtn bg-hover-blue bg-blue" id="showEditBtn">
-                <span class="iconify" data-icon="clarity:pencil-line" data-width="24" data-height="24"></span>
-                Edit
-            </button>
-        </div>
-    </section>
+			<div class="detailsBtn-container">
+				<button
+					class="detailsBtn bg-hover-blue bg-blue"
+					id="showEditBtn"
+				>
+					<span
+						class="iconify"
+						data-icon="clarity:pencil-line"
+						data-width="24"
+						data-height="24"
+					></span>
+					Edit
+				</button>
+			</div>
+		</section>
 
-    <!-- test area -->
-    <span class="hide show showEdit hideEdit display-n"></span>
+		<!-- test area -->
+		<span class="hide show showEdit hideEdit display-n"></span>
 
-    <!-- SCRIPTS -->
-    <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
-</body>
-
+		<!-- SCRIPTS -->
+		<script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
+	</body>
 </html>

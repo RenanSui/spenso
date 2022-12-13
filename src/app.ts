@@ -47,6 +47,21 @@ const totalBalance = document.querySelector('#totalBalance') as HTMLDivElement;
 const totalIncome = document.querySelector('#totalIncome') as HTMLDivElement;
 const totalExpense = document.querySelector('#totalExpense') as HTMLDivElement;
 
+// header and dropdown menu
+const dropdownMenu = document.querySelector('.nav-dropdown') as HTMLDivElement;
+const headerTitle = document.querySelector(
+	'.header-title'
+) as HTMLHeadingElement;
+const dropdownOverall = document.querySelector(
+	'.dropdown-overall'
+) as HTMLHeadingElement;
+const dropdownIncome = document.querySelector(
+	'.dropdown-income'
+) as HTMLHeadingElement;
+const dropdownExpense = document.querySelector(
+	'.dropdown-expense'
+) as HTMLHeadingElement;
+
 // Call render
 RENDER_History();
 RENDER_Totals();
@@ -220,18 +235,65 @@ hideFormBtn.addEventListener('click', (): void => {
 // balance, income and expense filter
 totalBalance.addEventListener('click', () => {
 	renderFilteredHistory('Balance');
+	headerTitle.innerHTML = `Overall
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
 });
 totalIncome.addEventListener('click', () => {
 	renderFilteredHistory('Income');
+	headerTitle.innerHTML = `Income
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
 });
 totalExpense.addEventListener('click', () => {
 	renderFilteredHistory('Expense');
+	headerTitle.innerHTML = `Expenses
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
 });
 /*
  *
  *
  *
  */
+
+// dropdown menu
+headerTitle.addEventListener('click', () => {
+	dropdownMenu.classList.toggle('nav-dropdown-show');
+});
+
+dropdownOverall.addEventListener('click', () => {
+	console.log('overall');
+	dropdownMenu.classList.remove('nav-dropdown-show');
+	headerTitle.innerHTML = `Overall
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
+	renderFilteredHistory('Balance');
+});
+
+dropdownIncome.addEventListener('click', () => {
+	console.log('income');
+	dropdownMenu.classList.remove('nav-dropdown-show');
+	headerTitle.innerHTML = `Income
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
+	renderFilteredHistory('Income');
+});
+
+dropdownExpense.addEventListener('click', () => {
+	console.log('expense');
+	dropdownMenu.classList.remove('nav-dropdown-show');
+	headerTitle.innerHTML = `Expenses
+	<span>
+		<div class="chevron-down mr-auto ml-1"></div>
+	</span>`;
+	renderFilteredHistory('Expense');
+});
 
 // dark and white theme
 // drop down menu on the header title: all income or all expense or total balance

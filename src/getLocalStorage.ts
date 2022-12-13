@@ -1,10 +1,11 @@
 import formFormatter from './interfaces/FormFormatter.js';
 
 const getLocalStorage = (): Array<formFormatter> => {
+
 	// return the current history
 	return localStorage.getItem('history')
 		? JSON.parse(localStorage.getItem('history'))
-		: [];
+		: []
 };
 
 export const getId_LocalStorage = (): string => {
@@ -16,12 +17,10 @@ export const getId_LocalStorage = (): string => {
 export const getValuesById = (id: number): formFormatter => {
 	const history = localStorage.getItem('history')
 		? JSON.parse(localStorage.getItem('history'))
-		: []
-	;
-	
-	const valuesById = history.filter( (item: { id: number; }) => {
+		: [];
+	const valuesById = history.filter((item: { id: number }) => {
 		return item.id === id;
-	})
+	});
 
 	return valuesById;
 };

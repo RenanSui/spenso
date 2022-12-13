@@ -3,285 +3,325 @@
 
 // Reset styles
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    letter-spacing: 1.15px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 1.15px;
 }
 
 ul {
-    list-style: none;
+	list-style: none;
 }
 
 a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 img {
-    width: 100%;
+	width: 100%;
 }
 
 video {
-    width: 100%;
-    aspect-ratio: 16/9
+	width: 100%;
+	aspect-ratio: 16/9;
 }
 
 button {
-    background: none;
-    border: none;
+	background: none;
+	border: none;
 }
 
 input {
-    border: 0;
-    background: 0;
+	border: 0;
+	background: 0;
 }
 
 .iconify {
-    color: $white;
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
+	color: $white;
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
 }
 
 // Base styles
 body {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    position: relative;
-    height: 100%;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	position: relative;
+	height: 100%;
 }
 
 .overflow-hidden {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .containerModal {
-    animation: modalOut 1s backwards;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    opacity: 0;
-    z-index: 3;
-    background-color: rgb(0, 0, 0);
-    pointer-events: none;
+	animation: modalOut 1s backwards;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	opacity: 0;
+	z-index: 3;
+	background-color: rgb(0, 0, 0);
+	pointer-events: none;
 }
 
 .modal {
-    z-index: 3;
-    animation: modalIn 1s forwards;
-    background-color: rgb(0, 0, 0);
+	z-index: 3;
+	animation: modalIn 1s forwards;
+	background-color: rgb(0, 0, 0);
 }
 
 @keyframes modalIn {
-    0% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 0;
+	}
 
-    100% {
-        opacity: 0.8;
-        pointer-events: auto;
-    }
+	100% {
+		opacity: 0.8;
+		pointer-events: auto;
+	}
 }
 
 @keyframes modalOut {
-    0% {
-        opacity: 0.8;
-    }
+	0% {
+		opacity: 0.8;
+	}
 
-    100% {
-        opacity: 0;
-    }
+	100% {
+		opacity: 0;
+	}
 }
 
 .containerTitle {
-
-    .recentTitle {
-        margin-left: 24px;
-    }
+	.recentTitle {
+		margin-left: 24px;
+	}
 }
 
 @media (min-width: 800px) {
-    .containerTitle {
-        position: relative;
-        transition: top 1s, bottom 1s, right;
+	.containerTitle {
+		position: relative;
+		transition: top 1s, bottom 1s, right;
 
-        .position-circle-plus {
-            position: absolute;
-            top: -20px;
-            right: 24px;
-            bottom: 0;
-        }
-    }
+		.position-circle-plus {
+			position: absolute;
+			top: -20px;
+			right: 24px;
+			bottom: 0;
+		}
+	}
 }
 
 /****header and nav****/
 header {
-    .nav-title {
-        font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
+	.nav-title {
+		font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .nav-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
 
 .totalBalance,
 .income,
 .expense {
-    position: relative;
-    height: 120px;
-    transition: height 1s, font-size 1s;
+	position: relative;
+	height: 120px;
+	transition: height 1s, font-size 1s;
 
-    p {
-        font-size: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.625rem);
-        line-height: 4;
-        transition: font-size 1s;
-    }
+	p {
+		font-size: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.625rem);
+		line-height: 4;
+		transition: font-size 1s;
+	}
 
-    h3 {
-        font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
-        transition: font-size 1s;
-    }
+	h3 {
+		font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.25rem);
+		transition: font-size 1s;
+	}
 
-    .info {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
+	.info {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
 
-        h3 {
-            font-weight: 500;
-        }
-    }
+		h3 {
+			font-weight: 500;
+		}
+	}
 }
 
 .totalBalance {
-    .tB-info {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+	.tB-info {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 
-        h3 {
-            font-weight: 500;
-        }
-    }
+		h3 {
+			font-weight: 500;
+		}
+	}
 }
 
 .history {
+	.income-transaction,
+	.expense-transaction {
+		max-width: 800px;
+		height: 100px;
+		display: flex;
+		align-items: center;
 
-    .income-transaction,
-    .expense-transaction {
-        max-width: 800px;
-        height: 100px;
-        display: flex;
-        align-items: center;
+		.t-icon {
+			min-width: 75px;
+			min-height: 75px;
+			margin: $base-margin * 1.5;
+			position: relative;
+			pointer-events: none;
 
-        .t-icon {
-            min-width: 75px;
-            min-height: 75px;
-            margin: $base-margin * 1.50;
-            position: relative;
-            pointer-events: none;
+			.iconify {
+				width: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
+				height: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+			}
+		}
 
-            .iconify {
-                width: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
-                height: clamp(1.125rem, -1.0568rem + 10.9091vw, 1.5rem);
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                pointer-events: none;
-            }
-        }
+		.transaction-info {
+			width: auto;
+			margin: $base-margin * 1.5;
+			margin-left: 0;
 
-        .transaction-info {
-            width: auto;
-            margin: $base-margin * 1.50;
-            margin-left: 0;
+			display: flex;
+			justify-content: space-between;
+			pointer-events: none;
 
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
+			.transaction-title {
+				.t-title {
+					font-size: $base-font-size;
+					font-weight: 500;
+				}
+			}
 
-            .transaction-title {
-                .t-title {
-                    font-size: $base-font-size;
-                    font-weight: 500;
-                }
-            }
+			.t-value {
+				font-size: $base-font-size;
+				font-weight: 500;
+				text-align: end;
+			}
 
-            .t-value {
-                font-size: $base-font-size;
-                font-weight: 500;
-                text-align: end;
-            }
+			.t-tag {
+				font-size: $font-size-sm;
+				font-weight: 400;
+				letter-spacing: 1.5px;
+			}
 
-            .t-tag {
-                font-size: $font-size-sm;
-                font-weight: 400;
-                letter-spacing: 1.5px;
-            }
-
-            .t-date {
-                font-size: $font-size-xsm;
-                font-weight: 400;
-                letter-spacing: 1.5px;
-                text-align: end;
-                align-self: center;
-            }
-        }
-    }
+			.t-date {
+				font-size: $font-size-xsm;
+				font-weight: 400;
+				letter-spacing: 1.5px;
+				text-align: end;
+				align-self: center;
+			}
+		}
+	}
 }
 
 @media only screen and (min-width: 800px) {
+	.history {
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 0;
+		box-sizing: border-box;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		flex-grow: 1;
 
-    .history {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 0;
-        box-sizing: border-box;
+		.income-transaction,
+		.expense-transaction {
+			width: 368px;
+			margin: 0;
+			margin-bottom: 16px;
+			margin-left: 16px;
+			margin-right: 16px;
+		}
+	}
+
+	.totalBalance,
+	.income,
+	.expense {
+		position: relative;
+		height: 180px;
+
+		p {
+			font-size: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.825rem);
+			line-height: 4;
+		}
+
+		h3 {
+			font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.5rem);
+		}
+
+		.info {
+			position: absolute;
+			bottom: 40px;
+			left: 60px;
+		}
+	}
+}
+
+.shadow-none {
+	box-shadow: none;
+}
+
+.nav-dropdown {
+	background-color: #1a191e29;
+    backdrop-filter: blur(16px);
+	position: absolute;
+    flex-grow: 1;
+	flex-direction: column;
+	align-items: center;
+	top: 95px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2;
+    border-radius: 8px;
+    border: 1px solid rgb(55, 55, 55);
+    display: none;
+
+	h1 {
+		font-size: 20px;
+        width: 158px;
+        height: 80px;
+        cursor: pointer;
         display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
 
-        .income-transaction,
-        .expense-transaction {
-            width: 368px;
-            margin: 0;
-            margin-bottom: 16px;
-            margin-left: 16px;
-            margin-right: 16px;
+        &:hover{
+            background-color: #5454546c;
         }
-    }
+	}
+}
 
-    .totalBalance,
-    .income,
-    .expense {
-        position: relative;
-        height: 180px;
+.nav-dropdown-show{
+    display: flex;
+}
 
-        p {
-            font-size: clamp(0.5rem, -0.2273rem + 3.6364vw, 0.825rem);
-            line-height: 4;
-        }
-
-        h3 {
-            font-size: clamp(1rem, -0.4545rem + 7.2727vw, 1.50rem);
-        }
-
-        .info {
-            position: absolute;
-            bottom: 40px;
-            left: 60px;
-        }
+.dropdown-icon{
+    .chevron-down{
+        pointer-events: none;
     }
 }
