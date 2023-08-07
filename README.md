@@ -1,7 +1,7 @@
-# I made this website when i was trying to learn SASS
+## [Expense Tracker](https://ren-expensetracker.vercel.app)
 
-### How to use
+A Simple expense tracker website with CRUD (Create, Read, Update and Delete).</BR>
+The app design is based on [Expenso](https://github.com/Spikeysanju/Expenso) designed by [Spikeysanju](https://github.com/Spikeysanju)
+<img src="https://raw.githubusercontent.com/Spikeysanju/Expenso/master/art/EXPENSO-ANDROID.png"  /> 
 
-1. Install the package: npm install
-2. You can use on the terminal with: npm start
-3. You can build the website and purge the css with: npm run build
+### [Expense Tracker Preview website](https://ren-expensetracker.vercel.app)
