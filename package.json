@@ -1,38 +1,31 @@
 {
-	"name": "project",
-	"version": "1.0.0",
-	"description": "SASS compile|autoprefix|minimize and live-reload dev server using Browsersync for static HTML",
-	"main": "public/index.html",
-	"author": "RenanSui",
-	"scripts": {
-		"build:sass": "sass  --no-source-map src/sass:public/css",
-		"copy:assets": "copyfiles -u 1 ./src/assets/**/* public",
-		"copy:html": "copyfiles -u 1 ./src/*.html public",
-		"copy": "npm-run-all --parallel copy:*",
-		"watch:assets": "onchange \"./src/assets/**/*\" -- npm run copy:assets",
-		"watch:html": "onchange \"src/*.html\" -- npm run copy:html",
-		"watch:sass": "sass  --no-source-map --watch src/sass:public/css",
-		"watch": "npm-run-all --parallel watch:*",
-		"serve": "browser-sync start --server public --files public",
-		"start": "npm-run-all copy --parallel watch serve",
-		"build": "npm-run-all copy:html build:*",
-		"postbuild": "postcss public/css/*.css -u autoprefixer cssnano --no-map & npx purgecss --css public/css/*.css css/palette.css --content public/index.html --output public/css/ & npx tsc --build"
-	},
-	"dependencies": {
-		"autoprefixer": "^10.4.2",
-		"browser-sync": "^2.27.7",
-		"copyfiles": "^2.4.1",
-		"cssnano": "^5.0.17",
-		"npm-run-all": "^4.1.5",
-		"onchange": "^7.1.0",
-		"postcss-cli": "^9.1.0",
-		"sass": "^1.49.8"
-	},
-	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.40.1",
-		"@typescript-eslint/parser": "^5.40.1",
-		"eslint": "^8.25.0",
-		"purgecss": "^5.0.0",
-		"typescript": "^4.8.4"
-	}
+  "name": "expense-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "20.4.8",
+    "@types/react": "18.2.18",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.14",
+    "eslint-config-next": "13.4.13",
+    "next": "13.4.13",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@total-typescript/ts-reset": "^0.4.2",
+    "eslint": "8.46.0",
+    "prettier": "^3.0.1",
+    "prettier-plugin-tailwindcss": "^0.4.1"
+  }
 }
