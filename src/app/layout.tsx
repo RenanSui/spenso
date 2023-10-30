@@ -20,8 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn('bg-black text-white', inter.className)}>
         {children}
+        <Grainy />
       </body>
-      <Grainy />
     </html>
   )
 }
