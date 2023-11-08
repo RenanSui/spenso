@@ -1,4 +1,4 @@
-import { Grainy } from '@/components/ui/grainy'
+import { Grainy } from '@/components/grainy'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
