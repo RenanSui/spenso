@@ -5,6 +5,8 @@ import { getServerSession } from 'next-auth'
 export const createServerClient = async () => {
   const session = await getServerSession(authOptions)
 
+  if (!session) return null
+
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
