@@ -3,11 +3,10 @@ import { User } from 'next-auth'
 
 export const getUser = async () => {
   const supabase = await createServerClient()
-
   if (!supabase) return null
 
-  const { data } = await supabase.from('users').select('*')
-  const user = data ? data[0] : null
+  const { data: user } = await supabase.from('users').select('*')
+  if (!user) return null
 
-  return user as User
+  return user[0] as User
 }
