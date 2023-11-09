@@ -1,4 +1,4 @@
-import { SiteHeader } from '@/components/SiteHeader'
+import { SiteHeader } from '@/components/site-header'
 
 export default function LobbyLayout({
   children,
