@@ -1,13 +1,16 @@
-import { SiteHeader } from '@/components/site-header'
+import { getUser } from '@/actions/server/user'
+import { SiteHeader } from '@/components/layouts/site-header'
 
-export default function LobbyLayout({
+export default async function LobbyLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const user = await getUser()
+
   return (
     <div>
-      <SiteHeader />
+      <SiteHeader user={user} />
       {children}
     </div>
   )
