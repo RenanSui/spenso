@@ -2,7 +2,6 @@ import signInPhoto from '@/../public/images/sign_in_photo.jpg'
 import { OAuthSignIn } from '@/components/auth/oauth-signin'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ButtonHTMLAttributes } from 'react'
 
 export default async function Page() {
   // const user = await getUser()
@@ -51,26 +50,11 @@ export default async function Page() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
             <OAuthSignIn />
           </div>
         </div>
       </div>
     </section>
-  )
-}
-
-export const ButtonProvider = ({
-  children,
-  className,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <button
-      className={`inline-flex w-full items-center justify-center rounded-md border border-neutral-900 px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-neutral-900 sm:w-auto ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
   )
 }

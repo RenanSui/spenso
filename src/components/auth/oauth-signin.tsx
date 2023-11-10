@@ -15,8 +15,7 @@ export type OAuthProviders = {
 const oauthProviders: OAuthProviders[] = [
   { name: 'Google', providerType: 'google', icon: 'google' },
   { name: 'Discord', providerType: 'discord', icon: 'discord' },
-  { name: 'Instagram', providerType: 'instagram', icon: 'instagram' },
-  { name: 'Facebook', providerType: 'facebook', icon: 'facebook' },
+  { name: 'Github', providerType: 'github', icon: 'github' },
 ]
 
 export const OAuthSignIn = () => {
