@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { buttonVariants } from '../ui/button'
+import { Button } from '../ui/button'
 import { Icons } from '../ui/icons'
 import { OAuthProviders } from './oauth-signin'
 
@@ -34,8 +34,8 @@ export const ProviderSignIn = ({
   }, [])
 
   return (
-    <button
-      className={buttonVariants({ variant: 'outline' })}
+    <Button
+      variant={'outline'}
       onClick={() => {
         setIsLoading(true)
         signIn(provider.providerType, { callbackUrl: redirectUrl })
@@ -49,6 +49,6 @@ export const ProviderSignIn = ({
         <Icon className="mr-2 h-4 w-4" aria-hidden="true" />
       )}
       {provider.name}
-    </button>
+    </Button>
   )
 }
