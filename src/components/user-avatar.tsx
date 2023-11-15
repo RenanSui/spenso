@@ -9,7 +9,9 @@ export const UserAvatar = ({ user }: UserAvatarProps) => {
   return (
     <Avatar>
       <AvatarImage className="h-8 w-8 rounded-full" src={user.image ?? ''} />
-      <AvatarFallback>{user.name ?? ''}</AvatarFallback>
+      <AvatarFallback>
+        <div className="h-8 w-8 rounded-full bg-neutral-300 dark:bg-neutral-800" />
+      </AvatarFallback>
     </Avatar>
   )
 }
