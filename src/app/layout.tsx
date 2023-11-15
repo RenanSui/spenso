@@ -19,7 +19,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn('bg-neutral-950 text-white', inter.className)}>
+      <body
+        className={cn(
+          'bg-white text-black dark:bg-neutral-950 dark:text-white',
+          inter.className,
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
