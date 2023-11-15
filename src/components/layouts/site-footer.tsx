@@ -1,13 +1,13 @@
+import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { Icons } from '../ui/icons'
 import { ThemeToggle } from './theme-toggle'
-import { siteConfig } from '@/config/site'
 
 export const SiteFooter = () => {
   return (
-    <footer className="w-full border-t border-neutral-900 px-8 py-4">
+    <footer className="w-full border-t bg-white px-8 py-4 dark:border-neutral-900 dark:bg-neutral-950">
       <section
         id="footer-bottom"
         aria-labelledby="footer-bottom-heading"

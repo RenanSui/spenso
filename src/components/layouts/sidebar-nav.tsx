@@ -29,10 +29,10 @@ export const SidebarNav = ({ className, items, ...props }: SidebarNavProps) => {
           >
             <span
               className={cn(
-                'hover:bg-muted hover:text-foreground group flex w-full items-center rounded-md border border-transparent px-2 py-1',
+                'group flex w-full items-center rounded-md border border-transparent px-2 py-1 text-neutral-950 hover:bg-neutral-100 dark:text-neutral-50 dark:hover:bg-neutral-800',
                 item.href.includes(String(segment))
-                  ? 'bg-neutral-800 font-medium text-neutral-50'
-                  : 'text-muted-foreground',
+                  ? 'bg-neutral-100 font-medium text-black dark:bg-neutral-800 dark:text-neutral-50'
+                  : '',
                 item.disabled && 'pointer-events-none opacity-60',
               )}
             >
