@@ -4,12 +4,14 @@ import { cn } from '@/lib/utils'
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLDivElement> & {
+    as?: 'div' | 'section' | 'article'
+  }
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'rounded-xl border border-neutral-200 bg-white text-neutral-950 shadow dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
+      'rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-50 shadow',
       className,
     )}
     {...props}
