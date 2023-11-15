@@ -16,8 +16,9 @@ export const Signout = ({
   return (
     <Button
       disabled={isLoading}
-      className={cn(className)}
-      size={'sm'}
+      className={cn(className, 'bg-white text-black hover:bg-neutral-200')}
+      variant="default"
+      size="sm"
       onClick={() => {
         setIsLoading(true)
         signOut({ callbackUrl: '/' })

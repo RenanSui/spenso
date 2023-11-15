@@ -10,7 +10,7 @@ export default async function Page() {
   // if (user) redirect('/')
 
   return (
-    <section className="flex bg-black">
+    <section className="flex bg-black text-white">
       <div className="absolute bottom-0 left-0 right-0 top-0 w-screen md:relative">
         <Image
           className="absolute inset-0 h-full w-full object-cover text-transparent opacity-50"
@@ -57,7 +57,7 @@ export default async function Page() {
             <Link
               className={cn(
                 buttonVariants({ size: 'sm', variant: 'outline' }),
-                'w-full',
+                'w-full border border-neutral-900 text-white hover:bg-neutral-900',
               )}
               href={'/'}
             >
