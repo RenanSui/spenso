@@ -9,7 +9,7 @@ interface SiteHeaderProps {
 
 export const SiteHeader = ({ user }: SiteHeaderProps) => {
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-center border-b-[1px] border-neutral-900">
+    <header className="sticky top-0 z-50 flex items-center justify-center border-b-[1px] border-neutral-900 bg-white dark:bg-neutral-950">
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 items-start justify-between px-4 py-4 sm:px-8">
         <Link className="text-xl font-semibold tracking-tight" href="/">
           Spenso
