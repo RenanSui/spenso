@@ -45,7 +45,7 @@ export const ErrorCard = ({
             href={retryLink}
             className={cn(
               buttonVariants({
-                variant: 'outline',
+                variant: 'ghost',
               }),
             )}
           >
