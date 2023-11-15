@@ -35,7 +35,7 @@ export const ErrorCard = ({
     >
       <CardContent className="flex min-h-[176px] flex-col items-center justify-center space-y-2.5 text-center">
         <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription className="line-cmalp-4">
+        <CardDescription className="line-clamp-4">
           {description}
         </CardDescription>
       </CardContent>
