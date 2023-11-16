@@ -8,7 +8,7 @@ import { ThemeToggle } from './theme-toggle'
 export const SiteFooter = () => {
   return (
     <footer className="w-full border-t bg-white px-8 py-4 dark:border-neutral-900 dark:bg-neutral-950">
-      <section
+      <div
         id="footer-bottom"
         aria-labelledby="footer-bottom-heading"
         className="flex items-center justify-between space-x-4"
@@ -43,7 +43,7 @@ export const SiteFooter = () => {
           </Link>
           <ThemeToggle />
         </div>
-      </section>
+      </div>
     </footer>
   )
 }
