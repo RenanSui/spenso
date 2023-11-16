@@ -3,9 +3,6 @@ import { siteConfig } from '@/config/site'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const url =
-  'https://images.unsplash.com/photo-1554224155-a1487473ffd9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-
 export default async function Page() {
   return (
     <section className="container grid max-w-6xl items-center gap-8 pt-0 md:py-8 md:pt-0">
@@ -14,7 +11,7 @@ export default async function Page() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0 z-[-1] opacity-60 dark:opacity-50">
         <Image
           className="absolute inset-0 h-full w-full object-cover text-transparent opacity-50"
-          src={url}
+          src={siteConfig.unsplash.lobby.imageUrl}
           width={1920}
           height={1080}
           alt={'photo of city buildings during daytime'}
@@ -52,7 +49,7 @@ export default async function Page() {
         <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
           Simple way to manage personal finances
         </h1>
-        <span className="max-w-[42rem] leading-normal text-neutral-500 [text-wrap:balance] dark:text-neutral-400 sm:text-xl sm:leading-8">
+        <span className="max-w-[42rem] leading-normal text-neutral-600 [text-wrap:balance] dark:text-neutral-400 sm:text-xl sm:leading-8">
           Take charge of your finances with Spenso. Our free budget tracker
           helps you understand your spending for a brighter financial future.
           Find Happiness In Budgeting!
