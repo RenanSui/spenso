@@ -54,7 +54,7 @@ export default async function Page() {
             <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-white">
               Sign out
             </h1>
-            <p className="w-[150px] text-center text-zinc-400">
+            <p className="w-[150px] text-center text-neutral-800 dark:text-zinc-400">
               Are you sure you want to sign out?
             </p>
           </div>

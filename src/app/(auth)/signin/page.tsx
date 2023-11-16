@@ -52,7 +52,7 @@ export default async function Page() {
             <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-white">
               Sign in
             </h1>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-neutral-800 dark:text-zinc-400">
               Choose your preferred sign in method
             </p>
           </div>
