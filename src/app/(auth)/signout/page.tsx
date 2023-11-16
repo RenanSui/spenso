@@ -1,6 +1,6 @@
-import signInPhoto from '@/../public/images/sign_in_photo.jpg'
 import { Signout } from '@/components/auth/sign-out'
 import { buttonVariants } from '@/components/ui/button'
+import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,7 +14,9 @@ export default async function Page() {
       <div className="absolute bottom-0 left-0 right-0 top-0 w-screen md:relative">
         <Image
           className="absolute inset-0 h-full w-full object-cover text-transparent opacity-50"
-          src={signInPhoto}
+          src={siteConfig.unsplash.auth.imageUrl}
+          width={1280}
+          height={1080}
           alt={'photo of city buildings during daytime'}
         />
 
@@ -26,15 +28,15 @@ export default async function Page() {
             Photo by{' '}
             <a
               className="hover:underline"
-              href="https://unsplash.com/@seanpollock?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+              href={siteConfig.unsplash.auth.authorUrl}
               target="_blank"
             >
-              Sean Pollock
+              {siteConfig.unsplash.auth.author}
             </a>{' '}
             on{' '}
             <a
               className="hover:underline"
-              href="https://unsplash.com/photos/low-angle-photo-of-city-high-rise-buildings-during-daytime-PhYq704ffdA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+              href={siteConfig.unsplash.auth.imagePageUrl}
               target="_blank"
             >
               Unsplash
