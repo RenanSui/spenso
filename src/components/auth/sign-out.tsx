@@ -16,7 +16,7 @@ export const Signout = ({
   return (
     <Button
       disabled={isLoading}
-      className={cn(className, 'bg-white text-black hover:bg-neutral-200')}
+      className={cn(className)}
       variant="default"
       size="sm"
       onClick={() => {

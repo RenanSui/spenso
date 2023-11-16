@@ -36,7 +36,7 @@ export const ProviderSignIn = ({
   return (
     <Button
       variant={'outline'}
-      className="border border-neutral-900 text-white hover:bg-neutral-900"
+      className="border bg-white text-black hover:bg-neutral-100 dark:border-neutral-900 dark:bg-black dark:text-white dark:hover:bg-neutral-900"
       onClick={() => {
         setIsLoading(true)
         signIn(provider.providerType, { callbackUrl: redirectUrl })
