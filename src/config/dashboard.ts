@@ -11,6 +11,7 @@ export const dashboardConfig: DashboardConfig = {
       href: '/dashboard/account',
       disabled: true,
       icon: 'avatarIcon',
+      description: 'Manage your account settings',
       items: [],
     },
     {
@@ -18,6 +19,7 @@ export const dashboardConfig: DashboardConfig = {
       href: '/dashboard/analytics',
       disabled: false,
       icon: 'dashboardIcon',
+      description: 'Analyze your transactions',
       items: [],
     },
     {
@@ -25,6 +27,7 @@ export const dashboardConfig: DashboardConfig = {
       href: '/dashboard/transactions',
       disabled: false,
       icon: 'listBulletIcon',
+      description: 'Manage your transactions',
       items: [],
     },
     {
@@ -32,6 +35,7 @@ export const dashboardConfig: DashboardConfig = {
       href: '/dashboard/settings',
       disabled: true,
       icon: 'gearIcon',
+      description: 'Manage the website settings',
       items: [],
     },
   ],

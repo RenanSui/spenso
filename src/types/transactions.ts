@@ -1,10 +1,11 @@
 export interface Transaction {
   id: string
-  merchantName: string
+  created_at: string
+  merchant_name: string
   product?: string
-  date: string
+  transaction_date: string
   amount: string
-  transactionType: string
+  transaction_type: string
   category: string
   description?: string
   user_id: string

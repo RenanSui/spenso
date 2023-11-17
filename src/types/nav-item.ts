@@ -5,6 +5,7 @@ export interface NavItem {
   href?: string
   disabled?: boolean
   icon?: keyof typeof Icons
+  description?: string
 }
 
 export interface NavItemWithChildren extends NavItem {
@@ -12,3 +13,9 @@ export interface NavItemWithChildren extends NavItem {
 }
 
 export type SidebarNavItem = NavItemWithChildren
+
+export interface NavItemWithOptionalChildren extends NavItem {
+  items?: NavItemWithChildren[]
+}
+
+export type MainNavItem = NavItemWithOptionalChildren
