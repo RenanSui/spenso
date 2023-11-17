@@ -19,6 +19,11 @@ export default withAuth(
         else return false
       },
     },
+
+    pages: {
+      signIn: '/signin',
+      signOut: '/signout',
+    },
   },
 )
 
