@@ -7,7 +7,7 @@ import { ThemeToggle } from './theme-toggle'
 
 export const SiteFooter = () => {
   return (
-    <footer className="w-full border-t bg-white px-8 py-4 dark:border-neutral-900 dark:bg-neutral-950">
+    <footer className="w-full border-t bg-white px-4 py-4 dark:border-neutral-900 dark:bg-neutral-950 md:px-8">
       <div
         id="footer-bottom"
         aria-labelledby="footer-bottom-heading"
