@@ -1,6 +1,6 @@
 'use client'
 
-import type { MainNavItem } from '@/types/nav-item'
+import type { MainNavItem } from '@/types'
 import Link from 'next/link'
 import * as React from 'react'
 

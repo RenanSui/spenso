@@ -1,4 +1,4 @@
-import { MainNavItem } from '@/types/nav-item'
+import { MainNavItem } from '@/types'
 import { dashboardConfig } from './dashboard'
 
 const links = {

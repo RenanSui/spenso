@@ -1,4 +1,4 @@
-import { Transaction } from '@/types/transactions'
+import { Transaction } from '@/types'
 
 interface TransactionItemProps {
   transaction: Transaction
@@ -13,7 +13,7 @@ export const TransactionItem = ({ transaction }: TransactionItemProps) => {
       </div>
       <div className="flex justify-between">
         <p className="capitalize">{transaction.category}</p>
-        <p>{transaction.transaction_date.replaceAll('-', '/')}</p>
+        <p>{transaction.date.replaceAll('-', '/')}</p>
       </div>
     </div>
   )

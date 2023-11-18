@@ -1,14 +1,10 @@
 'use client'
 
-import type {
-  NavItemWithOptionalChildren,
-  SidebarNavItem,
-} from '@/types/nav-item'
+import type { NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
 import { ViewVerticalIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import * as React from 'react'
-
 import {
   Accordion,
   AccordionContent,

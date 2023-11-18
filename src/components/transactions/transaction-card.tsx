@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Transaction } from '@/types/transactions'
+import { Transaction } from '@/types'
 import { HTMLAttributes } from 'react'
 import {
   Card,

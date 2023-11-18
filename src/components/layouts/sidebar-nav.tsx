@@ -1,11 +1,11 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import type { SidebarNavItem } from '@/types/nav-item'
+import type { SidebarNavItem } from '@/types'
+import { ChevronLeftIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { Icons } from '../ui/icons'
-import { ChevronLeftIcon } from '@radix-ui/react-icons'
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
   items: SidebarNavItem[]
