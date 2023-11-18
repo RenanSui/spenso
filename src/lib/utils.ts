@@ -11,3 +11,9 @@ export const getObjFromEntries = (
   const obj = JSON.parse(JSON.stringify(Object.fromEntries(iterableObj)))
   return obj
 }
+
+export function toSentenceCase(str: string) {
+  return str
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (str) => str.toUpperCase())
+}
