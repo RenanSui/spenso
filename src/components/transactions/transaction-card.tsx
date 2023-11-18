@@ -29,7 +29,7 @@ export const TransactionCard = ({
           currency: 'BRL',
         }).format(amount)
 
-        const isExpense = transaction.transaction_type === 'expense'
+        const isExpense = transaction.type === 'expense'
 
         return (
           <Card className={cn(' w-full', className)} key={transaction.id}>
@@ -48,7 +48,7 @@ export const TransactionCard = ({
                 {formatted}
               </CardDescription>
               <CardDescription>
-                {transaction.transaction_date.replaceAll('-', '/')}
+                {transaction.date.replaceAll('-', '/')}
               </CardDescription>
             </CardFooter>
           </Card>
