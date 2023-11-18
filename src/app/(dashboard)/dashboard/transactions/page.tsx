@@ -1,33 +1,74 @@
 import { getTransactions } from '@/actions/server/transactions'
-import { getUserId } from '@/actions/server/user'
-import { TransactionCard } from '@/components/transactions/transaction-card'
-import { TransactionColumns } from '@/components/transactions/transaction-columns'
-import { TransactionTable } from '@/components/transactions/transaction-table'
-import { Button } from '@/components/ui/button'
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from '@/components/page-header'
+import { Shell } from '@/components/shells/shell'
+import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 
 export default async function Page() {
-  const userId = await getUserId()
-  const transactions = await getTransactions()
+  const data = await getTransactions()
+
+  const transactions = data
+    ? [
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+      ]
+    : null
 
   return (
-    <section className="my-4">
-      <div className="flex justify-between">
+    <Shell className="my-4">
+      <PageHeader separated>
+        <PageHeaderHeading size="sm">Transactions</PageHeaderHeading>
+        <PageHeaderDescription size="sm">
+          Manage your transactions
+        </PageHeaderDescription>
+      </PageHeader>
+
+      {/* <TransactionsTableShell data={transactions ?? []} /> */}
+
+      {/* <div className="flex justify-between">
         <h1 className="text-2xl">Transactions</h1>
         <Button className="md:hidden">New</Button>
-      </div>
+      </div> */}
 
-      <div className="hidden md:block">
+      {/* <div className="hidden md:block">
         {transactions ? (
           <TransactionTable columns={TransactionColumns} data={transactions} />
         ) : null}
-      </div>
+      </div> */}
 
-      <div className="my-4 md:hidden">
+      {/* <div className="my-4 md:hidden">
         {transactions ? <TransactionCard data={transactions} /> : null}
-      </div>
+      </div> */}
 
       {/* <pre>{JSON.stringify({ userId }, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(transactions, null, 2)}</pre> */}
-    </section>
+    </Shell>
   )
 }
