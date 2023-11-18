@@ -50,7 +50,7 @@ export default async function Page() {
         </PageHeaderDescription>
       </PageHeader>
 
-      {/* <TransactionsTableShell data={transactions ?? []} /> */}
+      <TransactionsTableShell data={transactions ?? []} />
 
       {/* <div className="flex justify-between">
         <h1 className="text-2xl">Transactions</h1>
