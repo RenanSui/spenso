@@ -58,5 +58,6 @@ export const deleteTransaction = async (id: string) => {
   console.log(id)
 
   // make supabase fetch delete
+  await supabase.from('transactions').delete().eq('id', id)
   revalidatePath('/dashboard/transactions')
 }
