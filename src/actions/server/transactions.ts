@@ -44,7 +44,8 @@ export const editTransaction = async (formData: TransactionForm) => {
     amount: Number(amount.toFixed(2)),
   }
 
-  // make supabase fetch insert
+  // make supabase fetch update
+  revalidatePath('/dashboard/transactions')
 }
 
 export const deleteTransaction = async (id: string) => {
@@ -55,4 +56,7 @@ export const deleteTransaction = async (id: string) => {
   if (!userId) return
 
   console.log(id)
+
+  // make supabase fetch delete
+  revalidatePath('/dashboard/transactions')
 }
