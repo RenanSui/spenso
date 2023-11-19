@@ -22,6 +22,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import React from 'react'
+import { NewTransaction } from '../new-transaction'
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
 
@@ -69,6 +70,7 @@ export function DataTable<TData, TValue>({
     <div className="w-full space-y-3 overflow-auto">
       <DataTableToolbar
         table={table}
+        AddNewItem={NewTransaction}
         filterableColumns={filterableColumns}
         searchableColumns={searchableColumns}
       />

@@ -1,7 +1,6 @@
 import { DataTableFilterableColumn, DataTableSearchableColumn } from '@/types'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
-import React from 'react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
@@ -9,19 +8,18 @@ import { DataTableViewOptions } from './data-table-view-options'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
+  AddNewItem?: () => JSX.Element
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
 }
 
 export function DataTableToolbar<TData>({
   table,
+  AddNewItem,
   filterableColumns = [],
   searchableColumns = [],
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
-  const [isPending, startTransition] = React.useTransition()
-
-  console.log(searchableColumns)
 
   return (
     <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
@@ -72,39 +70,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center space-x-2">
-        {/* {deleteRowsAction && table.getSelectedRowModel().rows.length > 0 ? (
-          <Button
-            aria-label="Delete selected rows"
-            variant="outline"
-            size="sm"
-            className="h-8"
-            onClick={(event) => {
-              startTransition(() => {
-                table.toggleAllPageRowsSelected(false)
-                deleteRowsAction(event)
-              })
-            }}
-            disabled={isPending}
-          >
-            <TrashIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-            Delete
-          </Button>
-        ) : newRowLink ? (
-          <Link aria-label="Create new row" href={newRowLink}>
-            <div
-              className={cn(
-                buttonVariants({
-                  variant: 'outline',
-                  size: 'sm',
-                  className: 'h-8',
-                }),
-              )}
-            >
-              <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              New
-            </div>
-          </Link>
-        ) : null} */}
+        {AddNewItem ? <AddNewItem /> : null}
         <DataTableViewOptions table={table} />
       </div>
     </div>

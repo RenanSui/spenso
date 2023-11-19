@@ -40,3 +40,21 @@ export const dashboardConfig: DashboardConfig = {
     },
   ],
 }
+
+export const transactionType = ['expense', 'income']
+
+export const transactionCategory = [
+  'housing',
+  'transportation',
+  'utilities',
+  'insurance',
+  'saving & debts',
+  'personal spending',
+  'meals & entertainment',
+  'miscellaneous',
+  'interest',
+  'benefits',
+  'taxes',
+  'travel',
+  'other',
+].sort()

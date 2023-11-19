@@ -9,37 +9,7 @@ import { TransactionsTableShell } from '@/components/shells/transactions-table-s
 
 export default async function Page() {
   const data = await getTransactions()
-
-  const transactions = data
-    ? [
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-        ...data,
-      ]
-    : null
+  const transactions = data || null
 
   return (
     <Shell className="my-4">

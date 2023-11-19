@@ -2,16 +2,17 @@ import { Icons } from '@/components/ui/icons'
 
 export type TransactionTypes = 'income' | 'expense'
 
-export interface Transaction {
-  id: string
-  created_at: string
-  merchant_name: string
+export interface TransactionForm {
   product: string
-  date: string
-  amount: string
-  type: TransactionTypes
+  date: Date
+  amount: number
+  type: string
   category: string
-  description?: string
+}
+
+export interface Transaction extends TransactionForm {
+  id: string
+  created_at: Date
   user_id: string
 }
 
