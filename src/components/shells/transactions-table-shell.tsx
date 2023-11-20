@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { transactionTypeses } from '@/lib/transactions'
+import { cn } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
@@ -25,9 +26,6 @@ interface TransactionsTableShellProps {
 export function TransactionsTableShell({
   data: transactions,
 }: TransactionsTableShellProps) {
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
       {
@@ -107,31 +105,7 @@ export function TransactionsTableShell({
       },
       {
         id: 'actions',
-        cell: ({ row }) => {
-          const payment = row.original
-
-          const handleEdit = () => setOpenEdit(true)
-          const handleDelete = () => setOpenDelete(true)
-
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DeleteTransaction transactionId={payment.id}>
-                  Delete
-                </DeleteTransaction>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )
-        },
+        cell: ({ row }) => <TableDropdown transaction={row.original} />,
       },
     ],
     [],
@@ -165,3 +139,38 @@ const SortableHeader = ({
     <ChevronsUpDown className="ml-2 h-3 w-3" />
   </Button>
 )
+
+const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem
+            className={cn(
+              'bg-red-500 text-white shadow-sm hover:bg-red-700 focus:bg-red-700 focus:text-white dark:focus:bg-red-700',
+            )}
+            onClick={() => setOpen(true)}
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DeleteTransaction
+        open={open}
+        setOpen={setOpen}
+        transactionId={transaction.id}
+      ></DeleteTransaction>
+    </>
+  )
+}
