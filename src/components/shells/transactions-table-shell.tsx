@@ -14,8 +14,9 @@ import { transactionTypeses } from '@/lib/transactions'
 import { Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
+import { DeleteTransaction } from '../transactions/delete-transaction'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
@@ -24,6 +25,9 @@ interface TransactionsTableShellProps {
 export function TransactionsTableShell({
   data: transactions,
 }: TransactionsTableShellProps) {
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
       {
@@ -106,6 +110,9 @@ export function TransactionsTableShell({
         cell: ({ row }) => {
           const payment = row.original
 
+          const handleEdit = () => setOpenEdit(true)
+          const handleDelete = () => setOpenDelete(true)
+
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -118,9 +125,9 @@ export function TransactionsTableShell({
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem className="bg-red-500 text-white shadow-sm hover:bg-red-700 focus:bg-red-700 focus:text-white dark:focus:bg-red-700">
+                <DeleteTransaction transactionId={payment.id}>
                   Delete
-                </DropdownMenuItem>
+                </DeleteTransaction>
               </DropdownMenuContent>
             </DropdownMenu>
           )

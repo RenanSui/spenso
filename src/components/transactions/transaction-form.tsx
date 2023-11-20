@@ -236,12 +236,13 @@ export const TransactionForm = ({
         />
 
         <div className="flex items-center justify-between">
-          <Button size="sm" type="submit">
+          <Button size="sm" type="submit" disabled={form.formState.isLoading}>
             Submit
           </Button>
           <span
             className={cn(
               buttonVariants({ size: 'sm', variant: 'ghost' }),
+              form.formState.isLoading && 'pointer-events-none opacity-60',
               'cursor-pointer',
             )}
             onClick={setRandomForm}
