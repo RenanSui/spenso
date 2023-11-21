@@ -21,24 +21,6 @@ export default async function Page() {
       </PageHeader>
 
       <TransactionsTableShell data={transactions ?? []} />
-
-      {/* <div className="flex justify-between">
-        <h1 className="text-2xl">Transactions</h1>
-        <Button className="md:hidden">New</Button>
-      </div> */}
-
-      {/* <div className="hidden md:block">
-        {transactions ? (
-          <TransactionTable columns={TransactionColumns} data={transactions} />
-        ) : null}
-      </div> */}
-
-      {/* <div className="my-4 md:hidden">
-        {transactions ? <TransactionCard data={transactions} /> : null}
-      </div> */}
-
-      {/* <pre>{JSON.stringify({ userId }, null, 2)}</pre> */}
-      {/* <pre>{JSON.stringify(transactions, null, 2)}</pre> */}
     </Shell>
   )
 }

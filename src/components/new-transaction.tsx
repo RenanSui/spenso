@@ -26,7 +26,7 @@ export const NewTransaction = () => {
           <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
         <Separator />
-        <TransactionForm setOpen={setOpen} />
+        <TransactionForm formAction="add" setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   )

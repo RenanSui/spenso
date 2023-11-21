@@ -31,20 +31,25 @@ export const addTransaction = async (formData: TransactionForm) => {
   revalidatePath('/dashboard/transactions')
 }
 
-export const editTransaction = async (formData: TransactionForm) => {
+type UpdateTransactionData = TransactionForm & { id: string }
+
+export const updateTransaction = async (formData: UpdateTransactionData) => {
   const supabase = await createServerClient()
   if (!supabase) return
 
   const userId = await getUserId()
   if (!userId) return
 
-  const { amount, ...formDataObj } = formData
-  const formDataWithId = {
+  const { amount, id, ...formDataObj } = formData
+  const formDataUpdate = {
     ...formDataObj,
     amount: Number(amount.toFixed(2)),
   }
 
-  // make supabase fetch update
+  await supabase
+    .from('transactions')
+    .update({ ...formDataUpdate })
+    .eq('id', id)
   revalidatePath('/dashboard/transactions')
 }
 

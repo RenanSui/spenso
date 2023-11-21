@@ -18,6 +18,7 @@ import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
 import { DeleteTransaction } from '../transactions/delete-transaction'
+import { UpdateTransaction } from '../transactions/update-transaction'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
@@ -141,7 +142,8 @@ const SortableHeader = ({
 )
 
 const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
-  const [open, setOpen] = useState(false)
+  const [openDelete, setDelete] = useState(false)
+  const [openUpdate, setUpdate] = useState(false)
 
   return (
     <>
@@ -155,22 +157,31 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setUpdate(true)}>
+            Edit
+          </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
               'bg-red-500 text-white shadow-sm hover:bg-red-700 focus:bg-red-700 focus:text-white dark:focus:bg-red-700',
             )}
-            onClick={() => setOpen(true)}
+            onClick={() => setDelete(true)}
           >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
       <DeleteTransaction
-        open={open}
-        setOpen={setOpen}
+        open={openDelete}
+        setOpen={setDelete}
         transactionId={transaction.id}
-      ></DeleteTransaction>
+      />
+
+      <UpdateTransaction
+        open={openUpdate}
+        setOpen={setUpdate}
+        transaction={transaction}
+      />
     </>
   )
 }

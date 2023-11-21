@@ -1,10 +1,4 @@
-import { getTransactions } from '@/actions/server/transactions'
-import { getUser } from '@/actions/server/user'
-
 export default async function Page() {
-  const user = await getUser()
-  const transactions = await getTransactions()
-
   return (
     <div className="">
       <h1 className="text-2xl">Analytics</h1>

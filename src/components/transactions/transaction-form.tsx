@@ -1,6 +1,9 @@
 'use client'
 
-import { addTransaction } from '@/actions/server/transactions'
+import {
+  addTransaction,
+  updateTransaction,
+} from '@/actions/server/transactions'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -26,6 +29,7 @@ import {
 } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { cn } from '@/lib/utils'
+import { Transaction } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
@@ -43,8 +47,12 @@ const formSchema = z.object({
 
 export const TransactionForm = ({
   setOpen,
+  formAction,
+  transaction,
 }: {
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setOpen?: Dispatch<SetStateAction<boolean>>
+  formAction: 'add' | 'update'
+  transaction?: Transaction
 }) => {
   const [productsApi, setProductsApi] = useState([''])
 
@@ -62,12 +70,14 @@ export const TransactionForm = ({
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
     values: z.infer<typeof formSchema>,
   ) => {
-    // const dateFormatted = `${values.date.getFullYear()}-${
-    //   values.date.getMonth() + 1
-    // }-${values.date.getDate()}`
+    // process form add
+    if (formAction === 'add') await addTransaction(values)
 
-    await addTransaction(values)
-    setOpen(false)
+    // process form update
+    if (formAction === 'update' && transaction)
+      await updateTransaction({ ...values, id: transaction.id })
+
+    setOpen?.(false)
   }
 
   const setRandomForm = async () => {
@@ -97,6 +107,19 @@ export const TransactionForm = ({
     }
     getProducts()
   }, [])
+
+  useEffect(() => {
+    const setUpdateForm = () => {
+      if (!transaction) return false
+
+      form.setValue('product', transaction.product)
+      form.setValue('date', new Date(transaction.date))
+      form.setValue('amount', transaction.amount)
+      form.setValue('type', transaction.type)
+      form.setValue('category', transaction.category)
+    }
+    setUpdateForm()
+  }, [form, transaction])
 
   return (
     <Form {...form}>
@@ -235,9 +258,14 @@ export const TransactionForm = ({
           )}
         />
 
-        <div className="flex items-center justify-between">
-          <Button size="sm" type="submit" disabled={form.formState.isLoading}>
-            Submit
+        <div
+          className={cn(
+            'flex items-center justify-between',
+            form.formState.isLoading ? 'pointer-events-none opacity-60' : null,
+          )}
+        >
+          <Button size="sm" type="submit">
+            {formAction === 'add' ? 'Submit' : 'Update'}
           </Button>
           <span
             className={cn(
