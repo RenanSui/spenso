@@ -56,8 +56,17 @@ export function TransactionsTableShell({
           <SortableHeader column={column}>Type</SortableHeader>
         ),
         cell: ({ row }) => {
-          const transactionType = String(row.getValue('type'))
-          return <span className="capitalize">{transactionType}</span>
+          const type = String(row.getValue('type'))
+          return (
+            <span
+              className={cn(
+                'capitalize',
+                type === 'expense' ? 'text-red-500' : null,
+              )}
+            >
+              {type}
+            </span>
+          )
         },
         filterFn: (row, id, value) => {
           return value.includes(row.getValue(id))
@@ -76,12 +85,23 @@ export function TransactionsTableShell({
         ),
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue('amount'))
+          const type = row.getValue('type') as 'expense' | 'income'
           const formatted = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           }).format(amount)
 
-          return <div className="font-medium">{formatted}</div>
+          return (
+            <div
+              className={cn(
+                'font-medium',
+                type === 'expense' ? 'text-red-500' : null,
+              )}
+            >
+              {type === 'expense' ? '- ' : null}
+              {formatted}
+            </div>
+          )
         },
       },
       {
