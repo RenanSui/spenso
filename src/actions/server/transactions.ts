@@ -58,3 +58,19 @@ export const deleteTransaction = async (id: string) => {
   await supabase.from('transactions').delete().eq('id', id)
   revalidatePath('/dashboard/transactions')
 }
+
+export const deleteSelectedTransactions = async (ids: string[]) => {
+  const supabase = await createServerClient()
+  if (!supabase) return
+
+  const userId = await getUserId()
+  if (!userId) return
+
+  const deletePromises = ids.map(async (id) => {
+    await supabase.from('transactions').delete().eq('id', id)
+  })
+
+  Promise.all(deletePromises)
+
+  revalidatePath('/dashboard/transactions')
+}

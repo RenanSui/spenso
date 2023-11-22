@@ -13,24 +13,41 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+import { Row, Table } from '@tanstack/react-table'
+import { useState } from 'react'
+import { DeleteSelectedTransaction } from '../transactions/delete-selected-transactions'
 import { Button } from '../ui/button'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
   pageSizeOptions?: number[]
+  rows: Row<unknown>[]
 }
 
 export function DataTablePagination<TData>({
   table,
+  rows,
   pageSizeOptions = [10, 20, 30, 40, 50],
 }: DataTablePaginationProps<TData>) {
+  const [openDelete, setDelete] = useState(false)
+
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
-      <div className="text-muted-foreground flex-1 whitespace-nowrap text-sm">
+      <div className="text-muted-foreground flex flex-1 items-center whitespace-nowrap text-sm">
         {table.getFilteredSelectedRowModel().rows.length} of{' '}
         {table.getFilteredRowModel().rows.length} row(s) selected.
+        {rows.length !== 0 ? (
+          <Button className="mx-2" size="sm" onClick={() => setDelete(true)}>
+            Delete Selections
+          </Button>
+        ) : null}
       </div>
+
+      <DeleteSelectedTransaction
+        open={openDelete}
+        setOpen={setDelete}
+        rows={rows}
+      />
 
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
