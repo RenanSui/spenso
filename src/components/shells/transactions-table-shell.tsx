@@ -100,8 +100,13 @@ export function TransactionsTableShell({
           <SortableHeader column={column}>Date</SortableHeader>
         ),
         cell: ({ row }) => {
-          const transactionDate = String(row.getValue('date'))
-          return transactionDate.replaceAll('-', '/')
+          const date = new Date(row.getValue('date'))
+
+          const Year = date.getFullYear()
+          const Month = String(date.getMonth()).padStart(2, '0')
+          const Day = String(date.getDay()).padStart(2, '0')
+
+          return `${Year}/${Month}/${Day}`
         },
       },
       {
