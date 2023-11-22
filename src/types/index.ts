@@ -1,20 +1,15 @@
 import { Icons } from '@/components/ui/icons'
+import { Database } from '@/lib/database.types'
+
+export type TransactionTable = Database['next_auth']['Tables']['transactions']
+
+export type Transaction = TransactionTable['Row']
+
+export type TransactionInsert = TransactionTable['Insert']
+
+export type TransactionUpdate = TransactionTable['Update']
 
 export type TransactionTypes = 'income' | 'expense'
-
-export interface TransactionForm {
-  product: string
-  date: Date
-  amount: number
-  type: string
-  category: string
-}
-
-export interface Transaction extends TransactionForm {
-  id: string
-  created_at: Date
-  user_id: string
-}
 
 export interface Option {
   label: string

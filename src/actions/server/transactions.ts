@@ -1,7 +1,7 @@
 'use server'
 
 import { createServerClient } from '@/lib/server/server'
-import { Transaction, TransactionForm } from '@/types'
+import { TransactionInsert, TransactionUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { getUserId } from './user'
 
@@ -10,20 +10,18 @@ export const getTransactions = async () => {
   if (!supabase) return null
 
   const { data } = await supabase.from('transactions').select('*')
-  return (data as Transaction[]) ?? []
+  return data
 }
 
-export const addTransaction = async (formData: TransactionForm) => {
+export const addTransaction = async (formData: TransactionInsert) => {
   const supabase = await createServerClient()
   if (!supabase) return
 
   const userId = await getUserId()
   if (!userId) return
 
-  const { amount, ...formDataObj } = formData
   const formDataWithId = {
-    ...formDataObj,
-    amount: Number(amount.toFixed(2)),
+    ...formData,
     user_id: userId,
   }
 
@@ -31,25 +29,19 @@ export const addTransaction = async (formData: TransactionForm) => {
   revalidatePath('/dashboard/transactions')
 }
 
-type UpdateTransactionData = TransactionForm & { id: string }
-
-export const updateTransaction = async (formData: UpdateTransactionData) => {
+export const updateTransaction = async (formData: TransactionUpdate) => {
   const supabase = await createServerClient()
   if (!supabase) return
 
   const userId = await getUserId()
   if (!userId) return
 
-  const { amount, id, ...formDataObj } = formData
-  const formDataUpdate = {
-    ...formDataObj,
-    amount: Number(amount.toFixed(2)),
-  }
+  const { id, ...formDataObj } = formData
 
   await supabase
     .from('transactions')
-    .update({ ...formDataUpdate })
-    .eq('id', id)
+    .update({ ...formDataObj })
+    .eq('id', id ?? '')
   revalidatePath('/dashboard/transactions')
 }
 

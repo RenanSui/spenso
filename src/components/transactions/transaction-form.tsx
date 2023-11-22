@@ -39,8 +39,11 @@ import * as z from 'zod'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
-  date: z.date(),
-  amount: z.coerce.number().nonnegative(),
+  date: z.string().transform((date) => date.toString()),
+  amount: z.coerce
+    .number()
+    .nonnegative()
+    .transform((number) => Number(number.toFixed(2))),
   type: z.string().min(1),
   category: z.string().min(1),
 })
@@ -60,7 +63,7 @@ export const TransactionForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       product: '',
-      date: new Date(),
+      date: '',
       amount: 0,
       type: transactionType[0],
       category: transactionCategory[0],
@@ -71,18 +74,23 @@ export const TransactionForm = ({
     values: z.infer<typeof formSchema>,
   ) => {
     // process form add
-    if (formAction === 'add') await addTransaction(values)
+    if (formAction === 'add') {
+      await addTransaction(values)
+    }
 
     // process form update
-    if (formAction === 'update' && transaction)
+    if (formAction === 'update' && transaction) {
       await updateTransaction({ ...values, id: transaction.id })
+    }
 
     setOpen?.(false)
   }
 
   const setRandomForm = async () => {
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
-    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12)
+    const dateRandom = new Date(
+      new Date().valueOf() - Math.random() * 1e12,
+    ).toString()
     const amountRandom = Number((Math.random() * 10000).toFixed(2))
     const typeRandom =
       transactionType[Math.floor(Math.random() * transactionType.length)]
@@ -113,7 +121,7 @@ export const TransactionForm = ({
       if (!transaction) return false
 
       form.setValue('product', transaction.product)
-      form.setValue('date', new Date(transaction.date))
+      form.setValue('date', new Date(transaction.date).toString())
       form.setValue('amount', transaction.amount)
       form.setValue('type', transaction.type)
       form.setValue('category', transaction.category)
@@ -155,7 +163,7 @@ export const TransactionForm = ({
                       )}
                     >
                       {field.value ? (
-                        format(field.value, 'PPP')
+                        format(new Date(field.value), 'PPP')
                       ) : (
                         <span>Pick a date*</span>
                       )}
@@ -166,7 +174,7 @@ export const TransactionForm = ({
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
+                    selected={new Date(field.value)}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date > new Date() || date < new Date('1900-01-01')
