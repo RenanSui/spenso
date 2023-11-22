@@ -1,10 +1,5 @@
 'use client'
 
-import type { NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
-import { ViewVerticalIcon } from '@radix-ui/react-icons'
-import Link from 'next/link'
-import { useSelectedLayoutSegment } from 'next/navigation'
-import * as React from 'react'
 import {
   Accordion,
   AccordionContent,
@@ -16,6 +11,11 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
+import type { NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
+import { DashboardIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
+import { useSelectedLayoutSegment } from 'next/navigation'
+import * as React from 'react'
 
 interface MobileNavProps {
   sidebarNavItems: SidebarNavItem[]
@@ -48,7 +48,7 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
           variant="ghost"
           className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
         >
-          <ViewVerticalIcon className="h-6 w-6" aria-hidden="true" />
+          <DashboardIcon className="h-6 w-6" aria-hidden="true" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
