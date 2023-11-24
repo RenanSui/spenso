@@ -20,8 +20,6 @@ export default async function Page() {
       </PageHeader>
 
       <TransactionAnalyticsShell transactions={transactions} />
-
-      {/* <pre>{JSON.stringify(transactions, null, 2)}</pre> */}
     </Shell>
   )
 }
