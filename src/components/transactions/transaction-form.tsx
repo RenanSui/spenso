@@ -39,7 +39,8 @@ import * as z from 'zod'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
-  date: z.string().transform((date) => date.toString()),
+  // date: z.date().transform((date) => date.toString()),
+  date: z.date(),
   amount: z.coerce
     .number()
     .nonnegative()
@@ -63,7 +64,7 @@ export const TransactionForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       product: '',
-      date: '',
+      date: new Date(),
       amount: 0,
       type: transactionType[0],
       category: transactionCategory[0],
@@ -73,14 +74,17 @@ export const TransactionForm = ({
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
     values: z.infer<typeof formSchema>,
   ) => {
+    const { date, ...valuesObj } = values
+    const newValues = { date: new Date(date).toString(), ...valuesObj }
+
     // process form add
     if (formAction === 'add') {
-      await addTransaction(values)
+      await addTransaction(newValues)
     }
 
     // process form update
     if (formAction === 'update' && transaction) {
-      await updateTransaction({ ...values, id: transaction.id })
+      await updateTransaction({ ...valuesObj, id: transaction.id })
     }
 
     setOpen?.(false)
@@ -88,9 +92,7 @@ export const TransactionForm = ({
 
   const setRandomForm = async () => {
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
-    const dateRandom = new Date(
-      new Date().valueOf() - Math.random() * 1e12,
-    ).toString()
+    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12) // .toString()
     const amountRandom = Number((Math.random() * 10000).toFixed(2))
     const typeRandom =
       transactionType[Math.floor(Math.random() * transactionType.length)]
@@ -121,7 +123,7 @@ export const TransactionForm = ({
       if (!transaction) return false
 
       form.setValue('product', transaction.product)
-      form.setValue('date', new Date(transaction.date).toString())
+      form.setValue('date', new Date(transaction.date))
       form.setValue('amount', transaction.amount)
       form.setValue('type', transaction.type)
       form.setValue('category', transaction.category)

@@ -20,7 +20,7 @@ export default async function Page() {
         </PageHeaderDescription>
       </PageHeader>
 
-      <TransactionsTableShell data={transactions ?? []} />
+      <TransactionsTableShell data={transactions?.reverse() ?? []} />
     </Shell>
   )
 }
