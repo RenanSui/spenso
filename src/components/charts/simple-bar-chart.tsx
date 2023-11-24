@@ -25,10 +25,12 @@ export const SimpleBarChart = ({
 }: SimpleBarChartProps) => {
   const { theme } = useTheme()
 
-  const data = categoriesSum.map((category) => ({
-    category: category.category,
-    total: category.sum,
-  }))
+  const data = categoriesSum
+    .map((category) => ({
+      category: category.category,
+      total: category.sum,
+    }))
+    .sort((item1, item2) => Number(item1.total) - Number(item2.total))
 
   return (
     <div
