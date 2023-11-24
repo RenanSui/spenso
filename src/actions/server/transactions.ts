@@ -1,7 +1,10 @@
 'use server'
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { createServerClient } from '@/lib/server/server'
 import { TransactionInsert, TransactionUpdate } from '@/types'
+import { createClient } from '@supabase/supabase-js'
+import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 import { getUserId } from './user'
 
@@ -52,8 +55,6 @@ export const deleteTransaction = async (id: string) => {
   const userId = await getUserId()
   if (!userId) return
 
-  console.log(id)
-
   // make supabase fetch delete
   await supabase.from('transactions').delete().eq('id', id)
   revalidatePath('/dashboard/transactions')
@@ -73,4 +74,30 @@ export const deleteSelectedTransactions = async (ids: string[]) => {
   Promise.all(deletePromises)
 
   revalidatePath('/dashboard/transactions')
+}
+
+export const getTransactionsCategories = async () => {
+  const session = await getServerSession(authOptions)
+  if (!session) return null
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+    {
+      db: { schema: 'public' },
+      global: {
+        headers: {
+          Authorization: `Bearer ${session?.supabaseAccessToken ?? ''}`,
+        },
+      },
+    },
+  )
+  if (!supabase) return
+
+  const userId = await getUserId()
+  if (!userId) return
+
+  const { data } = await supabase.from('transactions_categories').select('*')
+
+  return data as { category: string; sum: number }[]
 }

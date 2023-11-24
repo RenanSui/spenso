@@ -1,3 +1,5 @@
+'use server'
+
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
@@ -20,4 +22,9 @@ export const createServerClient = async () => {
       },
     },
   )
+}
+
+export const valueFormatter = (number: number) => {
+  'use server'
+  return `$ ${new Intl.NumberFormat('us').format(number).toString()}`
 }

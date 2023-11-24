@@ -21,3 +21,23 @@
 .dialog-scroll::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.recharts-wrapper svg{
+  overflow: inherit !important;
+}
+
+body::-webkit-scrollbar {
+  width: 10px
+}
+
+body::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #272727;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
