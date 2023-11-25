@@ -104,7 +104,9 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'category',
-        header: () => <>Category</>,
+        header: ({ column }) => (
+          <SortableHeader column={column}>Category</SortableHeader>
+        ),
         cell: ({ row }) => {
           const category = String(row.getValue('category'))
           return <span className="capitalize">{category}</span>
