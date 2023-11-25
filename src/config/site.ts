@@ -28,6 +28,8 @@ const auth = {
 
 export const siteConfig = {
   name: 'Spenso',
+  description: 'Spenso is the easiest way to keep track of your spendings',
+  url: 'https://spenso.vercel.app',
   links,
   unsplash: {
     lobby,
