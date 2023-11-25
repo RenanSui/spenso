@@ -165,7 +165,7 @@ export const TransactionForm = ({
                       )}
                     >
                       {field.value ? (
-                        format(new Date(field.value), 'PPP')
+                        format(field.value, 'PPP')
                       ) : (
                         <span>Pick a date*</span>
                       )}
@@ -176,7 +176,7 @@ export const TransactionForm = ({
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={new Date(field.value)}
+                    selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date > new Date() || date < new Date('1900-01-01')
