@@ -169,6 +169,7 @@ const SortableHeader = ({
 const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
   const [openDelete, setDelete] = useState(false)
   const [openUpdate, setUpdate] = useState(false)
+  const [openDuplicate, setDuplicate] = useState(false)
 
   return (
     <>
@@ -185,6 +186,9 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
           <DropdownMenuItem onClick={() => setUpdate(true)}>
             Edit
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setDuplicate(true)}>
+            Duplicate
+          </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
               'bg-red-500 text-white shadow-sm hover:bg-red-700 focus:bg-red-700 focus:text-white dark:focus:bg-red-700',
@@ -196,16 +200,24 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
+      <UpdateTransaction
+        open={openUpdate}
+        setOpen={setUpdate}
+        transaction={transaction}
+      />
+
       <DeleteTransaction
         open={openDelete}
         setOpen={setDelete}
         transactionId={transaction.id}
       />
 
+      {/* duplicate  */}
       <UpdateTransaction
-        open={openUpdate}
-        setOpen={setUpdate}
+        open={openDuplicate}
+        setOpen={setDuplicate}
         transaction={transaction}
+        isDuplicateItem={true}
       />
     </>
   )

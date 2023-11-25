@@ -15,6 +15,7 @@ interface UpdateTransactionProps extends HTMLAttributes<HTMLDivElement> {
   transaction: Transaction
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  isDuplicateItem?: boolean
 }
 
 export const UpdateTransaction = ({
@@ -22,17 +23,20 @@ export const UpdateTransaction = ({
   transaction,
   open,
   setOpen,
+  isDuplicateItem = false,
 }: UpdateTransactionProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="dialog-scroll max-h-screen overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle>Update Transaction</DialogTitle>
+          <DialogTitle>
+            {isDuplicateItem ? 'Duplicate' : 'Update'} Transaction
+          </DialogTitle>
         </DialogHeader>
         <Separator />
         <TransactionForm
-          formAction="update"
+          formAction={isDuplicateItem ? 'add' : 'update'}
           setOpen={setOpen}
           transaction={transaction}
         />
