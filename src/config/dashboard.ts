@@ -45,6 +45,7 @@ export const transactionType = ['expense', 'income']
 
 export const transactionCategory = [
   'housing',
+  'hobbies',
   'transportation',
   'utilities',
   'insurance',
