@@ -74,9 +74,7 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'product',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Product</SortableHeader>
-        ),
+        header: () => <>Product</>,
       },
       {
         accessorKey: 'amount',
@@ -106,9 +104,7 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'category',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Category</SortableHeader>
-        ),
+        header: () => <>Category</>,
         cell: ({ row }) => {
           const category = String(row.getValue('category'))
           return <span className="capitalize">{category}</span>
@@ -119,6 +115,14 @@ export function TransactionsTableShell({
         header: ({ column }) => (
           <SortableHeader column={column}>Date</SortableHeader>
         ),
+        sortingFn: (itemA, itemB): number => {
+          const dateA = new Date(itemA.original.date).getTime()
+          const dateB = new Date(itemB.original.date).getTime()
+
+          console.log({ dateA, dateB })
+
+          return dateA < dateB ? 1 : dateA > dateB ? -1 : 0
+        },
         cell: ({ row }) => {
           const date = new Date(row.getValue('date'))
 

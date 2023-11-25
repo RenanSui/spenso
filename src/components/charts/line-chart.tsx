@@ -25,10 +25,13 @@ export const LineChartShell = ({
   const data = transactions
     .map((item) => ({
       year: new Date(item.date).getFullYear().toString(),
+      date: new Date(item.date).getTime(),
       Revenue: item.type === 'income' ? item.amount : 0,
       Expense: item.type === 'expense' ? item.amount * -1 : 0,
     }))
-    .sort((item1, item2) => Number(item1.year) - Number(item2.year))
+    .sort((item1, item2) => item1.date - item2.date)
+
+  console.log(data)
 
   return (
     <div

@@ -84,7 +84,7 @@ export const TransactionForm = ({
 
     // process form update
     if (formAction === 'update' && transaction) {
-      await updateTransaction({ ...valuesObj, id: transaction.id })
+      await updateTransaction({ ...newValues, id: transaction.id })
     }
 
     setOpen?.(false)
