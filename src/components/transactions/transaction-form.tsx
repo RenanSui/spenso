@@ -63,11 +63,11 @@ export const TransactionForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product: '',
-      date: new Date(),
-      amount: 0,
-      type: transactionType[0],
-      category: transactionCategory[0],
+      product: transaction?.product ?? '',
+      date: transaction?.date ? new Date(transaction?.date) : new Date(),
+      amount: transaction?.amount ?? 0,
+      type: transaction?.type ?? transactionType[0],
+      category: transaction?.category ?? transactionCategory[0],
     },
   })
 
@@ -92,7 +92,7 @@ export const TransactionForm = ({
 
   const setRandomForm = async () => {
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
-    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12) // .toString()
+    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12)
     const amountRandom = Number((Math.random() * 10000).toFixed(2))
     const typeRandom =
       transactionType[Math.floor(Math.random() * transactionType.length)]
@@ -117,19 +117,6 @@ export const TransactionForm = ({
     }
     getProducts()
   }, [])
-
-  useEffect(() => {
-    const setUpdateForm = () => {
-      if (!transaction) return false
-
-      form.setValue('product', transaction.product)
-      form.setValue('date', new Date(transaction.date))
-      form.setValue('amount', transaction.amount)
-      form.setValue('type', transaction.type)
-      form.setValue('category', transaction.category)
-    }
-    setUpdateForm()
-  }, [form, transaction])
 
   return (
     <Form {...form}>
