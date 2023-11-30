@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/lib/database.types.ts"
+    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/lib/database.types.ts",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^0.1.6",
@@ -49,12 +50,14 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.3",
     "@rocketseat/eslint-config": "^2.1.0",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "autoprefixer": "^10.4.16",
+    "cross-env": "^7.0.3",
     "eslint": "^8.53.0",
     "eslint-config-next": "14.0.1",
     "postcss": "^8.4.31",
