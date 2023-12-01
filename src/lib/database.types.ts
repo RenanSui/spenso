@@ -107,6 +107,7 @@ export interface Database {
           product: string
           type: string
           user_id: string | null
+          year: string
         }
         Insert: {
           amount: number
@@ -117,6 +118,7 @@ export interface Database {
           product: string
           type: string
           user_id?: string | null
+          year: string
         }
         Update: {
           amount?: number
@@ -127,6 +129,7 @@ export interface Database {
           product?: string
           type?: string
           user_id?: string | null
+          year?: string
         }
         Relationships: [
           {

@@ -1,9 +1,13 @@
-import { getTransactionsCategories } from '@/actions/server/transactions'
+import {
+  getTransactionsCategories,
+  getTransactionsTypes,
+  getTransactionsYears,
+} from '@/actions/server/transactions'
 import { Transaction } from '@/types'
 import { CardChartShell } from '../charts/card-chart'
-import { CustomActivePieChartShell } from '../charts/custom-active-pie-chart'
-import { LineChartShell } from '../charts/line-chart'
-import { SimpleBarChart } from '../charts/simple-bar-chart'
+import { CategoriesChart } from '../charts/categories-chart'
+import { TypeChart } from '../charts/type-chart'
+import { YearsChart } from '../charts/years-chart'
 import { AnalyticTable } from '../table/analytic-table'
 
 type AnalyticsProps = { transactions: Transaction[] | null }
@@ -11,25 +15,23 @@ type AnalyticsProps = { transactions: Transaction[] | null }
 export const TransactionAnalyticsShell = async ({
   transactions,
 }: AnalyticsProps) => {
-  const categoriesSum = await getTransactionsCategories()
+  const categories = await getTransactionsCategories()
+  const types = await getTransactionsTypes()
+  const years = await getTransactionsYears()
 
   if (!transactions) return null
-  if (!categoriesSum) return null
 
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
       <CardChartShell transactions={transactions} />
 
-      <LineChartShell className="lg:col-span-2" transactions={transactions} />
+      <YearsChart className="lg:col-span-2" years={years} />
 
       <AnalyticTable className="lg:row-span-2" transactions={transactions} />
 
-      <CustomActivePieChartShell
-        className="lg:col-span-2"
-        transactions={transactions}
-      />
+      <TypeChart className="lg:col-span-2" types={types} />
 
-      <SimpleBarChart className="lg:col-span-3" categoriesSum={categoriesSum} />
+      <CategoriesChart className="lg:col-span-3" categories={categories} />
     </div>
   )
 }

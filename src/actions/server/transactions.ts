@@ -2,7 +2,7 @@
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { createServerClient } from '@/lib/server/server'
-import { TransactionInsert, TransactionUpdate } from '@/types'
+import { TransactionInsert, TransactionTypes, TransactionUpdate } from '@/types'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
@@ -78,7 +78,7 @@ export const deleteSelectedTransactions = async (ids: string[]) => {
 
 export const getTransactionsCategories = async () => {
   const session = await getServerSession(authOptions)
-  if (!session) return null
+  if (!session) return []
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
@@ -92,12 +92,64 @@ export const getTransactionsCategories = async () => {
       },
     },
   )
-  if (!supabase) return
+  if (!supabase) return []
 
   const userId = await getUserId()
-  if (!userId) return
+  if (!userId) return []
 
   const { data } = await supabase.from('transactions_categories').select('*')
 
   return data as { category: string; sum: number }[]
+}
+
+export const getTransactionsTypes = async () => {
+  const session = await getServerSession(authOptions)
+  if (!session) return []
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+    {
+      db: { schema: 'public' },
+      global: {
+        headers: {
+          Authorization: `Bearer ${session?.supabaseAccessToken ?? ''}`,
+        },
+      },
+    },
+  )
+  if (!supabase) return []
+
+  const userId = await getUserId()
+  if (!userId) return []
+
+  const { data } = await supabase.from('transactions_types').select('*')
+
+  return data as { type: string; sum: number }[]
+}
+
+export const getTransactionsYears = async () => {
+  const session = await getServerSession(authOptions)
+  if (!session) return []
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+    {
+      db: { schema: 'public' },
+      global: {
+        headers: {
+          Authorization: `Bearer ${session?.supabaseAccessToken ?? ''}`,
+        },
+      },
+    },
+  )
+  if (!supabase) return []
+
+  const userId = await getUserId()
+  if (!userId) return []
+
+  const { data } = await supabase.from('transactions_years').select('*')
+
+  return data as { year: string; type: TransactionTypes; sum: number }[]
 }

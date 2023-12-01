@@ -79,12 +79,19 @@ export const TransactionForm = ({
 
     // process form add
     if (formAction === 'add') {
-      await addTransaction(newValues)
+      await addTransaction({
+        ...newValues,
+        year: new Date(date).getFullYear().toString(),
+      })
     }
 
     // process form update
     if (formAction === 'update' && transaction) {
-      await updateTransaction({ ...newValues, id: transaction.id })
+      await updateTransaction({
+        ...newValues,
+        year: transaction.year,
+        id: transaction.id,
+      })
     }
 
     setOpen?.(false)

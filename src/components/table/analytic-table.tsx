@@ -34,7 +34,7 @@ export const AnalyticTable = ({
   return (
     <div
       className={cn(
-        'dialog-scroll h-full overflow-hidden overflow-y-scroll rounded-xl border dark:border-neutral-800 ',
+        'dialog-scroll h-[708px] overflow-hidden overflow-y-scroll rounded-xl border dark:border-neutral-800 ',
         className,
       )}
     >
