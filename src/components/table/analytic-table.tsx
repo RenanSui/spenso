@@ -65,7 +65,7 @@ export const AnalyticTable = ({
                 <TableCell
                   className={cn(
                     'text-sm font-medium capitalize',
-                    type === 'expense' ? 'text-red-500' : null,
+                    type === 'expense' ? 'text-red-400' : null,
                   )}
                 >
                   {type}
@@ -74,7 +74,7 @@ export const AnalyticTable = ({
                 <TableCell
                   className={cn(
                     'text-xs',
-                    type === 'expense' ? 'text-red-500' : null,
+                    type === 'expense' ? 'text-red-400' : null,
                   )}
                 >
                   {formatted}

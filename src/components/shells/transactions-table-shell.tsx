@@ -61,7 +61,7 @@ export function TransactionsTableShell({
             <span
               className={cn(
                 'capitalize',
-                type === 'expense' ? 'text-red-500' : null,
+                type === 'expense' ? 'text-red-400' : null,
               )}
             >
               {type}
@@ -93,7 +93,7 @@ export function TransactionsTableShell({
             <div
               className={cn(
                 'font-medium',
-                type === 'expense' ? 'text-red-500' : null,
+                type === 'expense' ? 'text-red-400' : null,
               )}
             >
               {type === 'expense' ? '- ' : null}
