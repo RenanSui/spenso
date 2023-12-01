@@ -45,9 +45,9 @@ export const UserDropdown = ({ user }: { user: SessionUser }) => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard">
+            <Link href="/dashboard/analytics">
               <DashboardIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              Dashboard
+              Analytics
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

@@ -55,7 +55,7 @@ export default async function Page() {
           Find Happiness In Budgeting!
         </span>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link className={buttonVariants()} href="/dashboard">
+          <Link className={buttonVariants()} href="/dashboard/analytics">
             Try now
           </Link>
           <Link
