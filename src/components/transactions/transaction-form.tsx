@@ -268,9 +268,6 @@ export const TransactionForm = ({
             form.formState.isLoading ? 'pointer-events-none opacity-60' : null,
           )}
         >
-          <Button size="sm" type="submit">
-            {formAction === 'add' ? 'Submit' : 'Update'}
-          </Button>
           <span
             className={cn(
               buttonVariants({ size: 'sm', variant: 'ghost' }),
@@ -281,6 +278,9 @@ export const TransactionForm = ({
           >
             Random
           </span>
+          <Button size="sm" type="submit">
+            {formAction === 'add' ? 'Submit' : 'Update'}
+          </Button>
         </div>
       </form>
     </Form>
