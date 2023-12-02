@@ -23,8 +23,3 @@ export const createServerClient = async () => {
     },
   )
 }
-
-export const valueFormatter = (number: number) => {
-  'use server'
-  return `$ ${new Intl.NumberFormat('us').format(number).toString()}`
-}
