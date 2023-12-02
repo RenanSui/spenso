@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "next:build": "next build",
+    "build": "pnpm run test && pnpm run next:build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --verbose",
