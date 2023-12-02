@@ -9,7 +9,17 @@ export type TransactionInsert = TransactionTable['Insert']
 
 export type TransactionUpdate = TransactionTable['Update']
 
+export type TransactionCategories = { category: string; sum: number }
+
 export type TransactionTypes = 'income' | 'expense'
+
+export type TransactionTypeses = { type: string; sum: number }
+
+export type TransactionYears = {
+  year: string
+  type: TransactionTypes
+  sum: number
+}
 
 export interface Option {
   label: string
