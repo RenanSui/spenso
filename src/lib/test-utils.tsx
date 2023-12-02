@@ -1,8 +1,6 @@
 import { ThemeProvider } from 'next-themes'
 
-interface TestProviderOptions {
-  theme?: string
-}
+type TestProviderOptions = { theme?: string }
 
 export const CreateTestProviders =
   ({ theme = 'dark' }: TestProviderOptions) =>
