@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "next:build": "next build",
-    "build": "pnpm run test && pnpm run next:build",
+    "build": "cross-env NODE_ENV=test pnpm run test && pnpm run next:build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --verbose",
