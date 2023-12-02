@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { transactionTypeses } from '@/lib/transactions'
+import { transactionTypeses } from '@/config/dashboard'
 import { cn } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'

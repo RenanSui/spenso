@@ -1,4 +1,4 @@
-import type { SidebarNavItem } from '@/types'
+import { SidebarNavItem, TransactionTypes } from '@/types'
 
 export interface DashboardConfig {
   SidebarNav: SidebarNavItem[]
@@ -60,3 +60,11 @@ export const transactionCategory = [
   'travel',
   'other',
 ].sort()
+
+export const transactionTypeses: {
+  label: string
+  value: TransactionTypes
+}[] = [
+  { label: 'Income', value: 'income' },
+  { label: 'Expense', value: 'expense' },
+]
