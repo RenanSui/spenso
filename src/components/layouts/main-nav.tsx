@@ -34,7 +34,10 @@ export function MainNav({ items }: MainNavProps) {
           {items?.map((item) =>
             item?.items ? (
               <NavigationMenuItem key={item.title}>
-                <NavigationMenuTrigger className="h-auto capitalize">
+                <NavigationMenuTrigger
+                  className="h-auto capitalize"
+                  aria-label="main-nav-trigger"
+                >
                   {item.title}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
