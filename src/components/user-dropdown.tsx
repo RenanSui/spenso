@@ -24,7 +24,7 @@ import { UserAvatar } from './user-avatar'
 export const UserDropdown = ({ user }: { user: SessionUser }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger aria-label="user-menu-trigger">
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
