@@ -1,5 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { createServerClient } from '@/lib/server/server'
+import { createServerClient } from '@/lib/server'
 import { getServerSession } from 'next-auth'
 
 export type SessionUser = {

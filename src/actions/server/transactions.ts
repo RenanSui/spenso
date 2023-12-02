@@ -1,7 +1,7 @@
 'use server'
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { createServerClient } from '@/lib/server/server'
+import { createServerClient } from '@/lib/server'
 import { TransactionInsert, TransactionTypes, TransactionUpdate } from '@/types'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
