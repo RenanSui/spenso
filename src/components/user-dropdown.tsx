@@ -2,6 +2,7 @@
 
 import { SessionUser } from '@/actions/server/user'
 
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import {
   AvatarIcon,
   DashboardIcon,
@@ -19,13 +20,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { UserAvatar } from './user-avatar'
 
 export const UserDropdown = ({ user }: { user: SessionUser }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger aria-label="user-menu-trigger">
-        <UserAvatar user={user} />
+        <Avatar>
+          <AvatarImage
+            className="h-8 w-8 rounded-full"
+            src={user.image || ''}
+          />
+          <AvatarFallback>
+            <div className="h-8 w-8 rounded-full bg-neutral-300 dark:bg-neutral-800" />
+          </AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
