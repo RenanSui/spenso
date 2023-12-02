@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "next:build": "next build",
-    "build": "pnpm run test && pnpm run next:build",
+    "build": "next build",
+    "build:test": "pnpm run test && pnpm run build",
     "start": "next start",
     "lint": "next lint",
-    "test": "cross-env NODE_ENV=test jest --verbose",
+    "test": "jest --verbose",
     "test:watch": "jest --watchAll --verbose",
     "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/lib/database.types.ts",
     "analyze": "cross-env ANALYZE=true next build"
