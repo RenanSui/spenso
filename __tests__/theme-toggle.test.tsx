@@ -3,6 +3,8 @@ import { CreateTestProviders } from '@/lib/test-utils'
 import '@testing-library/jest-dom'
 import { RenderOptions, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useTheme } from 'next-themes'
+import React from 'react'
 
 let localStorageMock: { [key: string]: string } = {}
 
@@ -42,20 +44,31 @@ const setup = (jsx: JSX.Element, { theme, ...options }: CustomOptions) => {
   }
 }
 
+const ThemeSpy: React.FC = () => {
+  const { theme } = useTheme()
+  return <span role="theme-spy">{theme}</span>
+}
+
 describe('Theme Toggle - Tests', () => {
   test('Should change theme on click', async () => {
-    const { getByRole } = setup(<ThemeToggle />, { theme: 'dark' })
+    const { getByRole } = setup(
+      <>
+        <ThemeToggle />
+        <ThemeSpy />
+      </>,
+      { theme: 'dark' },
+    )
 
     await userEvent.click(getByRole('button', { name: 'theme-toggler' }))
     await userEvent.click(getByRole('light-toggle'))
-    expect(getByRole('current-theme')).toHaveTextContent('light')
+    expect(getByRole('theme-spy')).toHaveTextContent('light')
 
     await userEvent.click(getByRole('button', { name: 'theme-toggler' }))
     await userEvent.click(getByRole('dark-toggle'))
-    expect(getByRole('current-theme')).toHaveTextContent('dark')
+    expect(getByRole('theme-spy')).toHaveTextContent('dark')
 
     await userEvent.click(getByRole('button', { name: 'theme-toggler' }))
     await userEvent.click(getByRole('system-toggle'))
-    expect(getByRole('current-theme')).toHaveTextContent('system')
+    expect(getByRole('theme-spy')).toHaveTextContent('system')
   })
 })
