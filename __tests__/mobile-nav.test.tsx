@@ -1,8 +1,8 @@
 import { MobileNav } from '@/components/layouts/mobile-nav'
 import { NavItemWithChildren } from '@/types'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, test, vi } from 'vitest'
 
 const setup = (jsx: JSX.Element) => {
   return {
@@ -11,9 +11,9 @@ const setup = (jsx: JSX.Element) => {
   }
 }
 
-const useSelectedLayoutSegmentMocked = jest.fn()
-jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
+const useSelectedLayoutSegmentMocked = vi.fn()
+vi.mock('next/navigation', async () => ({
+  ...(await vi.importActual('next/navigation')),
   useSelectedLayoutSegment: () => useSelectedLayoutSegmentMocked(),
 }))
 

@@ -1,31 +1,30 @@
 import { ThemeToggle } from '@/components/layouts/theme-toggle'
 import { CreateTestProviders } from '@/lib/test-utils'
-import '@testing-library/jest-dom'
 import { RenderOptions, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useTheme } from 'next-themes'
-import React from 'react'
+import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
 
 let localStorageMock: { [key: string]: string } = {}
 
 beforeAll(() => {
   // Create a mock of the window.matchMedia function
-  global.matchMedia = jest.fn((query) => ({
+  global.matchMedia = vi.fn((query) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   }))
 
   // Create mocks of localStorage getItem and setItem functions
-  global.Storage.prototype.getItem = jest.fn(
+  global.Storage.prototype.getItem = vi.fn(
     (key: string) => localStorageMock[key],
   )
-  global.Storage.prototype.setItem = jest.fn((key: string, value: string) => {
+  global.Storage.prototype.setItem = vi.fn((key: string, value: string) => {
     localStorageMock[key] = value
   })
 })
