@@ -9,44 +9,42 @@ type CardChartShellProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const CardChartShell = ({
-  transactions,
+  transactions: data,
   className,
 }: CardChartShellProps) => {
-  const wallet = {
-    totals: { length: 0, value: 0 },
-    revenue: { length: 0, value: 0 },
-    expenses: { length: 0, value: 0 },
+  const sums = data.map((item) => item.amount)
+
+  const revenueFilter = sums.filter((item) => item >= 0)
+  const expensesFilter = sums.filter((item) => item < 0)
+
+  const revenueValue = revenueFilter.reduce((acc, curr) => acc + curr, 0)
+  const expensesValue = expensesFilter.reduce((acc, curr) => acc + curr, 0)
+
+  const revenue = { length: revenueFilter.length, value: revenueValue }
+  const expenses = { length: expensesFilter.length, value: expensesValue }
+  const totals = {
+    length: revenue.length + expenses.length,
+    value: revenue.value + expenses.value,
   }
-
-  transactions?.forEach((item) => {
-    if (item.type === 'income') {
-      wallet.revenue.value += item.amount
-      wallet.revenue.length++
-    }
-    if (item.type === 'expense') {
-      wallet.expenses.value -= item.amount
-      wallet.expenses.length++
-    }
-  })
-
-  wallet.totals.value = wallet.revenue.value + wallet.expenses.value
-  wallet.totals.length = wallet.revenue.length + wallet.expenses.length
 
   return (
     <>
       <AnalyticCard
         className={className}
-        wallet={wallet.totals}
+        total={totals.length}
+        wallet={totals}
         title="total"
       />
       <AnalyticCard
         className={className}
-        wallet={wallet.revenue}
+        total={totals.length}
+        wallet={revenue}
         title="total profit"
       />
       <AnalyticCard
         className={className}
-        wallet={wallet.expenses}
+        total={totals.length}
+        wallet={expenses}
         title="total expenses"
       />
     </>

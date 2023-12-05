@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 export const AnalyticCard = ({
   title,
   wallet,
+  total,
 }: HTMLAttributes<HTMLDivElement> & {
   title: string
+  total: number
   wallet: {
     length: number
     value: number
@@ -17,6 +19,8 @@ export const AnalyticCard = ({
     currency: 'BRL',
   }).format(Number(wallet.value.toFixed(2)))
 
+  const percent = ((wallet.length * 100) / total).toFixed(0)
+
   return (
     <Card className={cn('', 'hover:bg-neutral-100 hover:dark:bg-neutral-900')}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -25,9 +29,16 @@ export const AnalyticCard = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="font-medium md:text-lg lg:text-2xl">{formatted}</div>
+        <div
+          className={cn(
+            'font-medium md:text-lg lg:text-2xl',
+            parseInt(formatted) < 0 ? 'text-red-400' : '',
+          )}
+        >
+          {formatted}
+        </div>
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
-          {wallet.length} Transactions
+          {`${percent}%`} of Transactions
         </p>
       </CardContent>
     </Card>
