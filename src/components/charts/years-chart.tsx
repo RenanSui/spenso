@@ -35,25 +35,23 @@ ChartJS.register(
 
 export const YearsChart = ({ className, years }: YearsChartProps) => {
   const allYears = removeArrayDuplicates(years.map((year) => year.year))
+  const allSums = years.map((year) => year.sum)
 
-  const revenueYears = years.filter((year) => year.type === 'income')
-
-  const expenseYears = years
-    .filter((year) => year.type === 'expense')
-    .map((year) => ({ ...years, sum: year.sum * -1 }))
+  const incomes = allSums.filter((sum) => sum >= 0)
+  const expenses = allSums.filter((sum) => sum < 0).map((sum) => sum * -1)
 
   const data = {
     labels: allYears.map((year) => year),
     datasets: [
       {
         label: 'revenue',
-        data: revenueYears.map((year) => year.sum),
+        data: incomes,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'expenses',
-        data: expenseYears.map((year) => year.sum),
+        data: expenses,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
