@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn, toPositive } from '@/lib/utils'
 import {
   BarElement,
   CategoryScale,
@@ -23,14 +23,19 @@ export const CategoriesChart = ({
   categories,
   className,
 }: CategoriesChartProps) => {
-  const labels = categories.map((category) => category.category)
+  const sortedCategories = categories.sort(
+    (item1, item2) => toPositive(item1.sum) - toPositive(item2.sum),
+  )
+
+  const labels = sortedCategories.map((category) => category.category)
+  const sums = sortedCategories.map((category) => toPositive(category.sum))
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Category expenses',
-        data: categories.map((category) => category.sum),
+        data: sums,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],

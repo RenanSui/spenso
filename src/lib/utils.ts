@@ -31,3 +31,5 @@ export const positiveOrNegative = (type: string, amount: number) => {
 
   return isExpense ? negativeAmount : positiveAmount
 }
+
+export const toPositive = (number: number) => number * -1
