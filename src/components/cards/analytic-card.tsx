@@ -31,8 +31,8 @@ export const AnalyticCard = ({
       <CardContent>
         <div
           className={cn(
-            'font-medium md:text-lg lg:text-2xl',
-            parseInt(formatted) < 0 ? 'text-red-400' : '',
+            'font-normal md:text-lg lg:text-2xl',
+            wallet.value < 0 ? 'text-red-400' : '',
           )}
         >
           {formatted}
