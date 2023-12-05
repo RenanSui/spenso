@@ -52,13 +52,10 @@ export const AnalyticTable = ({
           {data.map((transaction) => {
             const { amount, id, product, type } = transaction
 
-            const isNegative = type === 'expense'
-            const amountFixed = Number(amount.toFixed(2))
-
             const formatted = new Intl.NumberFormat('pt-BR', {
               style: 'currency',
               currency: 'BRL',
-            }).format(isNegative ? amountFixed * -1 : amountFixed)
+            }).format(parseInt(amount.toFixed(2)))
 
             return (
               <TableRow key={id}>
