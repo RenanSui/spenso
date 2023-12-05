@@ -33,3 +33,10 @@ export const positiveOrNegative = (type: string, amount: number) => {
 }
 
 export const toPositive = (number: number) => number * -1
+
+export const formatValue = (value: number, format: string) => {
+  return new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: format,
+  }).format(parseInt(value.toFixed(2)))
+}

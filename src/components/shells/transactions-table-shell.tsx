@@ -1,5 +1,6 @@
 'use client'
 
+import { formatStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -11,9 +12,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { transactionTypeses } from '@/config/dashboard'
-import { cn } from '@/lib/utils'
+import { cn, formatValue } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
+import { useAtom } from 'jotai'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
@@ -27,6 +29,8 @@ interface TransactionsTableShellProps {
 export function TransactionsTableShell({
   data: transactions,
 }: TransactionsTableShellProps) {
+  const [format] = useAtom(formatStateAtom)
+
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
       {
@@ -83,11 +87,10 @@ export function TransactionsTableShell({
         ),
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue('amount'))
+
           const type = row.getValue('type') as 'expense' | 'income'
-          const formatted = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(amount)
+
+          const formatted = formatValue(amount, format)
 
           return (
             <div
@@ -139,7 +142,7 @@ export function TransactionsTableShell({
         cell: ({ row }) => <TableDropdown transaction={row.original} />,
       },
     ],
-    [],
+    [format],
   )
 
   return (

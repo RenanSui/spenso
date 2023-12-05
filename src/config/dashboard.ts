@@ -1,8 +1,6 @@
-import { SidebarNavItem, TransactionTypes } from '@/types'
+import { DashboardConfig, TransactionTypes } from '@/types'
 
-export interface DashboardConfig {
-  SidebarNav: SidebarNavItem[]
-}
+export const formats = ['BRL', 'USD', 'EUR']
 
 export const dashboardConfig: DashboardConfig = {
   SidebarNav: [

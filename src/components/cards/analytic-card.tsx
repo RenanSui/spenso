@@ -1,3 +1,4 @@
+import { useFormatValue } from '@/hooks/use-format-value'
 import { cn } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -14,10 +15,7 @@ export const AnalyticCard = ({
     value: number
   }
 }) => {
-  const formatted = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(Number(wallet.value.toFixed(2)))
+  const formatted = useFormatValue(parseInt(wallet.value.toFixed(2)))
 
   const percent = ((wallet.length * 100) / total).toFixed(0)
 

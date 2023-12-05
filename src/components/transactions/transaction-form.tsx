@@ -36,6 +36,7 @@ import { format } from 'date-fns'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { FormatToggle } from '../format-toggle'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
@@ -71,6 +72,8 @@ export const TransactionForm = ({
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
     values: z.infer<typeof formSchema>,
   ) => {
+    console.log(values)
+
     const { date, ...valuesObj } = values
     const newValues = { date: new Date(date).toString(), ...valuesObj }
 
@@ -188,7 +191,16 @@ export const TransactionForm = ({
             <FormItem>
               <FormLabel>Amount*</FormLabel>
               <FormControl>
-                <Input type="number" step=".01" placeholder="" {...field} />
+                <div className="flex items-center gap-2">
+                  <Input
+                    className=""
+                    type="number"
+                    step=".01"
+                    placeholder=""
+                    {...field}
+                  />
+                  <FormatToggle />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

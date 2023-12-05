@@ -1,7 +1,9 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { formatStateAtom } from '@/atoms/global'
+import { cn, formatValue } from '@/lib/utils'
 import { Transaction } from '@/types'
+import { useAtom } from 'jotai'
 import { HTMLAttributes } from 'react'
 import {
   Table,
@@ -21,6 +23,8 @@ export const AnalyticTable = ({
   className,
   transactions,
 }: AnalyticTableProps) => {
+  const [format] = useAtom(formatStateAtom)
+
   const data = transactions
     .map((item) => ({
       id: item.id,
@@ -52,10 +56,7 @@ export const AnalyticTable = ({
           {data.map((transaction) => {
             const { amount, id, product, type } = transaction
 
-            const formatted = new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(parseInt(amount.toFixed(2)))
+            const formatted = formatValue(amount, format)
 
             return (
               <TableRow key={id}>

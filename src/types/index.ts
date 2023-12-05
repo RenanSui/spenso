@@ -51,6 +51,10 @@ export interface NavItemWithChildren extends NavItem {
 
 export type SidebarNavItem = NavItemWithChildren
 
+export interface DashboardConfig {
+  SidebarNav: SidebarNavItem[]
+}
+
 export interface NavItemWithOptionalChildren extends NavItem {
   items?: NavItemWithChildren[]
 }
