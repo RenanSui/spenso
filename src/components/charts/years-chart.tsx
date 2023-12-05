@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn, removeArrayDuplicates } from '@/lib/utils'
 import { TransactionTypes } from '@/types'
 import {
   CategoryScale,
@@ -34,18 +34,16 @@ ChartJS.register(
 )
 
 export const YearsChart = ({ className, years }: YearsChartProps) => {
-  const allYears = years.map((year) => year.year)
-  const filteredAllYears = allYears.filter(
-    (year, index) => allYears.indexOf(year) === index,
-  )
+  const allYears = removeArrayDuplicates(years.map((year) => year.year))
 
   const revenueYears = years.filter((year) => year.type === 'income')
+
   const expenseYears = years
     .filter((year) => year.type === 'expense')
     .map((year) => ({ ...years, sum: year.sum * -1 }))
 
   const data = {
-    labels: filteredAllYears.map((year) => year),
+    labels: allYears.map((year) => year),
     datasets: [
       {
         label: 'revenue',
