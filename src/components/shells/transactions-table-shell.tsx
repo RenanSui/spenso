@@ -96,7 +96,6 @@ export function TransactionsTableShell({
                 type === 'expense' ? 'text-red-400' : null,
               )}
             >
-              {type === 'expense' ? '- ' : null}
               {formatted}
             </div>
           )

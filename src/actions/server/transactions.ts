@@ -1,6 +1,7 @@
 'use server'
 
 import { createPublicServerClient, getSupabaseClient } from '@/lib/server'
+import { positiveOrNegative } from '@/lib/utils'
 import {
   TransactionCategories,
   TransactionInsert,
@@ -25,6 +26,7 @@ const addTransaction = async (formData: TransactionInsert) => {
   const formDataWithId = {
     ...formData,
     user_id: userId,
+    amount: positiveOrNegative(formData.type, formData.amount),
   }
 
   await supabase.from('transactions').insert({ ...formDataWithId })
@@ -37,10 +39,14 @@ const updateTransaction = async (formData: TransactionUpdate) => {
   if (!(supabase && userId)) return
 
   const { id, ...formDataObj } = formData
+  const formattedData = {
+    ...formDataObj,
+    amount: positiveOrNegative(formData.type || '', formData.amount || 0),
+  }
 
   await supabase
     .from('transactions')
-    .update({ ...formDataObj })
+    .update({ ...formattedData })
     .eq('id', id ?? '')
 
   revalidatePath('/dashboard/transactions')

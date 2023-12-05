@@ -41,10 +41,7 @@ const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
   // date: z.date().transform((date) => date.toString()),
   date: z.date(),
-  amount: z.coerce
-    .number()
-    .nonnegative()
-    .transform((number) => Number(number.toFixed(2))),
+  amount: z.coerce.number().transform((number) => Number(number.toFixed(2))),
   type: z.string().min(1),
   category: z.string().min(1),
 })
