@@ -1,6 +1,7 @@
 import { DataTableFilterableColumn, DataTableSearchableColumn } from '@/types'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
+import { FormatToggle } from '../format-toggle'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
@@ -71,6 +72,7 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center space-x-2">
         {AddNewItem ? <AddNewItem /> : null}
+        <FormatToggle />
         <DataTableViewOptions table={table} />
       </div>
     </div>
