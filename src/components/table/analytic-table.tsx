@@ -5,6 +5,7 @@ import { cn, formatValue } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { useAtom } from 'jotai'
 import { HTMLAttributes } from 'react'
+import { FormatToggle } from '../format-toggle'
 import {
   Table,
   TableBody,
@@ -42,7 +43,10 @@ export const AnalyticTable = ({
         className,
       )}
     >
-      <h1 className="mx-2 my-2 text-lg font-medium">Recent Transactions</h1>
+      <div className="flex items-center justify-between p-1">
+        <h1 className="p-1 text-lg font-medium">Recent Transactions</h1>
+        <FormatToggle />
+      </div>
       <Table className="">
         <TableCaption>A list of your recent transactions.</TableCaption>
         <TableHeader>
