@@ -1,36 +1,72 @@
 'use client'
 
 import { formatStateAtom } from '@/atoms/global'
-import { FormControl } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { formats } from '@/config/dashboard'
+import { cn } from '@/lib/utils'
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
 import { useAtom } from 'jotai'
+import * as React from 'react'
 
 export const FormatToggle = () => {
-  const [format, useFormat] = useAtom(formatStateAtom)
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState('')
+  const [format, setFormat] = useAtom(formatStateAtom)
 
   return (
-    <Select onValueChange={useFormat} defaultValue={format || formats[0]}>
-      <FormControl className="w-fit">
-        <SelectTrigger>
-          <SelectValue placeholder="Select a transaction type" />
-        </SelectTrigger>
-      </FormControl>
-      <SelectContent>
-        {formats.map((type) => {
-          return (
-            <SelectItem className="capitalize" key={type} value={type}>
-              {type}
-            </SelectItem>
-          )
-        })}
-      </SelectContent>
-    </Select>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-fit justify-between"
+        >
+          {value
+            ? formats.find((format) => format.toLowerCase() === value)
+            : format.toUpperCase()}
+          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder="Search currency..." className="h-9" />
+          <CommandEmpty>No format found.</CommandEmpty>
+          <CommandGroup>
+            {formats.map((format) => (
+              <CommandItem
+                key={format}
+                value={format}
+                onSelect={(currentValue) => {
+                  setValue(currentValue === value ? '' : currentValue)
+                  setFormat(currentValue)
+                  setOpen(false)
+                }}
+              >
+                {format}
+                <CheckIcon
+                  className={cn(
+                    'ml-auto h-4 w-4',
+                    value === format ? 'opacity-100' : 'opacity-0',
+                  )}
+                />
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </Command>
+      </PopoverContent>
+    </Popover>
   )
 }
