@@ -11,6 +11,12 @@ export default async function Page() {
   const data = await getTransactions()
   const transactions = data || null
 
+  const NewTransaction = transactions
+    ?.sort((item1, item2) => {
+      return item1.created_at.localeCompare(item2.created_at)
+    })
+    .reverse()
+
   return (
     <Shell className="my-4">
       <PageHeader separated>
@@ -20,7 +26,7 @@ export default async function Page() {
         </PageHeaderDescription>
       </PageHeader>
 
-      <TransactionsTableShell data={transactions?.reverse() ?? []} />
+      <TransactionsTableShell data={NewTransaction ?? []} />
     </Shell>
   )
 }
