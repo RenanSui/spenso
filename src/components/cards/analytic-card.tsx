@@ -17,7 +17,8 @@ export const AnalyticCard = ({
 }) => {
   const formatted = useFormatValue(parseInt(wallet.value.toFixed(2)))
 
-  const percent = ((wallet.length * 100) / total).toFixed(0)
+  const percent = parseInt(((wallet.length * 100) / total).toFixed(0))
+  const percentFormatted = isNaN(percent) ? 100 : percent
 
   return (
     <Card className={cn('', 'hover:bg-neutral-100 hover:dark:bg-neutral-900')}>
@@ -36,7 +37,7 @@ export const AnalyticCard = ({
           {formatted}
         </div>
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
-          {`${percent}%`} of Transactions
+          {`${percentFormatted}%`} of Transactions
         </p>
       </CardContent>
     </Card>
