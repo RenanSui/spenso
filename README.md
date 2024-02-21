@@ -24,13 +24,13 @@ Bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/can
 
 ## Running Locally
 
-1. Clone the repository
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/RenanSui/spenso.git
    ```
 
-2. Install dependencies using pnpm
+2. Install dependencies using pnpm:
 
    ```bash
    pnpm install
@@ -42,7 +42,7 @@ Bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/can
    cp .env.example .env.local
    ```
 
-4. Start the development server
+4. Start the development server:
 
    ```bash
    pnpm run dev
