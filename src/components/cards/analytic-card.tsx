@@ -15,8 +15,7 @@ export const AnalyticCard = ({
     value: number
   }
 }) => {
-  const formatted = useFormatValue(parseInt(wallet.value.toFixed(2)))
-
+  const formatted = useFormatValue(wallet.value)
   const percent = parseInt(((wallet.length * 100) / total).toFixed(0))
   const percentFormatted = isNaN(percent) ? 100 : percent
 

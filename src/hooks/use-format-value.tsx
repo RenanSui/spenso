@@ -7,5 +7,5 @@ export const useFormatValue = (value: number) => {
   return new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: format,
-  }).format(parseInt(value.toFixed(2)))
+  }).format(parseFloat(value.toFixed(2)))
 }
