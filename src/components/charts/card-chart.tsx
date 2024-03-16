@@ -14,14 +14,21 @@ export const CardChartShell = ({
 }: CardChartShellProps) => {
   const sums = data.map((item) => item.amount)
 
-  const revenueFilter = sums.filter((item) => item >= 0)
-  const expensesFilter = sums.filter((item) => item < 0)
+  const revenueFiltered = sums.filter((item) => item >= 0)
+  const expensesFiltered = sums.filter((item) => item < 0)
 
-  const revenueValue = revenueFilter.reduce((acc, curr) => acc + curr, 0)
-  const expensesValue = expensesFilter.reduce((acc, curr) => acc + curr, 0)
+  const revenueValue = revenueFiltered.reduce((acc, curr) => acc + curr, 0)
+  const expensesValue = expensesFiltered.reduce((acc, curr) => acc + curr, 0)
 
-  const revenue = { length: revenueFilter.length, value: revenueValue }
-  const expenses = { length: expensesFilter.length, value: expensesValue }
+  const revenue = {
+    length: revenueFiltered.length,
+    value: parseFloat(revenueValue.toFixed(2)),
+  }
+  const expenses = {
+    length: expensesFiltered.length,
+    value: parseFloat(expensesValue.toFixed(2)),
+  }
+
   const totals = {
     length: revenue.length + expenses.length,
     value: revenue.value + expenses.value,
