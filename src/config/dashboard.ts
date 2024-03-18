@@ -1,7 +1,5 @@
 import { DashboardConfig, TransactionTypes } from '@/types'
 
-export const formats = ['BRL', 'USD', 'EUR']
-
 export const dashboardConfig: DashboardConfig = {
   SidebarNav: [
     {
