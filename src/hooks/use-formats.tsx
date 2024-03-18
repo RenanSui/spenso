@@ -13,7 +13,7 @@ export const useFormats = () => {
 
   useEffect(() => {
     const getRates = async () => {
-      const res = await fetch('http://localhost:3000/api/currencies')
+      const res = await fetch('/api/currencies')
       const data = (await res.json()) as CurrencyRates
       const currencyRates = Object.keys(data.rates)
       setFormats(currencyRates)
