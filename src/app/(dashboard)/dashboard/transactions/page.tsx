@@ -8,8 +8,6 @@ import { Shell } from '@/components/shells/shell'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { getAllRates, sortTransactions } from '@/lib/transactions'
 
-export const revalidate = true
-
 export default async function Page() {
   const transactions = await getTransactions()
   const newTransaction = sortTransactions(transactions)
