@@ -1,3 +1,3 @@
 import { atomWithStorage } from 'jotai/utils'
 
-export const formatStateAtom = atomWithStorage<string>('format', 'BRL')
+export const currencyStateAtom = atomWithStorage<string>('currency', 'BRL')

@@ -1,5 +1,6 @@
-import { useFormatValue } from '@/hooks/use-format-value'
-import { cn } from '@/lib/utils'
+import { currencyStateAtom } from '@/atoms/global'
+import { cn, formatValue } from '@/lib/utils'
+import { useAtom } from 'jotai'
 import { HTMLAttributes } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 
@@ -15,7 +16,9 @@ export const AnalyticCard = ({
     value: number
   }
 }) => {
-  const formatted = useFormatValue(wallet.value)
+  const [currency] = useAtom(currencyStateAtom)
+
+  const formatted = formatValue(wallet.value, currency)
   const percent = parseInt(((wallet.length * 100) / total).toFixed(0))
   const percentFormatted = isNaN(percent) ? 100 : percent
 

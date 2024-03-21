@@ -1,9 +1,9 @@
 'use server'
 
 import { getUserId } from '@/actions/server/user'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth'
 import type { Database } from '../database.types'
 
 export const createServerClient = async () => {

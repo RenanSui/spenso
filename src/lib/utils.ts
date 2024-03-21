@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+type RemoveDuplicate = <T>(value: T[]) => T[]
+
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
@@ -18,7 +20,7 @@ export const toSentenceCase = (str: string) => {
     .replace(/^./, (str) => str.toUpperCase())
 }
 
-export const removeArrayDuplicates = (array: unknown[]) => {
+export const removeArrayDuplicates: RemoveDuplicate = (array) => {
   return array.filter((value, index) => array.indexOf(value) === index)
 }
 
@@ -34,9 +36,9 @@ export const positiveOrNegative = (type: string, amount: number) => {
 
 export const toPositive = (number: number) => number * -1
 
-export const formatValue = (value: number, format: string) => {
+export const formatValue = (value: number, currency: string) => {
   return new Intl.NumberFormat(undefined, {
     style: 'currency',
-    currency: format,
+    currency,
   }).format(parseFloat(value.toFixed(2)))
 }

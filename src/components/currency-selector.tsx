@@ -1,6 +1,5 @@
 'use client'
 
-import { formatStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -14,19 +13,24 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-// import { formats } from '@/config/dashboard'
-import { useFormats } from '@/hooks/use-formats'
+
+import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
-import { useAtom } from 'jotai'
 import * as React from 'react'
 import { ScrollArea } from './ui/scroll-area'
 
-export const FormatToggle = () => {
+type CurrencySelectorProps = {
+  value: string
+  onChange: (currency: string) => void
+}
+
+export const CurrencySelector = ({
+  value,
+  onChange,
+}: CurrencySelectorProps) => {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState('')
-  const [format, setFormat] = useAtom(formatStateAtom)
-  const formats = useFormats()
+  const currencies = useCurrencies()
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
@@ -37,33 +41,30 @@ export const FormatToggle = () => {
           aria-expanded={open}
           className="w-fit justify-between"
         >
-          {value
-            ? formats.find((format) => format.toLowerCase() === value)
-            : format.toUpperCase()}
+          {value.toUpperCase()}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Search currency..." className="h-9" />
-          <CommandEmpty>No format found.</CommandEmpty>
+          <CommandEmpty>No currencies found.</CommandEmpty>
           <CommandGroup>
             <ScrollArea className="h-32">
-              {formats.map((format) => (
+              {currencies.map((currency) => (
                 <CommandItem
-                  key={format}
-                  value={format}
+                  key={currency}
+                  value={currency}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue)
-                    setFormat(currentValue)
+                    onChange(currentValue.toUpperCase())
                     setOpen(false)
                   }}
                 >
-                  {format}
+                  {currency}
                   <CheckIcon
                     className={cn(
                       'ml-auto h-4 w-4',
-                      value === format ? 'opacity-100' : 'opacity-0',
+                      value === currency ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                 </CommandItem>

@@ -1,7 +1,8 @@
 'use server'
 
 import { createPublicServerClient, getSupabaseClient } from '@/lib/server'
-import { positiveOrNegative } from '@/lib/utils'
+import { sortTransactions } from '@/lib/transactions'
+import { positiveOrNegative, removeArrayDuplicates } from '@/lib/utils'
 import {
   TransactionCategories,
   TransactionInsert,
@@ -10,6 +11,14 @@ import {
   TransactionYears,
 } from '@/types'
 import { revalidatePath } from 'next/cache'
+
+// const revalidateAllTransactions = async () => {
+//   revalidateTag('get-transactions')
+//   revalidateTag('get-transactions-categories')
+//   revalidateTag('get-transactions-types')
+//   revalidateTag('get-transactions-years')
+//   revalidateTag('current-transaction-rates')
+// }
 
 const getTransactions = async () => {
   const { supabase } = await getSupabaseClient()
@@ -31,7 +40,7 @@ const addTransaction = async (formData: TransactionInsert) => {
 
   await supabase.from('transactions').insert({ ...formDataWithId })
 
-  revalidatePath('/dashboard/transactions')
+  revalidatePath('/dashboard/transactions/', 'layout')
 }
 
 const updateTransaction = async (formData: TransactionUpdate) => {
@@ -104,10 +113,23 @@ const getTransactionsYears = async () => {
   return years
 }
 
+const getTransactionCurrencies = async () => {
+  const transactions = await getTransactions()
+
+  const newTransaction = sortTransactions(transactions)
+
+  const allCurrencies = newTransaction?.map(({ currency }) => currency) ?? []
+
+  const newCurrencies = removeArrayDuplicates(allCurrencies)
+
+  return newCurrencies
+}
+
 export {
   addTransaction,
   deleteSelectedTransactions,
   deleteTransaction,
+  getTransactionCurrencies,
   getTransactions,
   getTransactionsCategories,
   getTransactionsTypes,

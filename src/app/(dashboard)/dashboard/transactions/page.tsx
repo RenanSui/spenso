@@ -6,16 +6,14 @@ import {
 } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
+import { getAllRates, sortTransactions } from '@/lib/transactions'
+
+export const revalidate = true
 
 export default async function Page() {
-  const data = await getTransactions()
-  const transactions = data || null
-
-  const NewTransaction = transactions
-    ?.sort((item1, item2) => {
-      return item1.created_at.localeCompare(item2.created_at)
-    })
-    .reverse()
+  const transactions = await getTransactions()
+  const newTransaction = sortTransactions(transactions)
+  const allRates = await getAllRates(newTransaction)
 
   return (
     <Shell className="my-4">
@@ -26,7 +24,7 @@ export default async function Page() {
         </PageHeaderDescription>
       </PageHeader>
 
-      <TransactionsTableShell data={NewTransaction ?? []} />
+      <TransactionsTableShell data={newTransaction} rates={allRates} />
     </Shell>
   )
 }
