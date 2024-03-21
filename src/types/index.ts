@@ -60,3 +60,12 @@ export interface NavItemWithOptionalChildren extends NavItem {
 }
 
 export type MainNavItem = NavItemWithOptionalChildren
+
+export type Rates = { [key: string]: number }
+
+export type CurrencyRates = {
+  timestamp: number
+  date: string
+  base: string
+  rates: Rates
+}

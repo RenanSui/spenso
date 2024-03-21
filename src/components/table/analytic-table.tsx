@@ -1,11 +1,10 @@
 'use client'
 
-import { formatStateAtom } from '@/atoms/global'
+import { currencyStateAtom } from '@/atoms/global'
 import { cn, formatValue } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { useAtom } from 'jotai'
 import { HTMLAttributes } from 'react'
-import { FormatToggle } from '../format-toggle'
 import {
   Table,
   TableBody,
@@ -15,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table'
+import { CurrencyToggle } from '../currency-toggle'
 
 type AnalyticTableProps = {
   transactions: Transaction[]
@@ -24,7 +24,7 @@ export const AnalyticTable = ({
   className,
   transactions,
 }: AnalyticTableProps) => {
-  const [format] = useAtom(formatStateAtom)
+  const [currency] = useAtom(currencyStateAtom)
 
   const data = transactions
     .map((item) => ({
@@ -45,7 +45,7 @@ export const AnalyticTable = ({
     >
       <div className="flex items-center justify-between p-1">
         <h1 className="p-1 text-lg font-medium">Recent Transactions</h1>
-        <FormatToggle />
+        <CurrencyToggle />
       </div>
       <Table className="">
         <TableCaption>A list of your recent transactions.</TableCaption>
@@ -60,7 +60,7 @@ export const AnalyticTable = ({
           {data.map((transaction) => {
             const { amount, id, product, type } = transaction
 
-            const formatted = formatValue(amount, format)
+            const formatted = formatValue(amount, currency)
 
             return (
               <TableRow key={id}>

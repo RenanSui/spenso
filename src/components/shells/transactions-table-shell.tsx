@@ -1,6 +1,6 @@
 'use client'
 
-import { formatStateAtom } from '@/atoms/global'
+import { currencyStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { transactionTypeses } from '@/config/dashboard'
 import { cn, formatValue } from '@/lib/utils'
-import { Transaction } from '@/types'
+import { CurrencyRates, Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { useAtom } from 'jotai'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
@@ -24,12 +24,14 @@ import { UpdateTransaction } from '../transactions/update-transaction'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
+  rates: CurrencyRates[]
 }
 
 export function TransactionsTableShell({
   data: transactions,
+  rates,
 }: TransactionsTableShellProps) {
-  const [format] = useAtom(formatStateAtom)
+  const [currencyState] = useAtom(currencyStateAtom)
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
@@ -87,10 +89,20 @@ export function TransactionsTableShell({
         ),
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue('amount'))
-
+          const currency = String(row.getValue('currency'))
           const type = row.getValue('type') as 'expense' | 'income'
 
-          const formatted = formatValue(amount, format)
+          const transactionRates = rates.filter((item) => {
+            return item.base === currency
+          })[0]
+
+          const currencyRate = transactionRates?.rates
+            ? transactionRates.rates[currencyState]
+            : 1
+
+          const newAmount = amount * parseFloat(currencyRate.toFixed(2))
+
+          const formatted = formatValue(newAmount, currency)
 
           return (
             <div
@@ -138,11 +150,22 @@ export function TransactionsTableShell({
         },
       },
       {
+        accessorKey: 'currency',
+        header: ({ column }) => (
+          <SortableHeader column={column}>Currency</SortableHeader>
+        ),
+        cell: ({ row }) => {
+          const currency = String(row.getValue('currency'))
+
+          return <div>{currency}</div>
+        },
+      },
+      {
         id: 'actions',
         cell: ({ row }) => <TableDropdown transaction={row.original} />,
       },
     ],
-    [format],
+    [currencyState, rates],
   )
 
   return (

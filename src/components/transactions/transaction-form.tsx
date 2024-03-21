@@ -36,13 +36,14 @@ import { format } from 'date-fns'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { FormatToggle } from '../format-toggle'
+import { CurrencySelector } from '../currency-selector'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
   // date: z.date().transform((date) => date.toString()),
   date: z.date(),
   amount: z.coerce.number().transform((number) => Number(number.toFixed(2))),
+  currency: z.string().min(3),
   type: z.string().min(1),
   category: z.string().min(1),
 })
@@ -64,6 +65,7 @@ export const TransactionForm = ({
       product: transaction?.product ?? '',
       date: transaction?.date ? new Date(transaction?.date) : new Date(),
       amount: transaction?.amount ?? 0,
+      currency: transaction?.currency ?? 'BRL',
       type: transaction?.type ?? transactionType[0],
       category: transaction?.category ?? transactionCategory[0],
     },
@@ -72,8 +74,6 @@ export const TransactionForm = ({
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
     values: z.infer<typeof formSchema>,
   ) => {
-    console.log(values)
-
     const { date, ...valuesObj } = values
     const newValues = { date: new Date(date).toString(), ...valuesObj }
 
@@ -94,6 +94,7 @@ export const TransactionForm = ({
       })
     }
 
+    // await revalidateAllTransactions()
     setOpen?.(false)
   }
 
@@ -133,7 +134,10 @@ export const TransactionForm = ({
           name="product"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Product*</FormLabel>
+              <FormLabel>
+                Product
+                <Required />
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Ex: Uni fan SL120" {...field} />
               </FormControl>
@@ -147,7 +151,10 @@ export const TransactionForm = ({
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Transaction Date*</FormLabel>
+              <FormLabel>
+                Transaction Date
+                <Required />
+              </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -161,7 +168,10 @@ export const TransactionForm = ({
                       {field.value ? (
                         format(field.value, 'PPP')
                       ) : (
-                        <span>Pick a date*</span>
+                        <span>
+                          Pick a date
+                          <Required />
+                        </span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -184,35 +194,67 @@ export const TransactionForm = ({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="amount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Amount*</FormLabel>
-              <FormControl>
-                <div className="flex items-center gap-2">
-                  <Input
-                    className=""
-                    type="number"
-                    step=".01"
-                    placeholder=""
-                    {...field}
-                  />
-                  <FormatToggle />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="amount"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>
+                  Amount
+                  <Required />
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      className=""
+                      type="number"
+                      step=".01"
+                      placeholder=""
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="currency"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  currency
+                  <Required />
+                </FormLabel>
+                <FormControl>
+                  <div>
+                    <Input className="hidden" placeholder="" {...field} />
+                    <CurrencySelector
+                      value={field.value}
+                      onChange={(currency) => {
+                        form.setValue('currency', currency)
+                      }}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Transaction Type*</FormLabel>
+              <FormLabel>
+                Transaction Type
+                <Required />
+              </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -244,7 +286,10 @@ export const TransactionForm = ({
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category*</FormLabel>
+              <FormLabel>
+                Category
+                <Required />
+              </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -295,3 +340,5 @@ export const TransactionForm = ({
     </Form>
   )
 }
+
+const Required = () => <span className="text-red-500"> *</span>
