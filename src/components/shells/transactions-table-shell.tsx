@@ -32,7 +32,6 @@ export function TransactionsTableShell({
   rates,
 }: TransactionsTableShellProps) {
   const [currencyState] = useAtom(currencyStateAtom)
-  const [newTransactions] = useState(transactions)
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
@@ -171,7 +170,7 @@ export function TransactionsTableShell({
 
   return (
     <DataTable
-      data={newTransactions}
+      data={transactions}
       columns={columns}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
       filterableColumns={[

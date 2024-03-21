@@ -17,23 +17,26 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
+import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ScrollArea } from './ui/scroll-area'
+import { Skeleton } from './ui/skeleton'
 
 export const CurrencyToggle = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const [currency, setCurrency] = useAtom(currencyStateAtom)
-  const [currencies, setCurrencies] = useState<string[]>([])
 
-  useEffect(() => {
-    const getCurrencies = async () => {
-      const transactionCurrencies = await getTransactionCurrencies()
-      setCurrencies(transactionCurrencies)
-    }
-    getCurrencies()
-  }, [currency])
+  const {
+    isFetching,
+    data: currencies,
+    refetch,
+  } = useQuery({
+    queryKey: ['transactionsCurrencies'],
+    queryFn: async () => await getTransactionCurrencies(),
+    initialData: [],
+  })
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
@@ -43,9 +46,12 @@ export const CurrencyToggle = () => {
           role="combobox"
           aria-expanded={open}
           className="w-fit justify-between"
+          onClick={() => refetch()}
         >
           {value
-            ? currencies.find((currency) => currency.toLowerCase() === value)
+            ? currencies.find(
+                (currency) => currency.toLowerCase() === value.toLowerCase(),
+              )
             : currency.toUpperCase()}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -56,25 +62,42 @@ export const CurrencyToggle = () => {
           <CommandEmpty>No currencies found.</CommandEmpty>
           <CommandGroup>
             <ScrollArea className="h-32">
-              {currencies.map((currency) => (
-                <CommandItem
-                  key={currency}
-                  value={currency}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue)
-                    setCurrency(currentValue.toUpperCase())
-                    setOpen(false)
-                  }}
-                >
-                  {currency}
-                  <CheckIcon
-                    className={cn(
-                      'ml-auto h-4 w-4',
-                      value === currency ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                </CommandItem>
-              ))}
+              {isFetching ? (
+                <div className="flex flex-col gap-1">
+                  {['', '', '', '', ''].map((_a, index) => {
+                    return (
+                      <Skeleton
+                        className="h-6 w-full rounded-sm bg-red-500"
+                        key={index}
+                      />
+                    )
+                  })}
+                </div>
+              ) : (
+                currencies.map((currency) => (
+                  <CommandItem
+                    key={currency}
+                    value={currency}
+                    onSelect={(currentValue) => {
+                      setValue(
+                        currentValue === value
+                          ? ''
+                          : currentValue.toUpperCase(),
+                      )
+                      setCurrency(currentValue.toUpperCase())
+                      setOpen(false)
+                    }}
+                  >
+                    {currency}
+                    <CheckIcon
+                      className={cn(
+                        'ml-auto h-4 w-4',
+                        value === currency ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                  </CommandItem>
+                ))
+              )}
             </ScrollArea>
           </CommandGroup>
         </Command>
