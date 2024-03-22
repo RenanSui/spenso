@@ -224,8 +224,7 @@ export type Tables<
     : never
   : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
         PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+    ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R

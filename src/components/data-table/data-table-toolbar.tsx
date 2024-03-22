@@ -33,14 +33,10 @@ export function DataTableToolbar<TData>({
                   key={String(column.id)}
                   placeholder={`Filter ${column.title}...`}
                   value={
-                    (table
-                      .getColumn(String(column.id))
-                      ?.getFilterValue() as string) ?? ''
+                    (table.getColumn(String(column.id))?.getFilterValue() as string) ?? ''
                   }
                   onChange={(event) =>
-                    table
-                      .getColumn(String(column.id))
-                      ?.setFilterValue(event.target.value)
+                    table.getColumn(String(column.id))?.setFilterValue(event.target.value)
                   }
                   className="h-8 w-[150px] lg:w-[250px]"
                 />

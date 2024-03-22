@@ -17,9 +17,7 @@ export default async function Page() {
     <Shell className="my-4">
       <PageHeader separated>
         <PageHeaderHeading size="sm">Transactions</PageHeaderHeading>
-        <PageHeaderDescription size="sm">
-          Manage your transactions
-        </PageHeaderDescription>
+        <PageHeaderDescription size="sm">Manage your transactions</PageHeaderDescription>
       </PageHeader>
 
       <TransactionsTableShell data={newTransaction} rates={allRates} />

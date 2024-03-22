@@ -1,13 +1,7 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from '../ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '../ui/card'
 
 interface ErrorCardProps extends React.ComponentPropsWithoutRef<typeof Card> {
   title: string
@@ -35,9 +29,7 @@ export const ErrorCard = ({
     >
       <CardContent className="flex min-h-[176px] flex-col items-center justify-center space-y-2.5 text-center">
         <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription className="line-clamp-4">
-          {description}
-        </CardDescription>
+        <CardDescription className="line-clamp-4">{description}</CardDescription>
       </CardContent>
       {retryLink ? (
         <CardFooter>

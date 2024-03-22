@@ -26,10 +26,7 @@ export const UserDropdown = ({ user }: { user: SessionUser }) => {
     <DropdownMenu>
       <DropdownMenuTrigger aria-label="user-menu-trigger">
         <Avatar>
-          <AvatarImage
-            className="h-8 w-8 rounded-full"
-            src={user.image || ''}
-          />
+          <AvatarImage className="h-8 w-8 rounded-full" src={user.image || ''} />
           <AvatarFallback>
             <div className="h-8 w-8 rounded-full bg-neutral-300 dark:bg-neutral-800" />
           </AvatarFallback>
@@ -39,9 +36,7 @@ export const UserDropdown = ({ user }: { user: SessionUser }) => {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user.name}</p>
-            <p className="text-xs leading-none text-neutral-400">
-              {user.email}
-            </p>
+            <p className="text-xs leading-none text-neutral-400">{user.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

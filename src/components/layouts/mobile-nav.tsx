@@ -31,9 +31,7 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
       title: 'My Account',
       items: sidebarNavItems,
     }
-    const myAccountIndex = items.findIndex(
-      (item) => item.title === 'My Account',
-    )
+    const myAccountIndex = items.findIndex((item) => item.title === 'My Account')
     if (myAccountIndex !== -1) {
       items.splice(myAccountIndex, 1)
     }
@@ -55,11 +53,7 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
 
       <SheetContent side="left" className="pl-1 pr-0">
         <div className="px-7">
-          <Link
-            href="/"
-            className="flex items-center"
-            onClick={() => setIsOpen(false)}
-          >
+          <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
             <span className="font-bold">{siteConfig.name}</span>
             <span className="sr-only">Home</span>
           </Link>
@@ -118,13 +112,7 @@ interface MobileLinkProps extends React.PropsWithChildren {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function MobileLink({
-  children,
-  href,
-  disabled,
-  segment,
-  setIsOpen,
-}: MobileLinkProps) {
+function MobileLink({ children, href, disabled, segment, setIsOpen }: MobileLinkProps) {
   return (
     <Link
       href={href}

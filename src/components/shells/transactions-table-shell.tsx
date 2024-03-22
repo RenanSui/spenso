@@ -40,9 +40,7 @@ export function TransactionsTableShell({
         header: ({ table }) => (
           <Checkbox
             checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value: unknown) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
+            onCheckedChange={(value: unknown) => table.toggleAllPageRowsSelected(!!value)}
             aria-label="Select all"
           />
         ),
@@ -58,17 +56,12 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'type',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Type</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Type</SortableHeader>,
         cell: ({ row }) => {
           const type = String(row.getValue('type'))
           return (
             <span
-              className={cn(
-                'capitalize',
-                type === 'expense' ? 'text-red-400' : null,
-              )}
+              className={cn('capitalize', type === 'expense' ? 'text-red-400' : null)}
             >
               {type}
             </span>
@@ -84,33 +77,25 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'amount',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Amount</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Amount</SortableHeader>,
         cell: ({ row }) => {
-          const amount = parseFloat(row.getValue('amount'))
-          const currency = String(row.getValue('currency'))
           const type = row.getValue('type') as 'expense' | 'income'
 
-          const transactionRates = rates.filter((item) => {
-            return item.base === currency
-          })[0]
+          const returnFormatted = () => {
+            const amount = parseFloat(row.getValue('amount'))
+            const currency = String(row.getValue('currency'))
 
-          const currencyRate = transactionRates?.rates
-            ? transactionRates.rates[currencyState]
-            : 1
+            const transactionRates = rates.find((item) => item.base === currency)
+            const currencyRate = transactionRates?.rates[currencyState] ?? 1
+            const newAmount = parseFloat((amount * currencyRate).toFixed(2))
 
-          const newAmount = amount * parseFloat(currencyRate.toFixed(2))
+            return formatValue(newAmount, currency)
+          }
 
-          const formatted = formatValue(newAmount, currency)
+          const formatted = returnFormatted()
 
           return (
-            <div
-              className={cn(
-                'font-medium',
-                type === 'expense' ? 'text-red-400' : null,
-              )}
-            >
+            <div className={cn('font-medium', type === 'expense' ? 'text-red-400' : '')}>
               {formatted}
             </div>
           )
@@ -118,9 +103,7 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'category',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Category</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Category</SortableHeader>,
         cell: ({ row }) => {
           const category = String(row.getValue('category'))
           return <span className="capitalize">{category}</span>
@@ -128,9 +111,7 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'date',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Date</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Date</SortableHeader>,
         sortingFn: (itemA, itemB): number => {
           const dateA = new Date(itemA.original.date).getTime()
           const dateB = new Date(itemB.original.date).getTime()
@@ -151,9 +132,7 @@ export function TransactionsTableShell({
       },
       {
         accessorKey: 'currency',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Currency</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Currency</SortableHeader>,
         cell: ({ row }) => {
           const currency = String(row.getValue('currency'))
 
@@ -173,9 +152,7 @@ export function TransactionsTableShell({
       data={transactions}
       columns={columns}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
-      filterableColumns={[
-        { id: 'type', title: 'Type', options: transactionTypeses },
-      ]}
+      filterableColumns={[{ id: 'type', title: 'Type', options: transactionTypeses }]}
     />
   )
 }
@@ -214,9 +191,7 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setUpdate(true)}>
-            Edit
-          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setUpdate(true)}>Edit</DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDuplicate(true)}>
             Duplicate
           </DropdownMenuItem>

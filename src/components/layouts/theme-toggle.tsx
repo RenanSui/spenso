@@ -35,10 +35,7 @@ export const ThemeToggle = () => {
           <MoonIcon className="mr-2 h-4 w-4" />
           <span>Dark</span>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          role="system-toggle"
-          onClick={() => setTheme('system')}
-        >
+        <DropdownMenuItem role="system-toggle" onClick={() => setTheme('system')}>
           <LaptopIcon className="mr-2 h-4 w-4" />
           <span>System</span>
         </DropdownMenuItem>

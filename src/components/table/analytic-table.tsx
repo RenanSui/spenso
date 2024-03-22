@@ -20,10 +20,7 @@ type AnalyticTableProps = {
   transactions: Transaction[]
 } & HTMLAttributes<HTMLDivElement>
 
-export const AnalyticTable = ({
-  className,
-  transactions,
-}: AnalyticTableProps) => {
+export const AnalyticTable = ({ className, transactions }: AnalyticTableProps) => {
   const [currency] = useAtom(currencyStateAtom)
 
   const data = transactions
@@ -74,10 +71,7 @@ export const AnalyticTable = ({
                 </TableCell>
                 <TableCell className="text-xs">{product}</TableCell>
                 <TableCell
-                  className={cn(
-                    'text-xs',
-                    type === 'expense' ? 'text-red-400' : null,
-                  )}
+                  className={cn('text-xs', type === 'expense' ? 'text-red-400' : null)}
                 >
                   {formatted}
                 </TableCell>

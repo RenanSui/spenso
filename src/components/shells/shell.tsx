@@ -20,15 +20,8 @@ interface ShellProps
   as?: React.ElementType
 }
 
-const Shell = ({
-  className,
-  as: Shell = 'section',
-  variant,
-  ...props
-}: ShellProps) => {
-  return (
-    <Shell className={cn(shellVariants({ variant }), className)} {...props} />
-  )
+const Shell = ({ className, as: Shell = 'section', variant, ...props }: ShellProps) => {
+  return <Shell className={cn(shellVariants({ variant }), className)} {...props} />
 }
 
 export { Shell, shellVariants }
