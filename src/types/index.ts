@@ -1,5 +1,5 @@
 import { Icons } from '@/components/ui/icons'
-import { Database } from '@/lib/database.types'
+import { Database } from './database.types'
 
 export type TransactionTable = Database['next_auth']['Tables']['transactions']
 

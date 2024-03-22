@@ -10,7 +10,7 @@
     "lint": "next lint --fix",
     "test": "vitest ",
     "test:coverage": "vitest run --coverage",
-    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/lib/database.types.ts",
+    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
