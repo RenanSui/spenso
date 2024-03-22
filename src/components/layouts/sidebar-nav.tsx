@@ -23,10 +23,7 @@ export const SidebarNav = ({ className, items, ...props }: SidebarNavProps) => {
 
         return item.href ? (
           <Link
-            className={cn(
-              '',
-              item.disabled && 'pointer-events-none opacity-60',
-            )}
+            className={cn('', item.disabled && 'pointer-events-none opacity-60')}
             aria-label={item.title}
             key={index}
             href={item.href}

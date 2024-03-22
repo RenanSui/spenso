@@ -14,9 +14,7 @@ export default async function Page() {
     <Shell className="my-4">
       <PageHeader separated>
         <PageHeaderHeading size="sm">Analytics</PageHeaderHeading>
-        <PageHeaderDescription size="sm">
-          Analyse your transactions
-        </PageHeaderDescription>
+        <PageHeaderDescription size="sm">Analyse your transactions</PageHeaderDescription>
       </PageHeader>
 
       <TransactionAnalyticsShell transactions={transactions} />

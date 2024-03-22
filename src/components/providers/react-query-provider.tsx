@@ -6,7 +6,5 @@ const queryClient = new QueryClient()
 export const ReactQueryProvider = ({
   children,
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  )
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 }

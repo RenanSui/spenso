@@ -12,9 +12,7 @@ import { AnalyticTable } from '../table/analytic-table'
 
 type AnalyticsProps = { transactions: Transaction[] | null }
 
-export const TransactionAnalyticsShell = async ({
-  transactions,
-}: AnalyticsProps) => {
+export const TransactionAnalyticsShell = async ({ transactions }: AnalyticsProps) => {
   const categories = await getTransactionsCategories()
   const types = await getTransactionsTypes()
   const years = await getTransactionsYears()

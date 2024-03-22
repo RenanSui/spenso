@@ -2,11 +2,7 @@ import { getUser } from '@/actions/server/user'
 import { SiteFooter } from '@/components/layouts/site-footer'
 import { SiteHeader } from '@/components/layouts/site-header'
 
-export default async function LobbyLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function LobbyLayout({ children }: { children: React.ReactNode }) {
   const user = await getUser()
 
   return (

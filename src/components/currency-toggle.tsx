@@ -10,11 +10,7 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
 import { useQuery } from '@tanstack/react-query'
@@ -79,11 +75,7 @@ export const CurrencyToggle = () => {
                     key={currency}
                     value={currency}
                     onSelect={(currentValue) => {
-                      setValue(
-                        currentValue === value
-                          ? ''
-                          : currentValue.toUpperCase(),
-                      )
+                      setValue(currentValue === value ? '' : currentValue.toUpperCase())
                       setCurrency(currentValue.toUpperCase())
                       setOpen(false)
                     }}

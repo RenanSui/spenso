@@ -8,11 +8,7 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
@@ -25,10 +21,7 @@ type CurrencySelectorProps = {
   onChange: (currency: string) => void
 }
 
-export const CurrencySelector = ({
-  value,
-  onChange,
-}: CurrencySelectorProps) => {
+export const CurrencySelector = ({ value, onChange }: CurrencySelectorProps) => {
   const [open, setOpen] = React.useState(false)
   const currencies = useCurrencies()
 

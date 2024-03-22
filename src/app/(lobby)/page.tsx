@@ -16,6 +16,7 @@ export default async function Page() {
           src={siteConfig.unsplash.lobby.imageUrl}
           width={1920}
           height={1080}
+          priority={true}
           alt={'photo of city buildings during daytime'}
         />
 
@@ -52,18 +53,15 @@ export default async function Page() {
           Simple way to manage personal finances
         </h1>
         <span className="max-w-[42rem] leading-normal text-neutral-600 [text-wrap:balance] dark:text-neutral-400 sm:text-xl sm:leading-8">
-          Take charge of your finances with Spenso. Our free budget tracker
-          helps you understand your spending for a brighter financial future.
-          Find Happiness In Budgeting!
+          Take charge of your finances with Spenso. Our free budget tracker helps you
+          understand your spending for a brighter financial future. Find Happiness In
+          Budgeting!
         </span>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link className={buttonVariants()} href="/dashboard/analytics">
             Try now
           </Link>
-          <Link
-            className={buttonVariants({ variant: 'outline' })}
-            href="/signin"
-          >
+          <Link className={buttonVariants({ variant: 'outline' })} href="/signin">
             Sign in
           </Link>
         </div>

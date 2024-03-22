@@ -19,10 +19,7 @@ type CategoriesChartProps = {
   categories: { category: string; sum: number }[]
 }
 
-export const CategoriesChart = ({
-  categories,
-  className,
-}: CategoriesChartProps) => {
+export const CategoriesChart = ({ categories, className }: CategoriesChartProps) => {
   const sortedCategories = categories.sort(
     (item1, item2) => toPositive(item1.sum) - toPositive(item2.sum),
   )

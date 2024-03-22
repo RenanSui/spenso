@@ -10,11 +10,7 @@ import {
   TransactionUpdate,
   TransactionYears,
 } from '@/types'
-import {
-  unstable_cache as cache,
-  revalidatePath,
-  revalidateTag,
-} from 'next/cache'
+import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 
 const revalidateAllTransactions = async () => {
   revalidateTag('get-transactions')

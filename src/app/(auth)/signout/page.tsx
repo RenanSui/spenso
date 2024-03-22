@@ -64,10 +64,7 @@ export default async function Page() {
           <div className="flex justify-center space-x-2">
             <Signout className="w-full">Log out</Signout>
             <Link
-              className={cn(
-                buttonVariants({ size: 'sm', variant: 'outline' }),
-                'w-full',
-              )}
+              className={cn(buttonVariants({ size: 'sm', variant: 'outline' }), 'w-full')}
               href={'/'}
             >
               Go back

@@ -43,11 +43,7 @@ export function DataTablePagination<TData>({
         ) : null}
       </div>
 
-      <DeleteSelectedTransaction
-        open={openDelete}
-        setOpen={setDelete}
-        rows={rows}
-      />
+      <DeleteSelectedTransaction open={openDelete} setOpen={setDelete} rows={rows} />
 
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
@@ -72,8 +68,7 @@ export function DataTablePagination<TData>({
         </div>
 
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{' '}
-          {table.getPageCount()}
+          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
 
         <div className="flex items-center space-x-2">

@@ -1,9 +1,6 @@
 'use client'
 
-import {
-  addTransaction,
-  updateTransaction,
-} from '@/actions/server/transactions'
+import { addTransaction, updateTransaction } from '@/actions/server/transactions'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -15,11 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -28,6 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
+import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -40,7 +34,6 @@ import { CurrencySelector } from '../currency-selector'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
-  // date: z.date().transform((date) => date.toString()),
   date: z.date(),
   amount: z.coerce.number().transform((number) => Number(number.toFixed(2))),
   currency: z.string().min(3),
@@ -58,8 +51,9 @@ export const TransactionForm = ({
   transaction?: Transaction
 }) => {
   const [productsApi, setProductsApi] = useState([''])
+  const currencies = useCurrencies()
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       product: transaction?.product ?? '',
@@ -94,24 +88,22 @@ export const TransactionForm = ({
       })
     }
 
-    // await revalidateAllTransactions()
     setOpen?.(false)
   }
 
   const setRandomForm = async () => {
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
     const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12)
-    const amountRandom = Number((Math.random() * 10000).toFixed(2))
-    const typeRandom =
-      transactionType[Math.floor(Math.random() * transactionType.length)]
+    const amountRandom = Number((Math.random() * 100000).toFixed(2))
+    const currencyRandom = currencies[Math.random() * currencies.length]
+    const typeRandom = transactionType[Math.floor(Math.random() * transactionType.length)]
     const categoryRandom =
-      transactionCategory[
-        Math.floor(Math.random() * transactionCategory.length)
-      ]
+      transactionCategory[Math.floor(Math.random() * transactionCategory.length)]
 
     form.setValue('product', randomProduct)
     form.setValue('date', dateRandom)
     form.setValue('amount', amountRandom)
+    form.setValue('currency', currencyRandom)
     form.setValue('type', typeRandom)
     form.setValue('category', categoryRandom)
   }
@@ -264,11 +256,7 @@ export const TransactionForm = ({
                 <SelectContent>
                   {transactionType.map((type) => {
                     return (
-                      <SelectItem
-                        className="capitalize"
-                        key={type}
-                        value={type}
-                      >
+                      <SelectItem className="capitalize" key={type} value={type}>
                         {type}
                       </SelectItem>
                     )
@@ -299,11 +287,7 @@ export const TransactionForm = ({
                 <SelectContent>
                   {transactionCategory.map((category) => {
                     return (
-                      <SelectItem
-                        className="capitalize"
-                        key={category}
-                        value={category}
-                      >
+                      <SelectItem className="capitalize" key={category} value={category}>
                         {category}
                       </SelectItem>
                     )
