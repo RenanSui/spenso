@@ -104,6 +104,7 @@ export type Database = {
           created_at: string
           currency: string
           date: string
+          group_id: string | null
           id: string
           product: string
           type: string
@@ -116,6 +117,7 @@ export type Database = {
           created_at?: string
           currency?: string
           date: string
+          group_id?: string | null
           id?: string
           product: string
           type: string
@@ -128,6 +130,7 @@ export type Database = {
           created_at?: string
           currency?: string
           date?: string
+          group_id?: string | null
           id?: string
           product?: string
           type?: string
@@ -136,7 +139,43 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: 'next_auth_transactions_group_id_fkey'
+            columns: ['group_id']
+            isOneToOne: false
+            referencedRelation: 'transactions_groups'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'transactions_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      transactions_groups: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'next_auth_transaction_groups_user_id_fkey'
             columns: ['user_id']
             isOneToOne: false
             referencedRelation: 'users'

@@ -9,9 +9,10 @@ import { DataTableViewOptions } from './data-table-view-options'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
-  AddNewItem?: () => JSX.Element
+  AddNewItem?: ({ groupId }: { groupId: string }) => JSX.Element
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
+  groupId: string
 }
 
 export function DataTableToolbar<TData>({
@@ -19,6 +20,7 @@ export function DataTableToolbar<TData>({
   AddNewItem,
   filterableColumns = [],
   searchableColumns = [],
+  groupId,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -67,7 +69,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center space-x-2">
-        {AddNewItem ? <AddNewItem /> : null}
+        {AddNewItem ? <AddNewItem groupId={groupId} /> : null}
         <CurrencyToggle />
         <DataTableViewOptions table={table} />
       </div>

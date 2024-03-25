@@ -13,7 +13,7 @@ import { TransactionForm } from './transactions/transaction-form'
 import { buttonVariants } from './ui/button'
 import { Separator } from './ui/separator'
 
-export const NewTransaction = () => {
+export const NewTransaction = ({ groupId }: { groupId: string }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -26,7 +26,7 @@ export const NewTransaction = () => {
           <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
         <Separator />
-        <TransactionForm formAction="add" setOpen={setOpen} />
+        <TransactionForm groupId={groupId} formAction="add" setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   )

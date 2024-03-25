@@ -23,7 +23,7 @@ type CurrencySelectorProps = {
 
 export const CurrencySelector = ({ value, onChange }: CurrencySelectorProps) => {
   const [open, setOpen] = React.useState(false)
-  const currencies = useCurrencies()
+  const { data: currencies } = useCurrencies()
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal>

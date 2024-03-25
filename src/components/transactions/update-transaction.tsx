@@ -12,21 +12,29 @@ import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import { TransactionForm } from './transaction-form'
 
 interface UpdateTransactionProps extends HTMLAttributes<HTMLDivElement> {
-  transaction: Transaction
   open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+  transaction: Transaction
   isDuplicateItem?: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  setIsDisable?: Dispatch<SetStateAction<boolean>>
 }
 
 export const UpdateTransaction = ({
-  children,
-  transaction,
   open,
   setOpen,
+  children,
+  transaction,
+  setIsDisable,
   isDuplicateItem = false,
 }: UpdateTransactionProps) => {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setTimeout(() => setIsDisable?.(false), 700)
+        setOpen(open)
+      }}
+    >
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="dialog-scroll max-h-screen overflow-y-scroll">
         <DialogHeader>

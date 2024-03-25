@@ -21,13 +21,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
-import { useCurrencies } from '@/hooks/use-currencies'
+import { useProducts } from '@/hooks/use-products'
 import { cn } from '@/lib/utils'
 import { Transaction } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { CurrencySelector } from '../currency-selector'
@@ -43,15 +43,16 @@ const formSchema = z.object({
 
 export const TransactionForm = ({
   setOpen,
+  groupId,
   formAction,
   transaction,
 }: {
   setOpen?: Dispatch<SetStateAction<boolean>>
   formAction: 'add' | 'update'
   transaction?: Transaction
+  groupId?: string
 }) => {
-  const [productsApi, setProductsApi] = useState([''])
-  const currencies = useCurrencies()
+  const { data: productsApi } = useProducts()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,6 +77,8 @@ export const TransactionForm = ({
       await addTransaction({
         ...newValues,
         year: new Date(date).getFullYear().toString(),
+        // group_id: groupId ?? '',
+        group_id: transaction?.group_id ?? groupId ?? '',
       })
     }
 
@@ -89,13 +92,14 @@ export const TransactionForm = ({
     }
 
     setOpen?.(false)
+
+    // setTimeout(() => setIsDisable?.(false), 3000)
   }
 
   const setRandomForm = async () => {
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
-    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12)
+    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12) // 1e12 is the same as 1000000000000 (a million million).
     const amountRandom = Number((Math.random() * 100000).toFixed(2))
-    const currencyRandom = currencies[Math.random() * currencies.length]
     const typeRandom = transactionType[Math.floor(Math.random() * transactionType.length)]
     const categoryRandom =
       transactionCategory[Math.floor(Math.random() * transactionCategory.length)]
@@ -103,20 +107,9 @@ export const TransactionForm = ({
     form.setValue('product', randomProduct)
     form.setValue('date', dateRandom)
     form.setValue('amount', amountRandom)
-    form.setValue('currency', currencyRandom)
     form.setValue('type', typeRandom)
     form.setValue('category', categoryRandom)
   }
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const res = await fetch('https://dummyjson.com/products')
-      const data = (await res.json()) as { products: [{ title: string }] }
-      const products = data.products.map((item) => item.title).sort()
-      setProductsApi(products)
-    }
-    getProducts()
-  }, [])
 
   return (
     <Form {...form}>

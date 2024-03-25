@@ -1,17 +1,16 @@
-import { getRate } from '@/lib/transactions'
-import { useEffect, useState } from 'react'
+import { getRate } from '@/actions/server/currency-rates'
+import { useQuery } from '@tanstack/react-query'
 
 export const useCurrencies = () => {
-  const [currencies, setCurrencies] = useState<string[]>([])
-
-  useEffect(() => {
-    const getRates = async () => {
+  return useQuery({
+    queryKey: ['transactions-currencies'],
+    queryFn: async () => {
       const data = await getRate('BRL')
       const currencyRates = Object.keys(data.rates)
-      setCurrencies(currencyRates)
-    }
-    getRates()
-  }, [])
-
-  return currencies
+      return currencyRates
+    },
+    initialData: [],
+    gcTime: 0,
+    staleTime: 0,
+  })
 }

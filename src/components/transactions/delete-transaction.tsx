@@ -19,14 +19,16 @@ interface DeleteTransactionProps extends HTMLAttributes<HTMLDivElement> {
   transactionId: string
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  setIsDisable: Dispatch<SetStateAction<boolean>>
 }
 
 export const DeleteTransaction = ({
-  children,
-  className,
-  transactionId,
   open,
   setOpen,
+  children,
+  className,
+  setIsDisable,
+  transactionId,
 }: DeleteTransactionProps) => {
   const DeleteTransaction = async () => await deleteTransaction(transactionId)
 
@@ -41,8 +43,14 @@ export const DeleteTransaction = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => DeleteTransaction()}>
+          <AlertDialogCancel onClick={() => setIsDisable(false)}>
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              DeleteTransaction()
+            }}
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

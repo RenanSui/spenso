@@ -8,8 +8,6 @@ export default async function Page() {
     <section className="container grid max-w-6xl items-center gap-8 pt-0 md:py-8 md:pt-0">
       <h1 className="sr-only">Spenso</h1>
 
-      {/* <p>{(await getTime()).rates}</p> */}
-
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0 z-[-1] opacity-60 dark:opacity-50">
         <Image
           className="absolute inset-0 h-full w-full object-cover text-transparent opacity-50"

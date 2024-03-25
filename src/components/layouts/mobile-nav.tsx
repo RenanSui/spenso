@@ -11,7 +11,11 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
-import type { NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
+import type {
+  NavItemWithChildren,
+  NavItemWithOptionalChildren,
+  SidebarNavItem,
+} from '@/types'
 import { DashboardIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -19,6 +23,14 @@ import * as React from 'react'
 
 interface MobileNavProps {
   sidebarNavItems: SidebarNavItem[]
+}
+
+interface MobileLinkProps extends React.PropsWithChildren {
+  href: string
+  disabled?: boolean
+  segment: string
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  className?: string
 }
 
 export function MobileNav({ sidebarNavItems }: MobileNavProps) {
@@ -31,11 +43,14 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
       title: 'My Account',
       items: sidebarNavItems,
     }
+
     const myAccountIndex = items.findIndex((item) => item.title === 'My Account')
     if (myAccountIndex !== -1) {
       items.splice(myAccountIndex, 1)
     }
+
     items.splice(1, 0, myAccountItem)
+
     return items
   }, [sidebarNavItems])
 
@@ -73,10 +88,16 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col space-y-2">
-                      {item.items?.map((subItem, index) =>
-                        subItem.href ? (
+                      {item.items?.map((subItem, subIndex) => {
+                        return subItem.items.length > 0 ? (
+                          <NestedAccordionNavItems
+                            key={subIndex}
+                            item={subItem}
+                            setIsOpen={setIsOpen}
+                          />
+                        ) : subItem.href ? (
                           <MobileLink
-                            key={index}
+                            key={subIndex}
                             href={String(subItem.href)}
                             segment={String(segment)}
                             setIsOpen={setIsOpen}
@@ -86,13 +107,13 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
                           </MobileLink>
                         ) : (
                           <div
-                            key={index}
+                            key={subIndex}
                             className="text-neutral-400/70 transition-colors"
                           >
                             {item.title}
                           </div>
-                        ),
-                      )}
+                        )
+                      })}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -105,21 +126,67 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
   )
 }
 
-interface MobileLinkProps extends React.PropsWithChildren {
-  href: string
-  disabled?: boolean
-  segment: string
+interface NestedAccordionNavItemsProps {
+  item: NavItemWithChildren
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function MobileLink({ children, href, disabled, segment, setIsOpen }: MobileLinkProps) {
+const NestedAccordionNavItems = ({
+  item,
+  setIsOpen,
+  ...props
+}: NestedAccordionNavItemsProps) => {
+  const segment = useSelectedLayoutSegment()
+
+  return (
+    <Accordion type="multiple" defaultValue={[item.title]} className="w-full" {...props}>
+      <AccordionItem value={item.title}>
+        <AccordionTrigger className="py-0 text-sm capitalize">
+          {item.title}
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="flex flex-col space-y-2 pt-2">
+            {item.items?.map((subItem, index) =>
+              subItem.href ? (
+                <MobileLink
+                  className="pl-4"
+                  key={index}
+                  href={String(subItem.href)}
+                  segment={String(segment)}
+                  setIsOpen={setIsOpen}
+                  disabled={subItem.disabled}
+                >
+                  {subItem.title}
+                </MobileLink>
+              ) : (
+                <div key={index} className="text-neutral-400/70 transition-colors">
+                  {item.title}
+                </div>
+              ),
+            )}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
+function MobileLink({
+  children,
+  href,
+  disabled,
+  segment,
+  setIsOpen,
+  className,
+}: MobileLinkProps) {
   return (
     <Link
       href={href}
       className={cn(
-        'text-foreground/70 hover:text-foreground transition-colors',
-        href.includes(segment) && 'text-foreground',
+        'text-neutral-900 transition-colors hover:text-neutral-400 dark:text-neutral-100 hover:dark:text-neutral-300',
+        href.includes(segment) && 'text-neutral-900 dark:text-neutral-100',
         disabled && 'pointer-events-none opacity-60',
+        className,
       )}
       onClick={() => setIsOpen(false)}
     >

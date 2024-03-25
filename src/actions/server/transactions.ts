@@ -1,8 +1,7 @@
 'use server'
 
 import { createPublicServerClient, getSupabaseClient } from '@/lib/server'
-import { sortTransactions } from '@/lib/transactions'
-import { positiveOrNegative, removeArrayDuplicates } from '@/lib/utils'
+import { positiveOrNegative } from '@/lib/utils'
 import {
   TransactionCategories,
   TransactionInsert,
@@ -12,27 +11,52 @@ import {
 } from '@/types'
 import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 
-const revalidateAllTransactions = async () => {
+const revalidateTransactions = () => revalidatePath('/dashboard/transactions/')
+
+export const revalidateAllTransactionsGetters = async () => {
   revalidateTag('get-transactions')
   revalidateTag('get-transactions-categories')
   revalidateTag('get-transactions-types')
   revalidateTag('get-transactions-years')
   revalidateTag('current-transaction-rates')
+
+  // by id
+  revalidateTag('get-transactions-by-id')
 }
 
-const getTransactions = cache(
+export const getTransactions = cache(
   async () => {
     const { supabase } = await getSupabaseClient()
     if (!supabase) return null
 
     const { data } = await supabase.from('transactions').select('*')
+
     return data
   },
   [],
   { revalidate: false, tags: ['get-transactions'] },
 )
 
-const addTransaction = async (formData: TransactionInsert) => {
+export const getTransactionsById = cache(
+  async (groupId) => {
+    const { supabase } = await getSupabaseClient()
+    if (!supabase) return null
+
+    const { data } = await supabase
+      .from('transactions')
+      .select('*')
+      .eq('group_id', groupId)
+
+    return data
+  },
+  [],
+  {
+    revalidate: false,
+    tags: ['get-transactions-by-id'],
+  },
+)
+
+export const addTransaction = async (formData: TransactionInsert) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
@@ -44,11 +68,11 @@ const addTransaction = async (formData: TransactionInsert) => {
 
   await supabase.from('transactions').insert({ ...formDataWithId })
 
-  revalidatePath('/dashboard/transactions/')
-  revalidateAllTransactions()
+  revalidateTransactions()
+  revalidateAllTransactionsGetters()
 }
 
-const updateTransaction = async (formData: TransactionUpdate) => {
+export const updateTransaction = async (formData: TransactionUpdate) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
@@ -63,21 +87,37 @@ const updateTransaction = async (formData: TransactionUpdate) => {
     .update({ ...formattedData })
     .eq('id', id ?? '')
 
-  revalidatePath('/dashboard/transactions')
-  revalidateAllTransactions()
+  revalidateTransactions()
+  revalidateAllTransactionsGetters()
 }
 
-const deleteTransaction = async (id: string) => {
+export const updateTransactionGroupFromIdToId = async (
+  transactionId: string,
+  groupId: string,
+) => {
+  const { supabase, userId } = await getSupabaseClient()
+  if (!(supabase && userId)) return
+
+  await supabase
+    .from('transactions')
+    .update({ group_id: groupId })
+    .eq('id', transactionId)
+
+  revalidateTransactions()
+  revalidateAllTransactionsGetters()
+}
+
+export const deleteTransaction = async (id: string) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
   await supabase.from('transactions').delete().eq('id', id)
 
-  revalidatePath('/dashboard/transactions')
-  revalidateAllTransactions()
+  revalidateTransactions()
+  revalidateAllTransactionsGetters()
 }
 
-const deleteSelectedTransactions = async (ids: string[]) => {
+export const deleteSelectedTransactions = async (ids: string[]) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
@@ -87,11 +127,11 @@ const deleteSelectedTransactions = async (ids: string[]) => {
 
   Promise.all(deletePromises)
 
-  revalidatePath('/dashboard/transactions')
-  revalidateAllTransactions()
+  revalidateTransactions()
+  revalidateAllTransactionsGetters()
 }
 
-const getTransactionsCategories = cache(
+export const getTransactionsCategories = cache(
   async () => {
     const supabase = await createPublicServerClient()
     if (!supabase) return []
@@ -105,7 +145,7 @@ const getTransactionsCategories = cache(
   { revalidate: false, tags: ['get-transactions-categories'] },
 )
 
-const getTransactionsTypes = cache(
+export const getTransactionsTypes = cache(
   async () => {
     const supabase = await createPublicServerClient()
     if (!supabase) return []
@@ -122,7 +162,7 @@ const getTransactionsTypes = cache(
   },
 )
 
-const getTransactionsYears = cache(
+export const getTransactionsYears = cache(
   async () => {
     const supabase = await createPublicServerClient()
     if (!supabase) return []
@@ -135,34 +175,3 @@ const getTransactionsYears = cache(
   [],
   { revalidate: false, tags: ['get-transactions-years'] },
 )
-
-const getTransactionCurrencies = cache(
-  async () => {
-    const transactions = await getTransactions()
-
-    const newTransaction = sortTransactions(transactions)
-
-    const allCurrencies = newTransaction?.map(({ currency }) => currency) ?? []
-
-    const newCurrencies = removeArrayDuplicates(allCurrencies)
-
-    return newCurrencies
-  },
-  [],
-  {
-    revalidate: false,
-    tags: ['current-transaction-rates'],
-  },
-)
-
-export {
-  addTransaction,
-  deleteSelectedTransactions,
-  deleteTransaction,
-  getTransactionCurrencies,
-  getTransactions,
-  getTransactionsCategories,
-  getTransactionsTypes,
-  getTransactionsYears,
-  updateTransaction,
-}

@@ -31,6 +31,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
+  groupId: string
 }
 
 export function DataTable<TData, TValue>({
@@ -38,6 +39,7 @@ export function DataTable<TData, TValue>({
   data,
   filterableColumns,
   searchableColumns,
+  groupId,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -67,6 +69,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full space-y-3 overflow-auto">
       <DataTableToolbar
+        groupId={groupId}
         table={table}
         AddNewItem={NewTransaction}
         filterableColumns={filterableColumns}

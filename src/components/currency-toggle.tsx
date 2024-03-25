@@ -1,6 +1,5 @@
 'use client'
 
-import { getTransactionCurrencies } from '@/actions/server/transactions'
 import { currencyStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,28 +10,20 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { ScrollArea } from './ui/scroll-area'
+import { Separator } from './ui/separator'
 import { Skeleton } from './ui/skeleton'
 
 export const CurrencyToggle = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const [currency, setCurrency] = useAtom(currencyStateAtom)
-
-  const {
-    isFetching,
-    data: currencies,
-    refetch,
-  } = useQuery({
-    queryKey: ['transactionsCurrencies'],
-    queryFn: async () => await getTransactionCurrencies(),
-    initialData: [],
-  })
+  const { data: currencies, isFetching } = useCurrencies()
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
@@ -42,7 +33,6 @@ export const CurrencyToggle = () => {
           role="combobox"
           aria-expanded={open}
           className="w-fit justify-between"
-          onClick={() => refetch()}
         >
           {value
             ? currencies.find(
@@ -60,7 +50,7 @@ export const CurrencyToggle = () => {
             <ScrollArea className="h-32">
               {isFetching ? (
                 <div className="flex flex-col gap-1">
-                  {['', '', '', '', ''].map((_a, index) => {
+                  {[''].map((_a, index) => {
                     return (
                       <Skeleton
                         className="h-6 w-full rounded-sm bg-red-500"
@@ -90,6 +80,7 @@ export const CurrencyToggle = () => {
                   </CommandItem>
                 ))
               )}
+              <Separator />
             </ScrollArea>
           </CommandGroup>
         </Command>

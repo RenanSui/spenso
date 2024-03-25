@@ -9,17 +9,27 @@ export type TransactionInsert = TransactionTable['Insert']
 
 export type TransactionUpdate = TransactionTable['Update']
 
-export type TransactionCategories = { category: string; sum: number }
+export type TransactionCategories = { category: string; sum: number; currency: string }
 
 export type TransactionTypes = 'income' | 'expense'
 
-export type TransactionTypeses = { type: string; sum: number }
+export type TransactionTypeses = { type: string; sum: number; currency: string }
 
 export type TransactionYears = {
   year: string
   type: TransactionTypes
   sum: number
+  currency: string
 }
+
+export type TransactionGroupsTable =
+  Database['next_auth']['Tables']['transactions_groups']
+
+export type TransactionGroups = TransactionGroupsTable['Row']
+
+export type TransactionGroupsInsert = TransactionGroupsTable['Insert']
+
+export type TransactionGroupsUpdate = TransactionGroupsTable['Update']
 
 export interface Option {
   label: string
@@ -38,6 +48,7 @@ export interface DataTableFilterableColumn<TData>
 }
 
 export interface NavItem {
+  id?: string
   title: string
   href?: string
   disabled?: boolean

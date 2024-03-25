@@ -17,19 +17,22 @@ import { CurrencyRates, Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { useAtom } from 'jotai'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
+import { ChangeTransactionGroup } from '../transactions/change-transaction-group'
 import { DeleteTransaction } from '../transactions/delete-transaction'
 import { UpdateTransaction } from '../transactions/update-transaction'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
   rates: CurrencyRates[]
+  groupId: string
 }
 
 export function TransactionsTableShell({
   data: transactions,
   rates,
+  groupId,
 }: TransactionsTableShellProps) {
   const [currencyState] = useAtom(currencyStateAtom)
 
@@ -61,7 +64,10 @@ export function TransactionsTableShell({
           const type = String(row.getValue('type'))
           return (
             <span
-              className={cn('capitalize', type === 'expense' ? 'text-red-400' : null)}
+              className={cn(
+                'pl-4 capitalize',
+                type === 'expense' ? 'text-red-400' : null,
+              )}
             >
               {type}
             </span>
@@ -89,13 +95,15 @@ export function TransactionsTableShell({
             const currencyRate = transactionRates?.rates[currencyState] ?? 1
             const newAmount = parseFloat((amount * currencyRate).toFixed(2))
 
-            return formatValue(newAmount, currency)
+            return formatValue(newAmount, currencyState)
           }
 
           const formatted = returnFormatted()
 
           return (
-            <div className={cn('font-medium', type === 'expense' ? 'text-red-400' : '')}>
+            <div
+              className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-400' : '')}
+            >
               {formatted}
             </div>
           )
@@ -106,7 +114,7 @@ export function TransactionsTableShell({
         header: ({ column }) => <SortableHeader column={column}>Category</SortableHeader>,
         cell: ({ row }) => {
           const category = String(row.getValue('category'))
-          return <span className="capitalize">{category}</span>
+          return <span className="pl-4 capitalize">{category}</span>
         },
       },
       {
@@ -115,8 +123,6 @@ export function TransactionsTableShell({
         sortingFn: (itemA, itemB): number => {
           const dateA = new Date(itemA.original.date).getTime()
           const dateB = new Date(itemB.original.date).getTime()
-
-          console.log({ dateA, dateB })
 
           return dateA < dateB ? 1 : dateA > dateB ? -1 : 0
         },
@@ -127,7 +133,7 @@ export function TransactionsTableShell({
           const Month = String(date.getMonth() + 1).padStart(2, '0')
           const Day = String(date.getDate()).padStart(2, '0')
 
-          return `${Year}/${Month}/${Day}`
+          return <div className="pl-1">{`${Year}/${Month}/${Day}`}</div>
         },
       },
       {
@@ -136,7 +142,7 @@ export function TransactionsTableShell({
         cell: ({ row }) => {
           const currency = String(row.getValue('currency'))
 
-          return <div>{currency}</div>
+          return <div className="pl-4">{currency}</div>
         },
       },
       {
@@ -149,6 +155,7 @@ export function TransactionsTableShell({
 
   return (
     <DataTable
+      groupId={groupId}
       data={transactions}
       columns={columns}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
@@ -175,33 +182,66 @@ const SortableHeader = ({
 )
 
 const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
-  const [openDelete, setDelete] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  const [isDisable, setIsDisable] = useState(false)
+
   const [openUpdate, setUpdate] = useState(false)
+  const [openChangeGroup, setChangeGroup] = useState(false)
   const [openDuplicate, setDuplicate] = useState(false)
+  const [openDelete, setDelete] = useState(false)
+
+  useEffect(() => {
+    if (!openUpdate) setDuplicate(false)
+  }, [openChangeGroup, openUpdate])
+
+  const handleUpdate = (isDuplicate?: boolean) => {
+    if (isDuplicate) setDuplicate(true)
+    setIsDisable(true)
+    setUpdate(true)
+  }
+
+  const handleDelete = () => {
+    setIsDisable(true)
+    setDelete(true)
+  }
+
+  const handleChangeGroup = () => {
+    setIsDisable(true)
+    setChangeGroup(true)
+  }
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+          <Button
+            disabled={isDisable}
+            variant="ghost"
+            className={cn('h-8 w-8 p-0', isDisable ? 'bg-red-400' : '')}
+          >
             <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal
+              className={cn(
+                'h-4 w-4 transition-all duration-300',
+                !open ? '-rotate-90' : '',
+                isDisable ? 'text-red-900' : '',
+              )}
+            />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setUpdate(true)}>Edit</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setDuplicate(true)}>
+          <DropdownMenuItem onClick={() => handleUpdate()}>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleDelete()} title="destructive">
+            Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleUpdate(true)}>
             Duplicate
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className={cn(
-              'bg-red-500 text-white shadow-sm hover:bg-red-700 focus:bg-red-700 focus:text-white dark:focus:bg-red-700',
-            )}
-            onClick={() => setDelete(true)}
-          >
-            Delete
+          <DropdownMenuItem onClick={() => handleChangeGroup()}>
+            Change Group
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -210,20 +250,23 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
         open={openUpdate}
         setOpen={setUpdate}
         transaction={transaction}
+        setIsDisable={setIsDisable}
+        isDuplicateItem={openDuplicate}
+      />
+
+      <ChangeTransactionGroup
+        open={openChangeGroup}
+        setOpen={setChangeGroup}
+        setIsDisable={setIsDisable}
+        transactionId={transaction.id}
+        transactionGroupId={transaction.group_id ?? ''}
       />
 
       <DeleteTransaction
         open={openDelete}
         setOpen={setDelete}
         transactionId={transaction.id}
-      />
-
-      {/* duplicate  */}
-      <UpdateTransaction
-        open={openDuplicate}
-        setOpen={setDuplicate}
-        transaction={transaction}
-        isDuplicateItem={true}
+        setIsDisable={setIsDisable}
       />
     </>
   )
