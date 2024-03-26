@@ -9,7 +9,10 @@ import {
 import { Shell } from '@/components/shells/shell'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { TransactionsGroupActions } from '@/components/transactions-groups/transactions-group-actions'
+import { buttonVariants } from '@/components/ui/button'
 import { sortTransactions } from '@/lib/transactions'
+import { DashboardIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -30,6 +33,12 @@ export default async function Page({ params }: { params: { id: string } }) {
         <PageHeaderHeading size="sm" className="flex items-center justify-between">
           {title}
           <div className="flex items-center justify-center gap-1">
+            <Link
+              className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+              href={`/dashboard/analytics/${groupId}?title=${title}`}
+            >
+              <DashboardIcon className="h-5 w-5" />
+            </Link>
             <TransactionsGroupActions groupId={groupId} title={title} />
           </div>
         </PageHeaderHeading>

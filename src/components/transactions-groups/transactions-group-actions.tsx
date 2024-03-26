@@ -37,12 +37,13 @@ export const TransactionsGroupActions = ({
           <Button
             disabled={isDisabled}
             variant="ghost"
-            className={cn('px-3', isDisabled ? 'bg-red-400' : '')}
+            size="icon"
+            className={cn('px-0', isDisabled ? 'bg-red-400' : '')}
           >
             <span className="sr-only">Open menu</span>
             <DotsVerticalIcon
               className={cn(
-                'h-4 w-4 transition-all duration-300',
+                'transition-all duration-300',
                 open ? 'rotate-90' : '',
                 isDisabled ? 'rotate-90 text-red-900' : '',
               )}

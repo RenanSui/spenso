@@ -1,4 +1,10 @@
-import { getTransactions } from '@/actions/server/transactions'
+import { getAllTransactionsRates } from '@/actions/server/currency-rates'
+import {
+  getTransactions,
+  getTransactionsCategories,
+  getTransactionsTypes,
+  getTransactionsYears,
+} from '@/actions/server/transactions'
 import {
   PageHeader,
   PageHeaderDescription,
@@ -9,6 +15,12 @@ import { TransactionAnalyticsShell } from '@/components/shells/transactions-anal
 
 export default async function Page() {
   const transactions = await getTransactions()
+  if (!transactions) return null
+
+  const categories = await getTransactionsCategories()
+  const types = await getTransactionsTypes()
+  const years = await getTransactionsYears()
+  const allRates = await getAllTransactionsRates(transactions)
 
   return (
     <Shell className="my-4">
@@ -17,7 +29,13 @@ export default async function Page() {
         <PageHeaderDescription size="sm">Analyse your transactions</PageHeaderDescription>
       </PageHeader>
 
-      <TransactionAnalyticsShell transactions={transactions} />
+      <TransactionAnalyticsShell
+        transactions={transactions}
+        categories={categories}
+        types={types}
+        years={years}
+        allRates={allRates}
+      />
     </Shell>
   )
 }

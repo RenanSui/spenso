@@ -1,6 +1,6 @@
 'use server'
 
-import { createPublicServerClient, getSupabaseClient } from '@/lib/server'
+import { getSupabaseClient } from '@/lib/server'
 import { positiveOrNegative } from '@/lib/utils'
 import {
   TransactionCategories,
@@ -22,6 +22,9 @@ export const revalidateAllTransactionsGetters = async () => {
 
   // by id
   revalidateTag('get-transactions-by-id')
+  revalidateTag('get-transactions-categories-by-group-id')
+  revalidateTag('get-transactions-types-by-group-id')
+  revalidateTag('get-transactions-years-by-group-id')
 }
 
 export const getTransactions = cache(
@@ -133,13 +136,17 @@ export const deleteSelectedTransactions = async (ids: string[]) => {
 
 export const getTransactionsCategories = cache(
   async () => {
-    const supabase = await createPublicServerClient()
+    const { supabase } = await getSupabaseClient()
     if (!supabase) return []
 
-    const { data } = await supabase.from('transactions_categories').select('*')
+    const { data } = await supabase
+      .from('transactions')
+      .select('category,currency,amount.sum()')
+      .or('type.eq.expense')
+      .order('category', { ascending: false })
+      .order('currency', { ascending: false })
 
-    const categories: TransactionCategories[] = data ?? []
-    return categories
+    return (data ?? []) as unknown as TransactionCategories[]
   },
   [],
   { revalidate: false, tags: ['get-transactions-categories'] },
@@ -147,13 +154,16 @@ export const getTransactionsCategories = cache(
 
 export const getTransactionsTypes = cache(
   async () => {
-    const supabase = await createPublicServerClient()
+    const { supabase } = await getSupabaseClient()
     if (!supabase) return []
 
-    const { data } = await supabase.from('transactions_types').select('*')
+    const { data } = await supabase
+      .from('transactions')
+      .select('type,currency,amount.sum()')
+      .order('type', { ascending: false })
+      .order('currency', { ascending: false })
 
-    const types: TransactionTypeses[] = data ?? []
-    return types
+    return (data ?? []) as unknown as TransactionTypeses[]
   },
   [],
   {
@@ -164,14 +174,74 @@ export const getTransactionsTypes = cache(
 
 export const getTransactionsYears = cache(
   async () => {
-    const supabase = await createPublicServerClient()
+    const { supabase } = await getSupabaseClient()
     if (!supabase) return []
 
-    const { data } = await supabase.from('transactions_years').select('*')
+    const { data } = await supabase
+      .from('transactions')
+      .select('year,currency,type,amount.sum()')
+      .order('year', { ascending: false })
+      .order('type', { ascending: false })
+      .order('currency', { ascending: false })
 
-    const years: TransactionYears[] = data ?? []
-    return years
+    return (data ?? []) as unknown as TransactionYears[]
   },
   [],
   { revalidate: false, tags: ['get-transactions-years'] },
+)
+
+export const getTransactionsCategoriesByGroupId = cache(
+  async (groupId: string) => {
+    const { supabase } = await getSupabaseClient()
+    if (!supabase) return []
+
+    const { data } = await supabase
+      .from('transactions')
+      .select('category,currency,amount.sum()')
+      .eq('group_id', groupId)
+      .or('type.eq.expense')
+      .order('category', { ascending: false })
+      .order('currency', { ascending: false })
+
+    return (data ?? []) as unknown as TransactionCategories[]
+  },
+  [],
+  { revalidate: false, tags: ['get-transactions-categories-by-group-id'] },
+)
+
+export const getTransactionsTypesByGroupId = cache(
+  async (groupId: string) => {
+    const { supabase } = await getSupabaseClient()
+    if (!supabase) return []
+
+    const { data } = await supabase
+      .from('transactions')
+      .select('type,currency,amount.sum()')
+      .eq('group_id', groupId)
+      .order('type', { ascending: false })
+      .order('currency', { ascending: false })
+
+    return (data ?? []) as unknown as TransactionTypeses[]
+  },
+  [],
+  { revalidate: false, tags: ['get-transactions-types-by-group-id'] },
+)
+
+export const getTransactionsYearsByGroupId = cache(
+  async (groupId: string) => {
+    const { supabase } = await getSupabaseClient()
+    if (!supabase) return []
+
+    const { data } = await supabase
+      .from('transactions')
+      .select('year,currency,type,amount.sum()')
+      .eq('group_id', groupId)
+      .order('year', { ascending: false })
+      .order('type', { ascending: false })
+      .order('currency', { ascending: false })
+
+    return (data ?? []) as unknown as TransactionYears[]
+  },
+  [],
+  { revalidate: false, tags: ['get-transactions-years-by-group-id'] },
 )
