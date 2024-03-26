@@ -28,11 +28,6 @@ export const TransactionAnalyticsShell = async ({
 }: AnalyticsProps) => {
   if (!transactions) return null
 
-  // const categories = await getTransactionsCategories()
-  // const types = await getTransactionsTypes()
-  // const years = await getTransactionsYears()
-  // const allRates = await getAllTransactionsRates(transactions)
-
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
       <CardChartShell transactions={transactions} rates={allRates} />

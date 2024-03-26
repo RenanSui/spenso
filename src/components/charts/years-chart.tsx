@@ -37,45 +37,6 @@ export const YearsChart = ({ className, years: Years, rates }: YearsChartProps) 
   const [currencyState] = useAtom(currencyStateAtom)
 
   const years = removeArrayDuplicates(Years.map((year) => year.year))
-  // const sums = useMemo(
-  //   () =>
-  //     Years.map((year) => {
-  //       const returnCalculatedSum = () => {
-  //         const sum = year.sum
-  //         const currency = year.currency
-
-  //         const transactionRates = rates.find((item) => item.base === currency)
-  //         const currencyRate = transactionRates?.rates[currencyState] ?? 1
-  //         const newSum = parseFloat((sum * currencyRate).toFixed(2))
-
-  //         return newSum
-  //       }
-
-  //       return returnCalculatedSum()
-  //     }),
-  //   [Years, currencyState, rates],
-  // )
-
-  // const incomes = sums.filter((sum) => sum >= 0)
-  // const expenses = sums.filter((sum) => sum < 0).map((sum) => toPositive(sum))
-
-  // const data = {
-  //   labels: years.map((year) => year),
-  //   datasets: [
-  //     {
-  //       label: 'revenue',
-  //       data: incomes,
-  //       borderColor: 'rgb(53, 162, 235)',
-  //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-  //     },
-  //     {
-  //       label: 'expenses',
-  //       data: expenses,
-  //       borderColor: 'rgb(255, 99, 132)',
-  //       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //     },
-  //   ],
-  // }
 
   const data = useMemo(() => {
     const sums = Years.map((year) => {
