@@ -7,8 +7,8 @@ import {
 } from '@/types'
 import { CardChartShell } from '../charts/card-chart'
 import { CategoriesChart } from '../charts/categories-chart'
+import { LineChartShell } from '../charts/line-charts-shell'
 import { TypeChart } from '../charts/type-chart'
-import { YearsChart } from '../charts/years-chart'
 import { AnalyticTable } from '../table/analytic-table'
 
 type AnalyticsProps = {
@@ -28,11 +28,20 @@ export const TransactionAnalyticsShell = async ({
 }: AnalyticsProps) => {
   if (!transactions) return null
 
+  const sortedYears = years.sort(
+    (item1, item2) => Number(item1.year) - Number(item2.year),
+  )
+
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
       <CardChartShell transactions={transactions} rates={allRates} />
 
-      <YearsChart className="lg:col-span-2" years={years} rates={allRates} />
+      <LineChartShell
+        className="lg:col-span-2"
+        transactions={transactions}
+        years={sortedYears}
+        rates={allRates}
+      />
 
       <AnalyticTable
         className="lg:row-span-2"

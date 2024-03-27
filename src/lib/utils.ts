@@ -32,11 +32,24 @@ export const positiveOrNegative = (type: string, amount: number) => {
   return isExpense ? negativeAmount : positiveAmount
 }
 
-export const toPositive = (number: number) => number * -1
+export const toPositive = (number: number) => {
+  if (number === 0) return 0
+  return number * -1
+}
 
 export const formatValue = (value: number, currency: string) => {
   return new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency,
   }).format(parseFloat(value.toFixed(2)))
+}
+
+export const randomHex = (gratherThan: number): number => {
+  const random = Math.trunc(Math.random() * 255)
+
+  if (random < gratherThan) {
+    return randomHex(gratherThan)
+  }
+
+  return random
 }

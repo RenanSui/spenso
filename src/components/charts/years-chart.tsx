@@ -1,7 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
-import { cn, removeArrayDuplicates, toPositive } from '@/lib/utils'
+import { removeArrayDuplicates, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionYears } from '@/types'
 import {
   CategoryScale,
@@ -14,11 +14,10 @@ import {
   Tooltip,
 } from 'chart.js'
 import { useAtom } from 'jotai'
-import { useMemo } from 'react'
+import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 
-type YearsChartProps = {
-  className: string
+interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
   rates: CurrencyRates[]
 }
@@ -33,11 +32,10 @@ ChartJS.register(
   Legend,
 )
 
-export const YearsChart = ({ className, years: Years, rates }: YearsChartProps) => {
+export const YearsChart = ({ years: Years, rates }: YearsChartProps) => {
   const [currencyState] = useAtom(currencyStateAtom)
 
   const years = removeArrayDuplicates(Years.map((year) => year.year))
-
   const data = useMemo(() => {
     const sums = Years.map((year) => {
       const returnCalculatedSum = () => {
@@ -76,14 +74,5 @@ export const YearsChart = ({ className, years: Years, rates }: YearsChartProps) 
     }
   }, [Years, currencyState, rates, years])
 
-  return (
-    <div
-      className={cn(
-        'relative flex h-[350px] w-full items-center justify-center rounded-xl border p-2 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900',
-        className,
-      )}
-    >
-      {years.length !== 0 ? <Line data={data} /> : null}
-    </div>
-  )
+  return years.length !== 0 ? <Line data={data} /> : null
 }

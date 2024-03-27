@@ -34,11 +34,7 @@ export const CurrencyToggle = () => {
           aria-expanded={open}
           className="w-fit justify-between"
         >
-          {value
-            ? currencies.find(
-                (currency) => currency.toLowerCase() === value.toLowerCase(),
-              )
-            : currency.toUpperCase()}
+          {value ? currencies.find((currency) => currency === value) : currency}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
