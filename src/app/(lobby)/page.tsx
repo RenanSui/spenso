@@ -15,7 +15,7 @@ export default async function Page() {
           width={1920}
           height={1080}
           priority={true}
-          alt={'photo of city buildings during daytime'}
+          alt={'photo of a cup of coffee in a table with a notebook and a pencil'}
         />
 
         <div className="sr-only relative z-10 flex h-full flex-col justify-between p-4 px-8">
