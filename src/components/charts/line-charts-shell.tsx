@@ -21,7 +21,7 @@ export const LineChartShell = ({
   transactions,
 }: LineChartShell) => {
   const [isChecked, setChecked] = useState(true)
-  const [year, setYear] = useState(years[0].year ?? 'XXXX')
+  const [year, setYear] = useState(years[years.length - 1].year ?? 'XXXX')
 
   return (
     <div
