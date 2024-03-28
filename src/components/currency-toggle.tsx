@@ -2,13 +2,7 @@
 
 import { currencyStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
@@ -28,12 +22,7 @@ export const CurrencyToggle = () => {
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-fit justify-between"
-        >
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-fit justify-between">
           {value ? currencies.find((currency) => currency === value) : currency}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -47,12 +36,7 @@ export const CurrencyToggle = () => {
               {isFetching ? (
                 <div className="flex flex-col gap-1">
                   {[''].map((_a, index) => {
-                    return (
-                      <Skeleton
-                        className="h-6 w-full rounded-sm bg-red-500"
-                        key={index}
-                      />
-                    )
+                    return <Skeleton className="h-6 w-full rounded-sm bg-red-500" key={index} />
                   })}
                 </div>
               ) : (
@@ -67,12 +51,7 @@ export const CurrencyToggle = () => {
                     }}
                   >
                     {currency}
-                    <CheckIcon
-                      className={cn(
-                        'ml-auto h-4 w-4',
-                        value === currency ? 'opacity-100' : 'opacity-0',
-                      )}
-                    />
+                    <CheckIcon className={cn('ml-auto h-4 w-4', value === currency ? 'opacity-100' : 'opacity-0')} />
                   </CommandItem>
                 ))
               )}

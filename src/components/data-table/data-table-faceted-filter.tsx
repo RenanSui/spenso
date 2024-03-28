@@ -33,21 +33,13 @@ export function DataTableFacetedFilter<TData, TValue>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          aria-label="Filter rows"
-          variant="outline"
-          size="sm"
-          className="h-8 border-dashed"
-        >
+        <Button aria-label="Filter rows" variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
           {title}
           {selectedValues?.size > 0 && (
             <>
               <Separator orientation="vertical" className=" mx-2 h-4" />
-              <Badge
-                variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
-              >
+              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                 {selectedValues.size}
               </Badge>
               <div className="hidden space-x-1 lg:flex">
@@ -59,11 +51,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                   options
                     .filter((option) => selectedValues.has(option.value))
                     .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
+                      <Badge variant="secondary" key={option.value} className="rounded-sm px-1 font-normal">
                         {option.label}
                       </Badge>
                     ))
@@ -91,27 +79,18 @@ export function DataTableFacetedFilter<TData, TValue>({
                         selectedValues.add(option.value)
                       }
                       const filterValues = Array.from(selectedValues)
-                      column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined,
-                      )
+                      column?.setFilterValue(filterValues.length ? filterValues : undefined)
                     }}
                   >
                     <div
                       className={cn(
                         'border-primary mr-2 flex h-4 w-4 items-center justify-center rounded-sm border',
-                        isSelected
-                          ? 'bg-primary text-primary-foreground'
-                          : 'opacity-50 [&_svg]:invisible',
+                        isSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible',
                       )}
                     >
                       <CheckIcon className={cn('h-4 w-4')} aria-hidden="true" />
                     </div>
-                    {option.icon && (
-                      <option.icon
-                        className="text-muted-foreground mr-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    )}
+                    {option.icon && <option.icon className="text-muted-foreground mr-2 h-4 w-4" aria-hidden="true" />}
                     <span>{option.label}</span>
                   </CommandItem>
                 )

@@ -1,13 +1,7 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import {
-  ButtonHTMLAttributes,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
+import { ButtonHTMLAttributes, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Icons } from '../ui/icons'
 import { OAuthProviders } from './oauth-signin'
@@ -17,11 +11,7 @@ interface ProviderSignInProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   setIsSigning: Dispatch<SetStateAction<boolean>>
 }
 
-export const ProviderSignIn = ({
-  provider,
-  setIsSigning,
-  ...props
-}: ProviderSignInProps) => {
+export const ProviderSignIn = ({ provider, setIsSigning, ...props }: ProviderSignInProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [redirectUrl, setRedirectUrl] = useState('')
 

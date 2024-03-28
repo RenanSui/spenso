@@ -16,10 +16,7 @@ interface SiteHeaderProps {
 export const SiteHeader = async ({ user }: SiteHeaderProps) => {
   const transactionsGroups = await getTransactionsGroup()
 
-  const SidebarNav = await addTransactionsGroupToNavbarNav(
-    dashboardConfig.SidebarNav,
-    transactionsGroups,
-  )
+  const SidebarNav = await addTransactionsGroupToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-center border-b bg-white dark:border-neutral-900 dark:bg-neutral-950">

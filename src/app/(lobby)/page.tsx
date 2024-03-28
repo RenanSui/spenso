@@ -19,27 +19,16 @@ export default async function Page() {
         />
 
         <div className="sr-only relative z-10 flex h-full flex-col justify-between p-4 px-8">
-          <Link
-            className="text-2xl font-semibold tracking-tight text-black dark:text-white"
-            href="/"
-          >
+          <Link className="text-2xl font-semibold tracking-tight text-black dark:text-white" href="/">
             Spenso
           </Link>
           <p className="text-black dark:text-white">
             Photo by{' '}
-            <a
-              className="hover:underline"
-              href={siteConfig.unsplash.lobby.authorUrl}
-              target="_blank"
-            >
+            <a className="hover:underline" href={siteConfig.unsplash.lobby.authorUrl} target="_blank">
               {siteConfig.unsplash.lobby.author}
             </a>{' '}
             on{' '}
-            <a
-              className="hover:underline"
-              href={siteConfig.unsplash.lobby.imagePageUrl}
-              target="_blank"
-            >
+            <a className="hover:underline" href={siteConfig.unsplash.lobby.imagePageUrl} target="_blank">
               Unsplash
             </a>
           </p>
@@ -51,9 +40,8 @@ export default async function Page() {
           Simple way to manage personal finances
         </h1>
         <span className="max-w-[42rem] leading-normal text-neutral-600 [text-wrap:balance] dark:text-neutral-400 sm:text-xl sm:leading-8">
-          Take charge of your finances with Spenso. Our free budget tracker helps you
-          understand your spending for a brighter financial future. Find Happiness In
-          Budgeting!
+          Take charge of your finances with Spenso. Our free budget tracker helps you understand your spending for a
+          brighter financial future. Find Happiness In Budgeting!
         </span>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link className={buttonVariants()} href="/dashboard/analytics">

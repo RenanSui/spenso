@@ -43,9 +43,7 @@ export const DeleteTransaction = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setIsDisable(false)}>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setIsDisable(false)}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               DeleteTransaction()

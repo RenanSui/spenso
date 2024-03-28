@@ -1,5 +1,5 @@
 import { currencyStateAtom } from '@/atoms/global'
-import { toPositive } from '@/lib/utils'
+import { returnCalculatedValue } from '@/lib/transactions'
 import { CurrencyRates, Transaction } from '@/types'
 import {
   CategoryScale,
@@ -22,15 +22,7 @@ interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
   year: string
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const monthsOfTheYear = [
   'January',
@@ -53,48 +45,20 @@ export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => 
   const data = useMemo(() => {
     const months = monthsOfTheYear.map((month) => month.substring(0, 3))
 
-    const filteredTransactions = transactions.filter((item) => item.year === year)
+    const filteredTransactions = transactions.filter((transaction) => transaction.year === year)
+
     const newTransactions = filteredTransactions.map((item) => {
-      const returnCalculatedAmount = () => {
-        const sum = item.amount
-        const currency = item.currency
-
-        const transactionRates = rates.find((item) => item.base === currency)
-        const currencyRate = transactionRates?.rates[currencyState] ?? 1
-        const newSum = parseFloat((sum * currencyRate).toFixed(2))
-
-        return newSum as number
-      }
-
-      return {
-        ...item,
-        amount: returnCalculatedAmount(),
-      }
-    })
-
-    const getMonths = newTransactions.map((item) => {
       return {
         month: months[new Date(item.date).getMonth()],
-        amount: item.amount,
+        amount: returnCalculatedValue(item.amount, item.currency, rates, currencyState),
       }
     })
 
-    const incomeMonths = removeDuplicatesAndSumMonths(
-      getMonths.filter((item) => item.amount >= 0),
-    )
-    const expenseMonths = removeDuplicatesAndSumMonths(
-      getMonths.filter((item) => item.amount < 0),
-    )
+    const incomeMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount >= 0))
+    const expenseMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount < 0))
 
-    const incomeAmounts = months.map((month) => {
-      const monthData = incomeMonths.find((nMonth) => nMonth.month === month)
-      return monthData?.amount ?? 0
-    })
-
-    const expenseAmounts = months.map((month) => {
-      const monthData = expenseMonths.find((nMonth) => nMonth.month === month)
-      return toPositive(monthData?.amount ?? 0)
-    })
+    const incomeAmounts = months.map((month) => incomeMonths.find((income) => income.month === month) ?? 0)
+    const expenseAmounts = months.map((month) => expenseMonths.find((expense) => expense.month === month) ?? 0)
 
     const incomeDataset = {
       label: 'revenue',

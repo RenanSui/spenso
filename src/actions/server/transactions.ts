@@ -45,10 +45,7 @@ export const getTransactionsById = cache(
     const { supabase } = await getSupabaseClient()
     if (!supabase) return null
 
-    const { data } = await supabase
-      .from('transactions')
-      .select('*')
-      .eq('group_id', groupId)
+    const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
 
     return data
   },
@@ -94,17 +91,11 @@ export const updateTransaction = async (formData: TransactionUpdate) => {
   revalidateAllTransactionsGetters()
 }
 
-export const updateTransactionGroupFromIdToId = async (
-  transactionId: string,
-  groupId: string,
-) => {
+export const updateTransactionGroupFromIdToId = async (transactionId: string, groupId: string) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
-  await supabase
-    .from('transactions')
-    .update({ group_id: groupId })
-    .eq('id', transactionId)
+  await supabase.from('transactions').update({ group_id: groupId }).eq('id', transactionId)
 
   revalidateTransactions()
   revalidateAllTransactionsGetters()

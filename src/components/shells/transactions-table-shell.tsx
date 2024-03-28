@@ -29,11 +29,7 @@ interface TransactionsTableShellProps {
   groupId: string
 }
 
-export function TransactionsTableShell({
-  data: transactions,
-  rates,
-  groupId,
-}: TransactionsTableShellProps) {
+export function TransactionsTableShell({ data: transactions, rates, groupId }: TransactionsTableShellProps) {
   const [currencyState] = useAtom(currencyStateAtom)
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
@@ -62,16 +58,7 @@ export function TransactionsTableShell({
         header: ({ column }) => <SortableHeader column={column}>Type</SortableHeader>,
         cell: ({ row }) => {
           const type = String(row.getValue('type'))
-          return (
-            <span
-              className={cn(
-                'pl-4 capitalize',
-                type === 'expense' ? 'text-red-400' : null,
-              )}
-            >
-              {type}
-            </span>
-          )
+          return <span className={cn('pl-4 capitalize', type === 'expense' ? 'text-red-400' : null)}>{type}</span>
         },
         filterFn: (row, id, value) => {
           return value.includes(row.getValue(id))
@@ -100,13 +87,7 @@ export function TransactionsTableShell({
 
           const formatted = returnFormatted()
 
-          return (
-            <div
-              className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-400' : '')}
-            >
-              {formatted}
-            </div>
-          )
+          return <div className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-400' : '')}>{formatted}</div>
         },
       },
       {
@@ -164,13 +145,7 @@ export function TransactionsTableShell({
   )
 }
 
-const SortableHeader = ({
-  children,
-  column,
-}: {
-  children: ReactNode
-  column: Column<Transaction, unknown>
-}) => (
+const SortableHeader = ({ children, column }: { children: ReactNode; column: Column<Transaction, unknown> }) => (
   <Button
     className="text-xs dark:text-neutral-400 dark:hover:bg-neutral-800"
     variant="ghost"
@@ -215,11 +190,7 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button
-            disabled={isDisable}
-            variant="ghost"
-            className={cn('h-8 w-8 p-0', isDisable ? 'bg-red-400' : '')}
-          >
+          <Button disabled={isDisable} variant="ghost" className={cn('h-8 w-8 p-0', isDisable ? 'bg-red-400' : '')}>
             <span className="sr-only">Open menu</span>
             <MoreHorizontal
               className={cn(
@@ -237,12 +208,8 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
           <DropdownMenuItem onClick={() => handleDelete()} title="destructive">
             Delete
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleUpdate(true)}>
-            Duplicate
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleChangeGroup()}>
-            Change Group
-          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleUpdate(true)}>Duplicate</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleChangeGroup()}>Change Group</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 

@@ -1,9 +1,4 @@
-import {
-  AvatarIcon,
-  DashboardIcon,
-  GearIcon,
-  ListBulletIcon,
-} from '@radix-ui/react-icons'
+import { AvatarIcon, DashboardIcon, GearIcon, ListBulletIcon } from '@radix-ui/react-icons'
 
 type IconProps = React.HTMLAttributes<SVGElement>
 

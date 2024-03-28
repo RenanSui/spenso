@@ -43,8 +43,7 @@ export const DeleteSelectedTransaction = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Transaction</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete all your selected
-            transactions.
+            This action cannot be undone. This will permanently delete all your selected transactions.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,6 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
+import { returnCalculatedValue } from '@/lib/transactions'
 import { cn } from '@/lib/utils'
 import { CurrencyRates, TransactionTypeses } from '@/types'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
@@ -21,36 +22,22 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
 
   const data = useMemo(() => {
     const calculatedTypes = types.map((type) => {
-      const returnCalculatedSum = () => {
-        const sum = type.sum
-        const currency = type.currency
-        const transactionRates = rates.find((item) => item.base === currency)
-        const currencyRate = transactionRates?.rates[currencyState] ?? 1
-        const newSum = parseFloat((sum * currencyRate).toFixed(2))
-        return newSum
-      }
-      return { ...type, sum: returnCalculatedSum() }
+      return { sum: returnCalculatedValue(type.sum, type.currency, rates, currencyState) }
     })
 
     const incomes = calculatedTypes
-      .map((item) => item.sum)
-      .filter((item) => item >= 0) // less or equal 0 only
+      .map((type) => type.sum)
+      .filter((type) => type >= 0) // Only value greater or equal to 0
       .reduce((acc, curr) => acc + curr, 0)
 
     const expenses = calculatedTypes
-      .map((item) => item.sum)
-      .filter((item) => item < 0) // less than 0 only
+      .map((type) => type.sum)
+      .filter((type) => type < 0) // Only values less than 0
       .reduce((acc, curr) => acc + curr, 0)
 
     const newTypes = [
-      {
-        type: 'income',
-        sum: incomes,
-      },
-      {
-        type: 'expense',
-        sum: expenses,
-      },
+      { type: 'income', sum: incomes },
+      { type: 'expense', sum: expenses },
     ]
 
     return {

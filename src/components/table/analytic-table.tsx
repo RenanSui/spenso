@@ -1,20 +1,13 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
+import { returnCalculatedValue } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
 import { CurrencyToggle } from '../currency-toggle'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
 type AnalyticTableProps = {
   transactions: Transaction[]
@@ -26,27 +19,7 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
 
   const data = useMemo(() => {
     return transactions
-      .map((item) => {
-        const returnCalculatedAmount = () => {
-          const amount = item.amount
-          const currency = item.currency
-
-          const transactionRates = rates.find((item) => item.base === currency)
-          const currencyRate = transactionRates?.rates[currencyState] ?? 1
-          const newAmount = parseFloat((amount * currencyRate).toFixed(2))
-
-          return newAmount
-        }
-
-        const calculatedAmount = returnCalculatedAmount()
-
-        return {
-          id: item.id,
-          type: item.type,
-          product: item.product,
-          amount: calculatedAmount,
-        }
-      })
+      .map((item) => ({ ...item, amount: returnCalculatedValue(item.amount, item.currency, rates, currencyState) }))
       .reverse()
       .slice(0, 20)
   }, [currencyState, rates, transactions])
@@ -79,20 +52,11 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
 
             return (
               <TableRow key={id}>
-                <TableCell
-                  className={cn(
-                    'text-sm font-medium capitalize',
-                    type === 'expense' ? 'text-red-400' : null,
-                  )}
-                >
+                <TableCell className={cn('text-sm font-medium capitalize', type === 'expense' ? 'text-red-400' : null)}>
                   {type}
                 </TableCell>
                 <TableCell className="text-xs">{product}</TableCell>
-                <TableCell
-                  className={cn('text-xs', type === 'expense' ? 'text-red-400' : null)}
-                >
-                  {formatted}
-                </TableCell>
+                <TableCell className={cn('text-xs', type === 'expense' ? 'text-red-400' : null)}>{formatted}</TableCell>
               </TableRow>
             )
           })}

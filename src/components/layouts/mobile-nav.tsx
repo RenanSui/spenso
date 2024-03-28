@@ -1,21 +1,12 @@
 'use client'
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
-import type {
-  NavItemWithChildren,
-  NavItemWithOptionalChildren,
-  SidebarNavItem,
-} from '@/types'
+import type { NavItemWithChildren, NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
 import { DashboardIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -76,25 +67,15 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
 
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="pl-1 pr-7">
-            <Accordion
-              type="multiple"
-              defaultValue={navItems.map((item) => item.title)}
-              className="w-full"
-            >
+            <Accordion type="multiple" defaultValue={navItems.map((item) => item.title)} className="w-full">
               {navItems?.map((item, index) => (
                 <AccordionItem value={item.title} key={index}>
-                  <AccordionTrigger className="text-sm capitalize">
-                    {item.title}
-                  </AccordionTrigger>
+                  <AccordionTrigger className="text-sm capitalize">{item.title}</AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col space-y-2">
                       {item.items?.map((subItem, subIndex) => {
                         return subItem.items.length > 0 ? (
-                          <NestedAccordionNavItems
-                            key={subIndex}
-                            item={subItem}
-                            setIsOpen={setIsOpen}
-                          />
+                          <NestedAccordionNavItems key={subIndex} item={subItem} setIsOpen={setIsOpen} />
                         ) : subItem.href ? (
                           <MobileLink
                             key={subIndex}
@@ -106,10 +87,7 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
                             {subItem.title}
                           </MobileLink>
                         ) : (
-                          <div
-                            key={subIndex}
-                            className="text-neutral-400/70 transition-colors"
-                          >
+                          <div key={subIndex} className="text-neutral-400/70 transition-colors">
                             {item.title}
                           </div>
                         )
@@ -131,19 +109,13 @@ interface NestedAccordionNavItemsProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NestedAccordionNavItems = ({
-  item,
-  setIsOpen,
-  ...props
-}: NestedAccordionNavItemsProps) => {
+const NestedAccordionNavItems = ({ item, setIsOpen, ...props }: NestedAccordionNavItemsProps) => {
   const segment = useSelectedLayoutSegment()
 
   return (
     <Accordion type="multiple" defaultValue={[item.title]} className="w-full" {...props}>
       <AccordionItem value={item.title}>
-        <AccordionTrigger className="py-0 text-sm capitalize">
-          {item.title}
-        </AccordionTrigger>
+        <AccordionTrigger className="py-0 text-sm capitalize">{item.title}</AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col space-y-2 pt-2">
             {item.items?.map((subItem, index) =>
@@ -171,14 +143,7 @@ const NestedAccordionNavItems = ({
   )
 }
 
-function MobileLink({
-  children,
-  href,
-  disabled,
-  segment,
-  setIsOpen,
-  className,
-}: MobileLinkProps) {
+function MobileLink({ children, href, disabled, segment, setIsOpen, className }: MobileLinkProps) {
   return (
     <Link
       href={href}

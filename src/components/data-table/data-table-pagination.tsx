@@ -1,18 +1,7 @@
 'use client'
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@radix-ui/react-icons'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { Row, Table } from '@tanstack/react-table'
 import { useState } from 'react'
 import { DeleteSelectedTransaction } from '../transactions/delete-selected-transactions'
@@ -34,8 +23,7 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
       <div className="text-muted-foreground flex flex-1 items-center whitespace-nowrap text-sm">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
         {rows.length !== 0 ? (
           <Button className="mx-2" size="sm" onClick={() => setDelete(true)}>
             Delete Selections

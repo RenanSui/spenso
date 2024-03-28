@@ -1,6 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
+import { returnCalculatedValue } from '@/lib/transactions'
 import { removeArrayDuplicates, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionYears } from '@/types'
 import {
@@ -22,41 +23,21 @@ interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: CurrencyRates[]
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
-export const YearsChart = ({ years: Years, rates }: YearsChartProps) => {
+export const YearsChart = ({ years, rates }: YearsChartProps) => {
   const [currencyState] = useAtom(currencyStateAtom)
 
-  const years = removeArrayDuplicates(Years.map((year) => year.year))
+  const newYears = removeArrayDuplicates(years.map((year) => year.year))
+
   const data = useMemo(() => {
-    const sums = Years.map((year) => {
-      const returnCalculatedSum = () => {
-        const sum = year.sum
-        const currency = year.currency
-
-        const transactionRates = rates.find((item) => item.base === currency)
-        const currencyRate = transactionRates?.rates[currencyState] ?? 1
-        const newSum = parseFloat((sum * currencyRate).toFixed(2))
-
-        return newSum
-      }
-
-      return returnCalculatedSum()
-    })
+    const sums = years.map((year) => returnCalculatedValue(year.sum, year.currency, rates, currencyState))
 
     const incomes = sums.filter((sum) => sum >= 0)
     const expenses = sums.filter((sum) => sum < 0).map((sum) => toPositive(sum))
 
     return {
-      labels: years.map((year) => year),
+      labels: newYears.map((year) => year),
       datasets: [
         {
           label: 'revenue',
@@ -72,7 +53,7 @@ export const YearsChart = ({ years: Years, rates }: YearsChartProps) => {
         },
       ],
     }
-  }, [Years, currencyState, rates, years])
+  }, [currencyState, newYears, rates, years])
 
   return years.length !== 0 ? <Line data={data} /> : null
 }

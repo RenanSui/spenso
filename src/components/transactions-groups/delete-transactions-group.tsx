@@ -20,12 +20,7 @@ interface DeleteTransactionsGroupProps extends HTMLAttributes<HTMLDivElement> {
   setIsDeleting: Dispatch<SetStateAction<boolean>>
 }
 
-export const DeleteTransactionsGroup = ({
-  open,
-  groupId,
-  setOpen,
-  setIsDeleting,
-}: DeleteTransactionsGroupProps) => {
+export const DeleteTransactionsGroup = ({ open, groupId, setOpen, setIsDeleting }: DeleteTransactionsGroupProps) => {
   const DeleteTransactionGroup = async () => {
     setIsDeleting(true)
     await deleteTransactionsGroup(groupId)
@@ -42,12 +37,8 @@ export const DeleteTransactionsGroup = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setIsDeleting(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={() => DeleteTransactionGroup()}>
-              Delete
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={() => setIsDeleting(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => DeleteTransactionGroup()}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

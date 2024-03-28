@@ -6,11 +6,7 @@ import { ButtonHTMLAttributes, useState } from 'react'
 import { Button } from '../ui/button'
 import { Icons } from '../ui/icons'
 
-export const Signout = ({
-  children,
-  className,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const Signout = ({ children, className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (

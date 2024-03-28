@@ -4,13 +4,7 @@ import { removeArrayDuplicates } from '@/lib/utils'
 import { TransactionYears } from '@/types'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from './ui/command'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from './ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 interface YearToggleProps extends HTMLAttributes<HTMLDivElement> {

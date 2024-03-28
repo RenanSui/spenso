@@ -20,10 +20,7 @@ interface TransactionsGroupActionsProps extends HTMLAttributes<HTMLDivElement> {
   title: string
 }
 
-export const TransactionsGroupActions = ({
-  groupId,
-  title,
-}: TransactionsGroupActionsProps) => {
+export const TransactionsGroupActions = ({ groupId, title }: TransactionsGroupActionsProps) => {
   const [isDisabled, setIsDisabled] = useState(false)
 
   const [open, setOpen] = useState(false)

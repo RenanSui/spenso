@@ -1,11 +1,7 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import { getTransactionsById } from '@/actions/server/transactions'
 import { getTransactionsGroupById } from '@/actions/server/transactions-groups'
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/page-header'
+import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { TransactionsGroupActions } from '@/components/transactions-groups/transactions-group-actions'

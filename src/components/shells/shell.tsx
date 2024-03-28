@@ -14,9 +14,7 @@ const shellVariants = cva('grid items-center gap-8 pb-8 pt-6 md:py-8', {
   },
 })
 
-interface ShellProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof shellVariants> {
+interface ShellProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof shellVariants> {
   as?: React.ElementType
 }
 

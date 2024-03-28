@@ -1,11 +1,5 @@
 'use client'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Transaction } from '@/types'
 import { Separator } from '@radix-ui/react-dropdown-menu'
 import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
@@ -38,16 +32,10 @@ export const UpdateTransaction = ({
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="dialog-scroll max-h-screen overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle>
-            {isDuplicateItem ? 'Duplicate' : 'Update'} Transaction
-          </DialogTitle>
+          <DialogTitle>{isDuplicateItem ? 'Duplicate' : 'Update'} Transaction</DialogTitle>
         </DialogHeader>
         <Separator />
-        <TransactionForm
-          formAction={isDuplicateItem ? 'add' : 'update'}
-          setOpen={setOpen}
-          transaction={transaction}
-        />
+        <TransactionForm formAction={isDuplicateItem ? 'add' : 'update'} setOpen={setOpen} transaction={transaction} />
       </DialogContent>
     </Dialog>
   )

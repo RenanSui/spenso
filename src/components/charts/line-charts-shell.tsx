@@ -14,12 +14,7 @@ interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
   transactions: Transaction[]
 }
 
-export const LineChartShell = ({
-  rates,
-  years,
-  className,
-  transactions,
-}: LineChartShell) => {
+export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
   const [isChecked, setChecked] = useState(true)
   const [year, setYear] = useState(years[years.length - 1].year ?? 'XXXX')
 
@@ -47,9 +42,7 @@ export const LineChartShell = ({
         </span>
       </div>
 
-      {!isChecked ? (
-        <MonthsChart transactions={transactions} rates={rates} year={year} />
-      ) : null}
+      {!isChecked ? <MonthsChart transactions={transactions} rates={rates} year={year} /> : null}
       {isChecked ? <YearsChart years={years} rates={rates} /> : null}
     </div>
   )

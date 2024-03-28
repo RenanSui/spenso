@@ -24,12 +24,7 @@ export const OAuthSignIn = () => {
   return (
     <>
       {oauthProviders.map((provider) => (
-        <ProviderSignIn
-          key={provider.name}
-          disabled={isSigning}
-          provider={provider}
-          setIsSigning={setIsSigning}
-        />
+        <ProviderSignIn key={provider.name} disabled={isSigning} provider={provider} setIsSigning={setIsSigning} />
       ))}
     </>
   )

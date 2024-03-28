@@ -1,17 +1,7 @@
 'use client'
 
-import {
-  addTransactionsGroup,
-  updateTransactionsGroup,
-} from '@/actions/server/transactions-groups'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { addTransactionsGroup, updateTransactionsGroup } from '@/actions/server/transactions-groups'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -43,9 +33,7 @@ export const TransactionsGroupForm = ({
     },
   })
 
-  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
-    values: z.infer<typeof formSchema>,
-  ) => {
+  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
     if (formAction === 'add') {
       await addTransactionsGroup({ ...values })
     }

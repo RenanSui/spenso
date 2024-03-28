@@ -3,13 +3,7 @@
 import { SessionUser } from '@/actions/server/user'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import {
-  AvatarIcon,
-  DashboardIcon,
-  ExitIcon,
-  GearIcon,
-  ListBulletIcon,
-} from '@radix-ui/react-icons'
+import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, ListBulletIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import {
   DropdownMenu,

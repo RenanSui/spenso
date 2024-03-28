@@ -8,13 +8,7 @@ interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   separated?: boolean
 }
 
-function PageHeader({
-  className,
-  children,
-  as: Comp = 'section',
-  separated = false,
-  ...props
-}: PageHeaderProps) {
+function PageHeader({ className, children, as: Comp = 'section', separated = false, ...props }: PageHeaderProps) {
   return (
     <Comp className={cn('grid gap-1', className)} {...props}>
       {children}
@@ -42,12 +36,7 @@ interface PageHeaderHeadingProps
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-function PageHeaderHeading({
-  className,
-  size,
-  as: Comp = 'h1',
-  ...props
-}: PageHeaderHeadingProps) {
+function PageHeaderHeading({ className, size, as: Comp = 'h1', ...props }: PageHeaderHeadingProps) {
   return <Comp className={cn(headingVariants({ size, className }))} {...props} />
 }
 
@@ -68,18 +57,8 @@ interface PageHeaderDescriptionProps
   extends React.ComponentProps<typeof Balancer>,
     VariantProps<typeof descriptionVariants> {}
 
-function PageHeaderDescription({
-  className,
-  size,
-  ...props
-}: PageHeaderDescriptionProps) {
-  return (
-    <Balancer
-      as="p"
-      className={cn(descriptionVariants({ size, className }))}
-      {...props}
-    />
-  )
+function PageHeaderDescription({ className, size, ...props }: PageHeaderDescriptionProps) {
+  return <Balancer as="p" className={cn(descriptionVariants({ size, className }))} {...props} />
 }
 
 export { PageHeader, PageHeaderDescription, PageHeaderHeading }

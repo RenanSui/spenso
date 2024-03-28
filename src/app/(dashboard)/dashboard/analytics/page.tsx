@@ -5,11 +5,7 @@ import {
   getTransactionsTypes,
   getTransactionsYears,
 } from '@/actions/server/transactions'
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/page-header'
+import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
 

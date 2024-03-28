@@ -7,20 +7,9 @@ import Link from 'next/link'
 import { useSearchParams, useSelectedLayoutSegment } from 'next/navigation'
 import { useState } from 'react'
 import { TransactionsGroupForm } from '../transactions-groups/transactions-group-form'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '../ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
 import { buttonVariants } from '../ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '../ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Icons } from '../ui/icons'
 import { Separator } from '../ui/separator'
 
@@ -73,9 +62,7 @@ export const SidebarNav = ({ className, items, ...props }: SidebarNavProps) => {
                           <li
                             className={cn(
                               'px-8',
-                              subItem.title === title
-                                ? 'rounded bg-neutral-100 dark:bg-neutral-900'
-                                : '',
+                              subItem.title === title ? 'rounded bg-neutral-100 dark:bg-neutral-900' : '',
                             )}
                             key={`sub-${subIndex}`}
                           >
@@ -91,12 +78,7 @@ export const SidebarNav = ({ className, items, ...props }: SidebarNavProps) => {
                       })}
                     </ul>
                     <Dialog open={open} onOpenChange={setOpen}>
-                      <DialogTrigger
-                        className={cn(
-                          buttonVariants({ size: 'sm', variant: 'outline' }),
-                          'px-6',
-                        )}
-                      >
+                      <DialogTrigger className={cn(buttonVariants({ size: 'sm', variant: 'outline' }), 'px-6')}>
                         <PlusCircledIcon className="h-4 w-4" />
                       </DialogTrigger>
                       <DialogContent className="dialog-scroll max-h-screen overflow-y-scroll">

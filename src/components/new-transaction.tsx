@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import { TransactionForm } from './transactions/transaction-form'
@@ -18,9 +12,7 @@ export const NewTransaction = ({ groupId }: { groupId: string }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={cn(buttonVariants({ size: 'sm' }), 'px-6')}>
-        New
-      </DialogTrigger>
+      <DialogTrigger className={cn(buttonVariants({ size: 'sm' }), 'px-6')}>New</DialogTrigger>
       <DialogContent className="dialog-scroll max-h-screen overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Add Transaction</DialogTitle>

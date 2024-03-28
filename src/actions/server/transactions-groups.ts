@@ -42,8 +42,7 @@ export const getTransactionsGroupById = cache(
     const { supabase } = await getSupabaseClient()
     if (!supabase) return []
 
-    const data =
-      (await supabase.from('transactions_groups').select('*').eq('id', id)).data ?? []
+    const data = (await supabase.from('transactions_groups').select('*').eq('id', id)).data ?? []
 
     return data
   },
@@ -99,7 +98,5 @@ export const deleteTransactionsGroup = async (id: string) => {
 
 const redirectToFirstTransactionGroup = async () => {
   const transactionGroups = await getTransactionsGroup()
-  redirect(
-    `/dashboard/transactions/${transactionGroups[0].id}?title=${transactionGroups[0].title}`,
-  )
+  redirect(`/dashboard/transactions/${transactionGroups[0].id}?title=${transactionGroups[0].title}`)
 }

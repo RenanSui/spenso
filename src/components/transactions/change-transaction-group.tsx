@@ -9,20 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, HTMLAttributes, SetStateAction, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '../ui/dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Separator } from '../ui/separator'
 
 interface ChangeTransactionGroupProps extends HTMLAttributes<HTMLDivElement> {
@@ -54,9 +42,7 @@ export const ChangeTransactionGroup = ({
     },
   })
 
-  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
-    values: z.infer<typeof formSchema>,
-  ) => {
+  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
     if (values.groupId !== transactionGroupId) {
       await updateTransactionGroupFromIdToId(transactionId, values.groupId)
     }

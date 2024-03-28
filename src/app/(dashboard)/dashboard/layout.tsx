@@ -8,20 +8,13 @@ import { dashboardConfig } from '@/config/dashboard'
 import { addTransactionsGroupToNavbarNav } from '@/lib/utils-config'
 import { redirect } from 'next/navigation'
 
-export default async function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await getUser()
   if (!user) redirect('/signin')
 
   const transactionsGroups = await getTransactionsGroup()
 
-  const newSidebarNav = await addTransactionsGroupToNavbarNav(
-    dashboardConfig.SidebarNav,
-    transactionsGroups,
-  )
+  const newSidebarNav = await addTransactionsGroupToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
 
   return (
     <div className="relative flex min-h-screen flex-col">
