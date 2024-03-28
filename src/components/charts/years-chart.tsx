@@ -7,6 +7,7 @@ import { CurrencyRates, TransactionYears } from '@/types'
 import {
   CategoryScale,
   Chart as ChartJS,
+  Filler,
   Legend,
   LineElement,
   LinearScale,
@@ -23,7 +24,8 @@ interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: CurrencyRates[]
 }
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Tooltip, Legend)
+ChartJS.defaults.elements.line.tension = 0.4
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
   const [currencyState] = useAtom(currencyStateAtom)
@@ -43,13 +45,15 @@ export const YearsChart = ({ years, rates }: YearsChartProps) => {
           label: 'revenue',
           data: incomes,
           borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          backgroundColor: 'rgba(53, 162, 235, 0.2)',
+          fill: true,
         },
         {
           label: 'expenses',
           data: expenses,
           borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          fill: true,
         },
       ],
     }

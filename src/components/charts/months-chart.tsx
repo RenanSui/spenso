@@ -1,9 +1,11 @@
 import { currencyStateAtom } from '@/atoms/global'
 import { returnCalculatedValue } from '@/lib/transactions'
+import { toPositive } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import {
   CategoryScale,
   Chart as ChartJS,
+  Filler,
   Legend,
   LineElement,
   LinearScale,
@@ -16,13 +18,13 @@ import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 
 interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
-  // years: TransactionYears[]
   rates: CurrencyRates[]
   transactions: Transaction[]
   year: string
 }
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, Filler, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.defaults.elements.line.tension = 0.4
 
 const monthsOfTheYear = [
   'January',
@@ -57,21 +59,25 @@ export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => 
     const incomeMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount >= 0))
     const expenseMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount < 0))
 
-    const incomeAmounts = months.map((month) => incomeMonths.find((income) => income.month === month) ?? 0)
-    const expenseAmounts = months.map((month) => expenseMonths.find((expense) => expense.month === month) ?? 0)
+    const incomeAmounts = months.map((month) => incomeMonths.find((income) => income.month === month)?.amount ?? 0)
+    const expenseAmounts = months.map((month) =>
+      toPositive(expenseMonths.find((expense) => expense.month === month)?.amount ?? 0),
+    )
 
     const incomeDataset = {
       label: 'revenue',
       data: incomeAmounts,
       borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgba(53, 162, 235, 0.3)',
+      fill: true,
     }
 
     const expenseDataset = {
       label: 'expense',
       data: expenseAmounts,
       borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      backgroundColor: 'rgba(255, 99, 132, 0.3)',
+      fill: true,
     }
 
     return {
