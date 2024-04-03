@@ -9,8 +9,9 @@ export const useCurrencies = () => {
       const currencyRates = Object.keys(data.rates)
       return currencyRates
     },
-    initialData: [],
     gcTime: 0,
     staleTime: 0,
+    initialData: [],
+    refetchOnWindowFocus: false,
   })
 }

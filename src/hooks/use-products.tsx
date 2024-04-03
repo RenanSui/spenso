@@ -14,5 +14,6 @@ export const useProducts = () => {
     },
     initialData: [],
     gcTime: Infinity,
+    refetchOnWindowFocus: false,
   })
 }

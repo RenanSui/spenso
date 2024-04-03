@@ -16,7 +16,6 @@ type GetTransactionGroupsProps = Promise<
 
 export const revalidateTransactionsGroups = async () => {
   revalidateTag('get-transactions-group')
-  revalidateTag('get-transactions-group-by-id')
 }
 
 export const getTransactionsGroup = cache(
@@ -37,18 +36,9 @@ export const getTransactionsGroup = cache(
   { revalidate: false, tags: ['get-transactions-group'] },
 )
 
-export const getTransactionsGroupById = cache(
-  async (id: string) => {
-    const { supabase } = await getSupabaseClient()
-    if (!supabase) return []
-
-    const data = (await supabase.from('transactions_groups').select('*').eq('id', id)).data ?? []
-
-    return data
-  },
-  [],
-  { revalidate: false, tags: ['get-transactions-group-by-id'] },
-)
+export const getTransactionsGroupById = async (id: string) => {
+  return (await getTransactionsGroup())?.find((group) => group.id === id) ?? null
+}
 
 export const addTransactionsGroup = async (formData: TransactionGroupsInsert) => {
   const { supabase, userId } = await getSupabaseClient()

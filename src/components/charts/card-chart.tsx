@@ -1,7 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
-import { returnCalculatedValue } from '@/lib/transactions'
+import { getCurrencyValue } from '@/lib/transactions'
 import { CurrencyRates, Transaction } from '@/types'
 import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
@@ -18,7 +18,7 @@ export const CardChartShell = ({ transactions, className, rates }: CardChartShel
   const calculated = useMemo(() => {
     const sums = transactions.map((item) => {
       const { amount, currency } = item
-      return returnCalculatedValue(amount, currency, rates, currencyState)
+      return getCurrencyValue(amount, currency, rates, currencyState)
     })
 
     const revenue = {

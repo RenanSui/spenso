@@ -1,5 +1,5 @@
 import { currencyStateAtom } from '@/atoms/global'
-import { returnCalculatedValue } from '@/lib/transactions'
+import { getCurrencyValue } from '@/lib/transactions'
 import { toPositive } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import {
@@ -52,7 +52,7 @@ export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => 
     const newTransactions = filteredTransactions.map((item) => {
       return {
         month: months[new Date(item.date).getMonth()],
-        amount: returnCalculatedValue(item.amount, item.currency, rates, currencyState),
+        amount: getCurrencyValue(item.amount, item.currency, rates, currencyState),
       }
     })
 

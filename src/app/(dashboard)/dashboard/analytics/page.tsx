@@ -1,22 +1,18 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import {
-  getTransactions,
-  getTransactionsCategories,
-  getTransactionsTypes,
-  getTransactionsYears,
-} from '@/actions/server/transactions'
+import { getTransactions } from '@/actions/server/transactions'
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
+import { getTransactionsTypes, getTransactionsYears, getTransactionsCategories } from '@/lib/transactions'
 
 export default async function Page() {
   const transactions = await getTransactions()
   if (!transactions) return null
 
-  const categories = await getTransactionsCategories()
-  const types = await getTransactionsTypes()
-  const years = await getTransactionsYears()
-  const allRates = await getAllTransactionsRates(transactions)
+  const types = getTransactionsTypes(transactions)
+  const years = getTransactionsYears(transactions)
+  const categories = getTransactionsCategories(transactions)
+  const allRates = (await getAllTransactionsRates(transactions)) ?? []
 
   return (
     <Shell className="my-4">

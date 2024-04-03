@@ -1,7 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
-import { returnCalculatedValue } from '@/lib/transactions'
+import { getCurrencyValue } from '@/lib/transactions'
 import { cn } from '@/lib/utils'
 import { CurrencyRates, TransactionTypeses } from '@/types'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
@@ -22,7 +22,7 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
 
   const data = useMemo(() => {
     const calculatedTypes = types.map((type) => {
-      return { sum: returnCalculatedValue(type.sum, type.currency, rates, currencyState) }
+      return { sum: getCurrencyValue(type.sum, type.currency, rates, currencyState) }
     })
 
     const incomes = calculatedTypes

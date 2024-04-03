@@ -2,25 +2,41 @@
 
 import { removeArrayDuplicates } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
-import { unstable_cache as cache } from 'next/cache'
 
-export const getRate = cache(
-  async (currency: string) => {
-    const url = `https://api.fxratesapi.com/latest?base=${currency}`
-    const res = await fetch(url)
-    const rate = (await res.json()) as CurrencyRates
-    return rate
-  },
-  [],
-  { revalidate: 60 * 60 * 24, tags: ['get-rate'] },
-)
+export const getRate = async (currency: string) => {
+  const url = `https://api.fxratesapi.com/latest?base=${currency.toUpperCase()}`
+  const res = await fetch(url)
+  const rate = (await res.json()) as CurrencyRates
+  return rate
+}
 
 export const getAllTransactionsRates = async (newTransaction: Transaction[] | null) => {
-  const allCurrencies = newTransaction?.map(({ currency }) => currency) ?? []
+  if (!newTransaction) return null
+
+  const allCurrencies = newTransaction.map(({ currency }) => currency) ?? []
   const newCurrencies = removeArrayDuplicates(allCurrencies)
   const allRates = await Promise.all(newCurrencies.map(async (currency) => await getRate(currency)))
   return allRates
 }
+
+// export const getAllTransactionsRates = async () => {
+//   const transactions = await getTransactions()
+//   if (!transactions) return null
+
+//   const allCurrencies = transactions.map(({ currency }) => currency) ?? []
+//   const newCurrencies = removeArrayDuplicates(allCurrencies)
+
+//   const allRates: CurrencyRates[] | null = await Promise.all(
+//     newCurrencies.map(async (currency) => {
+//       const url = `https://api.fxratesapi.com/latest?base=${currency}`
+//       const res = await fetch(url)
+//       const rate = (await res.json()) as CurrencyRates
+//       return rate
+//     }),
+//   )
+
+//   return allRates
+// }
 
 // export const getTransactionCurrencies = cache(
 //   async () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { currencyStateAtom } from '@/atoms/global'
-import { returnCalculatedValue } from '@/lib/transactions'
+import { getCurrencyValue } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { useAtom } from 'jotai'
@@ -19,7 +19,7 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
 
   const data = useMemo(() => {
     return transactions
-      .map((item) => ({ ...item, amount: returnCalculatedValue(item.amount, item.currency, rates, currencyState) }))
+      .map((item) => ({ ...item, amount: getCurrencyValue(item.amount, item.currency, rates, currencyState) }))
       .reverse()
       .slice(0, 20)
   }, [currencyState, rates, transactions])

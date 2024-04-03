@@ -1,15 +1,11 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import {
-  getTransactionsById,
-  getTransactionsCategoriesByGroupId,
-  getTransactionsTypesByGroupId,
-  getTransactionsYearsByGroupId,
-} from '@/actions/server/transactions'
+import { getTransactionsById } from '@/actions/server/transactions'
 import { getTransactionsGroupById } from '@/actions/server/transactions-groups'
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { getTransactionsYears, getTransactionsTypes, getTransactionsCategories } from '@/lib/transactions'
 import { DotsVerticalIcon, ListBulletIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -17,18 +13,18 @@ import { notFound } from 'next/navigation'
 export default async function Page({ params }: { params: { id: string } }) {
   const { id: groupId } = params
 
+  const group = await getTransactionsGroupById(groupId)
+  if (!group) notFound()
+
   const transactions = await getTransactionsById(groupId)
   if (!transactions) notFound()
 
-  const transactionGroup = await getTransactionsGroupById(groupId)
-  if (transactionGroup.length === 0) notFound()
+  const years = getTransactionsYears(transactions)
+  const types = getTransactionsTypes(transactions)
+  const categories = getTransactionsCategories(transactions)
+  const allRates = (await getAllTransactionsRates(transactions)) ?? []
 
-  const { title } = transactionGroup[0]
-
-  const categories = await getTransactionsCategoriesByGroupId(groupId)
-  const types = await getTransactionsTypesByGroupId(groupId)
-  const years = await getTransactionsYearsByGroupId(groupId)
-  const allRates = await getAllTransactionsRates(transactions)
+  const { title } = group
 
   return (
     <Shell className="my-4">
@@ -51,7 +47,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </PageHeader>
 
       <TransactionAnalyticsShell
-        transactions={transactions}
+        transactions={transactions ?? []}
         categories={categories}
         types={types}
         years={years}

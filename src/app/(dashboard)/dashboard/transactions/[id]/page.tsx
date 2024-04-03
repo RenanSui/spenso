@@ -6,22 +6,22 @@ import { Shell } from '@/components/shells/shell'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { TransactionsGroupActions } from '@/components/transactions-groups/transactions-group-actions'
 import { buttonVariants } from '@/components/ui/button'
-import { sortTransactions } from '@/lib/transactions'
 import { DashboardIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id: groupId } = params
-  const transactionGroup = await getTransactionsGroupById(groupId)
 
-  if (transactionGroup.length === 0) notFound()
-
-  const { title } = transactionGroup[0]
+  const group = await getTransactionsGroupById(groupId)
+  if (!group) notFound()
 
   const transactions = await getTransactionsById(groupId)
-  const newTransaction = sortTransactions(transactions)
-  const allRates = await getAllTransactionsRates(newTransaction)
+  if (!transactions) notFound()
+
+  const allRates = (await getAllTransactionsRates(transactions)) ?? []
+
+  const { title } = group
 
   return (
     <Shell className="my-4">
@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <PageHeaderDescription size="sm">Manage your transactions</PageHeaderDescription>
       </PageHeader>
 
-      <TransactionsTableShell groupId={groupId} data={newTransaction} rates={allRates} />
+      <TransactionsTableShell groupId={groupId} data={transactions} rates={allRates} />
     </Shell>
   )
 }
