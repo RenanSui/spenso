@@ -2,7 +2,7 @@
 
 import { getSupabaseClient } from '@/lib/server'
 import { TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
-import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
+import { unstable_cache as cache, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 type GetTransactionGroupsProps = Promise<
@@ -13,10 +13,6 @@ type GetTransactionGroupsProps = Promise<
     user_id: string | null
   }[]
 >
-
-export const revalidateTransactionsGroups = async () => {
-  revalidateTag('get-transactions-group')
-}
 
 export const getTransactionsGroup = cache(
   async (): GetTransactionGroupsProps => {
@@ -52,12 +48,11 @@ export const addTransactionsGroup = async (formData: TransactionGroupsInsert) =>
   const { data, error } = await supabase
     .from('transactions_groups')
     .insert({ ...formDataWithId })
-    .select()
+    .select('id')
 
   if (!error) {
-    revalidatePath('/dashboard/transactions/')
-    revalidateTransactionsGroups()
-    redirect(`/dashboard/transactions/${data[0].id}?title=${data[0].title}`)
+    revalidateTag('get-transactions-group')
+    redirect(`/dashboard/transactions/${data[0].id}?title=${formData.title}`)
   }
 }
 
@@ -70,8 +65,7 @@ export const updateTransactionsGroup = async (formData: TransactionGroupsUpdate)
     .update({ ...formData })
     .eq('id', formData.id ?? '')
 
-  revalidatePath('/dashboard/transactions')
-  revalidateTransactionsGroups()
+  revalidateTag('get-transactions-group')
 }
 
 export const deleteTransactionsGroup = async (id: string) => {
@@ -81,8 +75,7 @@ export const deleteTransactionsGroup = async (id: string) => {
   await supabase.from('transactions').delete().eq('group_id', id)
   await supabase.from('transactions_groups').delete().eq('id', id)
 
-  revalidatePath('/dashboard/transactions')
-  revalidateTransactionsGroups()
+  revalidateTag('get-transactions-group')
   await redirectToFirstTransactionGroup()
 }
 

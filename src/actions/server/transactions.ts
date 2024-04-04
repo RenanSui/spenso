@@ -3,16 +3,7 @@
 import { getSupabaseClient } from '@/lib/server'
 import { positiveOrNegative } from '@/lib/utils'
 import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
-import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
-
-const revalidateTransactions = () => revalidatePath('/dashboard/transactions/')
-
-export const revalidateAllTransactionsGetters = async () => {
-  revalidateTag('get-transactions')
-
-  // by id
-  revalidateTag('get-transactions-by-id')
-}
+import { unstable_cache as cache, revalidatePath } from 'next/cache'
 
 export const getTransactions = cache(
   async () => {
@@ -71,40 +62,51 @@ export const updateTransaction = async (formData: TransactionUpdate) => {
     .update({ ...formattedData })
     .eq('id', id ?? '')
 
-  revalidateTransactions()
-  revalidateAllTransactionsGetters()
+  revalidatePath(`/dashboard/transactions/${formData.group_id}`)
+  revalidatePath(`/dashboard/analytics`)
 }
 
-export const updateTransactionGroupFromIdToId = async (transactionId: string, groupId: string) => {
+export const updateTransactionGroup = async (transactionId: string, oldGroupId: string, newGroupId: string) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
-  await supabase.from('transactions').update({ group_id: groupId }).eq('id', transactionId)
+  await supabase.from('transactions').update({ group_id: newGroupId }).eq('id', transactionId)
 
-  revalidateTransactions()
-  revalidateAllTransactionsGetters()
+  revalidatePath(`/dashboard/transactions/${oldGroupId}`)
+  revalidatePath(`/dashboard/transactions/${newGroupId}`)
+  revalidatePath(`/dashboard/analytics`)
 }
 
-export const deleteTransaction = async (id: string) => {
+export const deleteTransaction = async (id: string, groupId?: string) => {
   const { supabase, userId } = await getSupabaseClient()
   if (!(supabase && userId)) return
 
   await supabase.from('transactions').delete().eq('id', id)
 
-  revalidateTransactions()
-  revalidateAllTransactionsGetters()
+  revalidatePath(`/dashboard/transactions/${groupId}`)
+  revalidatePath(`/dashboard/analytics`)
 }
 
-export const deleteSelectedTransactions = async (ids: string[]) => {
-  const { supabase, userId } = await getSupabaseClient()
-  if (!(supabase && userId)) return
+// export const deleteSelectedTransactions = async (ids: { id: string; groupId: string }[]) => {
+//   // const { supabase, userId } = await getSupabaseClient()
+//   // if (!(supabase && userId)) return
 
-  const deletePromises = ids.map(async (id) => {
-    await supabase.from('transactions').delete().eq('id', id)
-  })
+//   // const deletePromises = ids.map(async (id) => {
+//   //   await supabase.from('transactions').delete().eq('id', id)
+//   // })
 
-  Promise.all(deletePromises)
+//   // console.log({ids})
+//   // const deletePromises = ids.map(async ({ id, groupId }) => await deleteTransaction(id, groupId))
+//   // Promise.all(deletePromises)
 
-  revalidateTransactions()
-  revalidateAllTransactionsGetters()
-}
+//   // revalidateTransactions()
+//   // revalidateAllTransactionsGetters()
+
+//   ids.forEach(async ({ groupId, id }) => {
+//     await deleteTransaction(id, groupId)
+//     // revalidatePath(`/dashboard/transactions/${groupId}`)
+//   })
+
+//   revalidatePath(`/dashboard/transactions/${ids[0].}`)
+//   revalidatePath(`/dashboard/analytics`)
+// }

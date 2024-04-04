@@ -232,6 +232,7 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
       <DeleteTransaction
         open={openDelete}
         setOpen={setDelete}
+        groupId={transaction.group_id ?? ''}
         transactionId={transaction.id}
         setIsDisable={setIsDisable}
       />

@@ -1,6 +1,6 @@
 'use client'
 
-import { updateTransactionGroupFromIdToId } from '@/actions/server/transactions'
+import { updateTransactionGroup } from '@/actions/server/transactions'
 import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
@@ -44,7 +44,9 @@ export const ChangeTransactionGroup = ({
 
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
     if (values.groupId !== transactionGroupId) {
-      await updateTransactionGroupFromIdToId(transactionId, values.groupId)
+      const oldGroupId = transactionGroupId
+      const newGroupId = values.groupId
+      await updateTransactionGroup(transactionId, oldGroupId, newGroupId)
     }
 
     setOpen(false)

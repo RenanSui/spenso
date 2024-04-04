@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteSelectedTransactions } from '@/actions/server/transactions'
+import { deleteTransaction } from '@/actions/server/transactions'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,8 +32,7 @@ export const DeleteSelectedTransaction = ({
 }: DeleteSelectedTransactionsProps) => {
   const deleteSelections = () => {
     const transactions = rows.map((row) => row.original) as Transaction[]
-    const transactionsId = transactions.map((item) => item.id)
-    deleteSelectedTransactions(transactionsId)
+    transactions.forEach(async (transaction) => await deleteTransaction(transaction.id, transaction.group_id ?? ''))
   }
 
   return (

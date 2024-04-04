@@ -62,7 +62,6 @@ export const TransactionForm = ({
       await addTransaction({
         ...newValues,
         year: new Date(date).getFullYear().toString(),
-        // group_id: groupId ?? '',
         group_id: transaction?.group_id ?? groupId ?? '',
       })
     }
@@ -71,6 +70,7 @@ export const TransactionForm = ({
     if (formAction === 'update' && transaction) {
       await updateTransaction({
         ...newValues,
+        group_id: transaction.group_id,
         year: transaction.year,
         id: transaction.id,
       })
