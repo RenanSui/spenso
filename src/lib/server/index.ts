@@ -1,6 +1,5 @@
 'use server'
 
-import { getUserId } from '@/actions/server/user'
 import { Database } from '@/types/database.types'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
@@ -25,25 +24,11 @@ export const createServerClient = async () => {
     : null
 }
 
-export const createPublicServerClient = async () => {
-  const session = await getServerSession(authOptions)
+export const getSupabaseClient = async () => await createServerClient()
 
-  return session?.supabaseAccessToken
-    ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL ?? '', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '', {
-        db: { schema: 'public' },
-        global: {
-          headers: {
-            Authorization: `Bearer ${session?.supabaseAccessToken ?? ''}`,
-          },
-        },
-      })
-    : null
-}
+export const getSupabaseClientWithUser = async () => {
+  const supabase = await createServerClient()
+  const user = (await supabase?.auth.getUser())?.data.user
 
-export const getSupabaseClient = async () => {
-  return { supabase: await createServerClient(), userId: await getUserId() }
-}
-
-export const getSupabasePublicClient = async () => {
-  return { supabase: await createPublicServerClient() }
+  return { supabase, user }
 }

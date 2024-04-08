@@ -78,3 +78,11 @@ export type CurrencyRates = {
   base: string
   rates: Rates
 }
+
+export type SessionUser = {
+  address: string
+} & {
+  name?: string | null | undefined
+  email?: string | null | undefined
+  image?: string | null | undefined
+}

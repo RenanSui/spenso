@@ -1,13 +1,13 @@
 'use server'
 
-import { getSupabaseClient } from '@/lib/server'
+import { getSupabaseClient, getSupabaseClientWithUser } from '@/lib/server'
 import { positiveOrNegative } from '@/lib/utils'
 import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
 
 export const getTransactions = cache(
   async () => {
-    const { supabase } = await getSupabaseClient()
+    const supabase = await getSupabaseClient()
     if (!supabase) return null
 
     const { data } = await supabase.from('transactions').select('*')
@@ -20,7 +20,7 @@ export const getTransactions = cache(
 
 export const getTransactionsById = cache(
   async (groupId: string) => {
-    const { supabase } = await getSupabaseClient()
+    const supabase = await getSupabaseClient()
     if (!supabase) return null
 
     const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
@@ -32,12 +32,12 @@ export const getTransactionsById = cache(
 )
 
 export const addTransaction = async (formData: TransactionInsert) => {
-  const { supabase, userId } = await getSupabaseClient()
-  if (!(supabase && userId)) return
+  const { supabase, user } = await getSupabaseClientWithUser()
+  if (!supabase || !user) return
 
   const formDataWithId = {
     ...formData,
-    user_id: userId,
+    user_id: user.id,
     amount: positiveOrNegative(formData.type, formData.amount),
   }
 
@@ -48,8 +48,8 @@ export const addTransaction = async (formData: TransactionInsert) => {
 }
 
 export const updateTransaction = async (formData: TransactionUpdate) => {
-  const { supabase, userId } = await getSupabaseClient()
-  if (!(supabase && userId)) return
+  const supabase = await getSupabaseClient()
+  if (!supabase || !formData.type || !formData.amount) return
 
   const { id, ...formDataObj } = formData
   const formattedData = {
@@ -67,8 +67,8 @@ export const updateTransaction = async (formData: TransactionUpdate) => {
 }
 
 export const updateTransactionGroup = async (transactionId: string, oldGroupId: string, newGroupId: string) => {
-  const { supabase, userId } = await getSupabaseClient()
-  if (!(supabase && userId)) return
+  const supabase = await getSupabaseClient()
+  if (!supabase) return
 
   await supabase.from('transactions').update({ group_id: newGroupId }).eq('id', transactionId)
 
@@ -78,8 +78,8 @@ export const updateTransactionGroup = async (transactionId: string, oldGroupId: 
 }
 
 export const deleteTransaction = async (id: string, groupId?: string) => {
-  const { supabase, userId } = await getSupabaseClient()
-  if (!(supabase && userId)) return
+  const supabase = await getSupabaseClient()
+  if (!supabase) return
 
   await supabase.from('transactions').delete().eq('id', id)
 

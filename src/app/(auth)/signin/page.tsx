@@ -1,13 +1,14 @@
-import { getUser } from '@/actions/server/user'
 import { OAuthSignIn } from '@/components/auth/oauth-signin'
 import { siteConfig } from '@/config/site'
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 export default async function Page() {
-  const user = await getUser()
-  if (user) redirect('/signout')
+  const session = await getServerSession(authOptions)
+  if (session?.user) redirect('/signout')
 
   return (
     <section className="flex bg-white text-white dark:bg-black">

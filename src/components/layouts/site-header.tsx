@@ -1,5 +1,4 @@
 import { getTransactionsGroup } from '@/actions/server/transactions-groups'
-import { SessionUser } from '@/actions/server/user'
 import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
 import { addTransactionsGroupToNavbarNav } from '@/lib/utils-config'
@@ -8,12 +7,9 @@ import { buttonVariants } from '../ui/button'
 import { UserDropdown } from '../user-dropdown'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
+import { SessionUser } from '@/types'
 
-interface SiteHeaderProps {
-  user: SessionUser | null
-}
-
-export const SiteHeader = async ({ user }: SiteHeaderProps) => {
+export const SiteHeader = async ({ user }: { user: SessionUser | null | undefined }) => {
   const transactionsGroups = await getTransactionsGroup()
 
   const SidebarNav = await addTransactionsGroupToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)

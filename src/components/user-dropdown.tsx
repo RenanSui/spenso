@@ -1,7 +1,5 @@
 'use client'
 
-import { SessionUser } from '@/actions/server/user'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, ListBulletIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
@@ -14,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import { SessionUser } from '@/types'
 
 export const UserDropdown = ({ user }: { user: SessionUser }) => {
   return (
