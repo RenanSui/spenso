@@ -25,7 +25,7 @@ import { UpdateTransaction } from '../transactions/update-transaction'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
   groupId: string
 }
 
@@ -78,7 +78,7 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
             const amount = parseFloat(row.getValue('amount'))
             const currency = String(row.getValue('currency'))
 
-            const transactionRates = rates.find((item) => item.base === currency)
+            const transactionRates = rates.find((item) => item?.base === currency)
             const currencyRate = transactionRates?.rates[currencyState] ?? 1
             const newAmount = parseFloat((amount * currencyRate).toFixed(2))
 

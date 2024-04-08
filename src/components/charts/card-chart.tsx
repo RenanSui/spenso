@@ -9,7 +9,7 @@ import { AnalyticCard } from '../cards/analytic-card'
 
 type CardChartShellProps = {
   transactions: Transaction[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
 } & HTMLAttributes<HTMLDivElement>
 
 export const CardChartShell = ({ transactions, className, rates }: CardChartShellProps) => {

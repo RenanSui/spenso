@@ -21,7 +21,7 @@ import { Line } from 'react-chartjs-2'
 
 interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
 }
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Tooltip, Legend)
@@ -109,7 +109,7 @@ function sumTransactionsByYear(transactions: TransactionYears[]) {
   return Object.values(yearSums)
 }
 
-function getCalculatedYears(years: TransactionYears[], rates: CurrencyRates[], currencyState: string) {
+function getCalculatedYears(years: TransactionYears[], rates: (CurrencyRates | null)[], currencyState: string) {
   return years.map((year) => ({
     ...year,
     sum: getCurrencyValue(year.sum, year.currency, rates, currencyState),

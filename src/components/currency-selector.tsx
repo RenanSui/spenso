@@ -33,7 +33,7 @@ export const CurrencySelector = ({ value, onChange }: CurrencySelectorProps) => 
           <CommandEmpty>No currencies found.</CommandEmpty>
           <CommandGroup>
             <ScrollArea className="h-32">
-              {currencies.map((currency) => (
+              {currencies?.map((currency) => (
                 <CommandItem
                   key={currency}
                   value={currency}

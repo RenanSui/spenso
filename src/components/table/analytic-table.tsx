@@ -11,7 +11,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 
 type AnalyticTableProps = {
   transactions: Transaction[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
 } & HTMLAttributes<HTMLDivElement>
 
 export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableProps) => {

@@ -2,7 +2,9 @@ import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { redirect } from 'next/navigation'
 
 export default async function Page() {
-  const transactionGroup = await getTransactionsGroup()
+  const transactionsGroup = await getTransactionsGroup()
 
-  redirect(`/dashboard/transactions/${transactionGroup[0].id}?title=${transactionGroup[0].title}`)
+  if (!transactionsGroup || transactionsGroup.length === 0) redirect('/')
+
+  redirect(`/dashboard/transactions/${transactionsGroup[0].id}?title=${transactionsGroup[0].title}`)
 }

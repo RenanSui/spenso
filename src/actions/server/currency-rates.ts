@@ -7,8 +7,11 @@ import { unstable_cache as cache } from 'next/cache'
 export const getRate = cache(
   async (currency: string) => {
     const url = `https://api.fxratesapi.com/latest?base=${currency.toUpperCase()}`
-    const res = await fetch(url)
-    const rate = (await res.json()) as CurrencyRates
+    const response = await fetch(url)
+
+    if (!response.ok) return null
+
+    const rate = (await response.json()) as CurrencyRates
     return rate
   },
   [],

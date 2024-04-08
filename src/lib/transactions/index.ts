@@ -12,8 +12,13 @@ export const sortTransactions = (transactions: Transaction[] | null): Transactio
   return transactions?.sort((item1, item2) => item1.created_at.localeCompare(item2.created_at)).reverse()
 }
 
-export const getCurrencyValue = (value: number, currency: string, rates: CurrencyRates[], currencyState: string) => {
-  const transactionRates = rates.find((item) => item.base === currency)
+export const getCurrencyValue = (
+  value: number,
+  currency: string,
+  rates: (CurrencyRates | null)[],
+  currencyState: string,
+) => {
+  const transactionRates = rates.find((item) => item?.base === currency)
   const currencyRate = transactionRates?.rates[currencyState] ?? 1
   return parseFloat((value * currencyRate).toFixed(2))
 }

@@ -1,12 +1,11 @@
 'use client'
 
 import { updateTransactionGroup } from '@/actions/server/transactions'
-import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { TransactionGroups } from '@/types'
+import { useGroups } from '@/hooks/use-groups'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Dispatch, HTMLAttributes, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
@@ -33,7 +32,7 @@ export const ChangeTransactionGroup = ({
   transactionId,
   transactionGroupId,
 }: ChangeTransactionGroupProps) => {
-  const [transactionsGroups, setTransactionsGroups] = useState<TransactionGroups[]>([])
+  const { data: transactionsGroups } = useGroups()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,14 +50,6 @@ export const ChangeTransactionGroup = ({
 
     setOpen(false)
   }
-
-  useEffect(() => {
-    const fetchTransactionsGroups = async () => {
-      const transactionsGroups = await getTransactionsGroup()
-      setTransactionsGroups(transactionsGroups)
-    }
-    fetchTransactionsGroups()
-  }, [form, transactionGroupId])
 
   return (
     <Dialog
@@ -94,7 +85,7 @@ export const ChangeTransactionGroup = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {transactionsGroups.map((group, index) => {
+                      {transactionsGroups?.map((group, index) => {
                         return (
                           <SelectItem className="capitalize" key={index} value={group.id}>
                             {group.title}

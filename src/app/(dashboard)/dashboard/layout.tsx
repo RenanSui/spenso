@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/layouts/site-header'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { dashboardConfig } from '@/config/dashboard'
 import { authOptions } from '@/lib/auth'
-import { addTransactionsGroupToNavbarNav } from '@/lib/utils-config'
+import { addGroupsToNavbarNav } from '@/lib/utils-config'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
@@ -14,7 +14,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!session?.user) redirect('/signin')
 
   const transactionsGroups = await getTransactionsGroup()
-  const newSidebarNav = await addTransactionsGroupToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
+  const newSidebarNav = transactionsGroups
+    ? await addGroupsToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
+    : dashboardConfig.SidebarNav
 
   return (
     <div className="relative flex min-h-screen flex-col">

@@ -12,7 +12,7 @@ import { Doughnut } from 'react-chartjs-2'
 type TypeChartProps = {
   className: string
   types: TransactionTypeses[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
 }
 
 ChartJS.register(ArcElement, Tooltip, Legend)

@@ -6,6 +6,7 @@ export const useCurrencies = () => {
     queryKey: ['transactions-currencies'],
     queryFn: async () => {
       const data = await getRate('BRL')
+      if (!data) return null
       const currencyRates = Object.keys(data.rates)
       return currencyRates
     },

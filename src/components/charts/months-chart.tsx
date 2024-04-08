@@ -18,7 +18,7 @@ import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 
 interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
   transactions: Transaction[]
   year: string
 }

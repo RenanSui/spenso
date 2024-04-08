@@ -1,6 +1,6 @@
 import { NavItemWithChildren, TransactionGroups } from '@/types'
 
-export const addTransactionsGroupToNavbarNav = async (
+export const addGroupsToNavbarNav = async (
   SidebarNav: NavItemWithChildren[],
   transactionsGroups: TransactionGroups[],
 ) => {

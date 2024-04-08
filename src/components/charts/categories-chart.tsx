@@ -14,7 +14,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 type CategoriesChartProps = {
   className?: string
   categories: TransactionCategories[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
 }
 
 export const CategoriesChart = ({ categories, className, rates }: CategoriesChartProps) => {
@@ -51,7 +51,11 @@ export const CategoriesChart = ({ categories, className, rates }: CategoriesChar
   )
 }
 
-function getCalculatedCategories(categories: TransactionCategories[], rates: CurrencyRates[], currencyState: string) {
+function getCalculatedCategories(
+  categories: TransactionCategories[],
+  rates: (CurrencyRates | null)[],
+  currencyState: string,
+) {
   return categories.map((category) => ({
     ...category,
     sum: getCurrencyValue(category.sum, category.currency, rates, currencyState),

@@ -10,13 +10,13 @@ import { YearsChart } from './years-chart'
 
 interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
-  rates: CurrencyRates[]
+  rates: (CurrencyRates | null)[]
   transactions: Transaction[]
 }
 
 export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
   const [isChecked, setChecked] = useState(true)
-  const [year, setYear] = useState(years[years.length - 1].year ?? 'XXXX') // ?.year ?? 'XXXX'
+  const [year, setYear] = useState(years[years.length - 1]?.year ?? 'XXXX') // ?.year ?? 'XXXX'
 
   return (
     <div

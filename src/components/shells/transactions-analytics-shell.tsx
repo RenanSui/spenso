@@ -10,7 +10,7 @@ type AnalyticsProps = {
   categories: TransactionCategories[]
   types: TransactionTypeses[]
   years: TransactionYears[]
-  allRates: CurrencyRates[]
+  allRates: (CurrencyRates | null)[]
 }
 
 export const TransactionAnalyticsShell = async ({

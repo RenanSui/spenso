@@ -1,26 +1,27 @@
 'use server'
 
 import { getSupabaseClient, getSupabaseClientWithUser } from '@/lib/server'
-import { TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
+import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
 import { unstable_cache as cache, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-type GetTransactionGroupsProps = Promise<
-  {
-    created_at: string
-    id: string
-    title: string
-    user_id: string | null
-  }[]
->
+// type GetTransactionGroupsProps = Promise<
+//   {
+//     created_at: string
+//     id: string
+//     title: string
+//     user_id: string | null
+//   }[] | null
+// >
 
-export async function getTransactionsGroup() {
+export async function getTransactionsGroup(): Promise<TransactionGroups[] | null> {
   return await cache(
-    async (): GetTransactionGroupsProps => {
+    async () => {
       const supabase = await getSupabaseClient()
-      if (!supabase) return []
+      if (!supabase) return null
 
-      const data = (await supabase.from('transactions_groups').select('*')).data ?? []
+      const { data } = await supabase.from('transactions_groups').select('*')
+      if (!data) return null
 
       if (data.length === 0) {
         await addTransactionsGroup({ title: 'Global' })
@@ -35,7 +36,8 @@ export async function getTransactionsGroup() {
 }
 
 export async function getTransactionsGroupById(id: string) {
-  return (await getTransactionsGroup())?.find((group) => group.id === id) ?? null
+  const transactionsGroup = await getTransactionsGroup()
+  return transactionsGroup?.find((group) => group.id === id)
 }
 
 export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
@@ -75,10 +77,10 @@ export async function deleteTransactionsGroup(id: string) {
   await supabase.from('transactions_groups').delete().eq('id', id)
 
   revalidateTag('get-transactions-group')
-  await redirectToFirstTransactionGroup()
+  redirect('/')
 }
 
-async function redirectToFirstTransactionGroup() {
-  const transactionGroups = await getTransactionsGroup()
-  redirect(`/dashboard/transactions/${transactionGroups[0].id}?title=${transactionGroups[0].title}`)
-}
+// async function redirectToFirstTransactionsGroup() {
+//   const transactionsGroup = await getTransactionsGroup()
+//   if (!transactionsGroup) redirect('/')
+// }

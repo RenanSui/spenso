@@ -23,7 +23,7 @@ export const CurrencyToggle = () => {
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-fit justify-between">
-          {value ? currencies.find((currency) => currency === value) : currency}
+          {value ? currencies?.find((currency) => currency === value) : currency}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -40,7 +40,7 @@ export const CurrencyToggle = () => {
                   })}
                 </div>
               ) : (
-                currencies.map((currency) => (
+                currencies?.map((currency) => (
                   <CommandItem
                     key={currency}
                     value={currency}

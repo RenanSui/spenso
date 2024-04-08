@@ -1,7 +1,7 @@
 import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
-import { addTransactionsGroupToNavbarNav } from '@/lib/utils-config'
+import { addGroupsToNavbarNav } from '@/lib/utils-config'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { UserDropdown } from '../user-dropdown'
@@ -12,7 +12,9 @@ import { SessionUser } from '@/types'
 export const SiteHeader = async ({ user }: { user: SessionUser | null | undefined }) => {
   const transactionsGroups = await getTransactionsGroup()
 
-  const SidebarNav = await addTransactionsGroupToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
+  const SidebarNav = transactionsGroups
+    ? await addGroupsToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
+    : dashboardConfig.SidebarNav
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-center border-b bg-white dark:border-neutral-900 dark:bg-neutral-950">
