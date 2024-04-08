@@ -11,15 +11,15 @@ export const SiteFooter = () => {
       <div
         id="footer-bottom"
         aria-labelledby="footer-bottom-heading"
-        className="flex items-center justify-between space-x-4"
+        className="mx-auto flex max-w-[1440px] items-center justify-between space-x-4"
       >
-        <div className="text-muted-foreground flex-1 text-left text-sm leading-loose">
+        <div className="flex-1 text-left text-sm leading-loose dark:text-neutral-400">
           Built by{' '}
           <Link
             href={siteConfig.links.githubAccount}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground font-semibold transition-colors"
+            className="font-semibold transition-colors hover:underline dark:hover:text-neutral-100"
           >
             Renansui
             <span className="sr-only">Twitter</span>
