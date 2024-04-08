@@ -14,29 +14,31 @@ type GetTransactionGroupsProps = Promise<
   }[]
 >
 
-export const getTransactionsGroup = cache(
-  async (): GetTransactionGroupsProps => {
-    const supabase = await getSupabaseClient()
-    if (!supabase) return []
+export async function getTransactionsGroup() {
+  return await cache(
+    async (): GetTransactionGroupsProps => {
+      const supabase = await getSupabaseClient()
+      if (!supabase) return []
 
-    const data = (await supabase.from('transactions_groups').select('*')).data ?? []
+      const data = (await supabase.from('transactions_groups').select('*')).data ?? []
 
-    if (data.length === 0) {
-      await addTransactionsGroup({ title: 'Global' })
-      return getTransactionsGroup()
-    }
+      if (data.length === 0) {
+        await addTransactionsGroup({ title: 'Global' })
+        return getTransactionsGroup()
+      }
 
-    return data
-  },
-  [],
-  { revalidate: false, tags: ['get-transactions-group'] },
-)
+      return data
+    },
+    ['transactions-group'],
+    { revalidate: false, tags: ['transactions-group'] },
+  )()
+}
 
-export const getTransactionsGroupById = async (id: string) => {
+export async function getTransactionsGroupById(id: string) {
   return (await getTransactionsGroup())?.find((group) => group.id === id) ?? null
 }
 
-export const addTransactionsGroup = async (formData: TransactionGroupsInsert) => {
+export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
   const { supabase, user } = await getSupabaseClientWithUser()
   if (!supabase || !user) return
 
@@ -53,7 +55,7 @@ export const addTransactionsGroup = async (formData: TransactionGroupsInsert) =>
   }
 }
 
-export const updateTransactionsGroup = async (formData: TransactionGroupsUpdate) => {
+export async function updateTransactionsGroup(formData: TransactionGroupsUpdate) {
   const supabase = await getSupabaseClient()
   if (!supabase || !formData.id) return
 
@@ -65,7 +67,7 @@ export const updateTransactionsGroup = async (formData: TransactionGroupsUpdate)
   revalidateTag('get-transactions-group')
 }
 
-export const deleteTransactionsGroup = async (id: string) => {
+export async function deleteTransactionsGroup(id: string) {
   const supabase = await getSupabaseClient()
   if (!supabase) return
 
@@ -76,7 +78,7 @@ export const deleteTransactionsGroup = async (id: string) => {
   await redirectToFirstTransactionGroup()
 }
 
-const redirectToFirstTransactionGroup = async () => {
+async function redirectToFirstTransactionGroup() {
   const transactionGroups = await getTransactionsGroup()
   redirect(`/dashboard/transactions/${transactionGroups[0].id}?title=${transactionGroups[0].title}`)
 }

@@ -2,36 +2,40 @@
 
 import { getSupabaseClient, getSupabaseClientWithUser } from '@/lib/server'
 import { positiveOrNegative } from '@/lib/utils'
-import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
+import { TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
 
-export const getTransactions = cache(
-  async () => {
-    const supabase = await getSupabaseClient()
-    if (!supabase) return null
+export async function getTransactions() {
+  return await cache(
+    async () => {
+      const supabase = await getSupabaseClient()
+      if (!supabase) return null
 
-    const { data } = await supabase.from('transactions').select('*')
+      const { data } = await supabase.from('transactions').select('*')
 
-    return data
-  },
-  [],
-  { revalidate: false, tags: ['get-transactions'] },
-)
+      return data
+    },
+    ['transactions'],
+    { revalidate: false, tags: ['transactions'] },
+  )()
+}
 
-export const getTransactionsById = cache(
-  async (groupId: string) => {
-    const supabase = await getSupabaseClient()
-    if (!supabase) return null
+export async function getTransactionsById(groupId: string) {
+  return await cache(
+    async () => {
+      const supabase = await getSupabaseClient()
+      if (!supabase) return null
 
-    const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
+      const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
 
-    return data as Transaction[] | null
-  },
-  [],
-  { revalidate: false, tags: ['get-transactions-by-id'] },
-)
+      return data
+    },
+    [`transactions-${groupId}`],
+    { revalidate: false, tags: [`transactions-${groupId}`] },
+  )()
+}
 
-export const addTransaction = async (formData: TransactionInsert) => {
+export async function addTransaction(formData: TransactionInsert) {
   const { supabase, user } = await getSupabaseClientWithUser()
   if (!supabase || !user) return
 
@@ -47,7 +51,7 @@ export const addTransaction = async (formData: TransactionInsert) => {
   revalidatePath(`/dashboard/analytics`)
 }
 
-export const updateTransaction = async (formData: TransactionUpdate) => {
+export async function updateTransaction(formData: TransactionUpdate) {
   const supabase = await getSupabaseClient()
   if (!supabase || !formData.type || !formData.amount) return
 
@@ -66,7 +70,7 @@ export const updateTransaction = async (formData: TransactionUpdate) => {
   revalidatePath(`/dashboard/analytics`)
 }
 
-export const updateTransactionGroup = async (transactionId: string, oldGroupId: string, newGroupId: string) => {
+export async function updateTransactionGroup(transactionId: string, oldGroupId: string, newGroupId: string) {
   const supabase = await getSupabaseClient()
   if (!supabase) return
 
@@ -77,7 +81,7 @@ export const updateTransactionGroup = async (transactionId: string, oldGroupId: 
   revalidatePath(`/dashboard/analytics`)
 }
 
-export const deleteTransaction = async (id: string, groupId?: string) => {
+export async function deleteTransaction(id: string, groupId?: string) {
   const supabase = await getSupabaseClient()
   if (!supabase) return
 
@@ -86,27 +90,3 @@ export const deleteTransaction = async (id: string, groupId?: string) => {
   revalidatePath(`/dashboard/transactions/${groupId}`)
   revalidatePath(`/dashboard/analytics`)
 }
-
-// export const deleteSelectedTransactions = async (ids: { id: string; groupId: string }[]) => {
-//   // const { supabase, userId } = await getSupabaseClient()
-//   // if (!(supabase && userId)) return
-
-//   // const deletePromises = ids.map(async (id) => {
-//   //   await supabase.from('transactions').delete().eq('id', id)
-//   // })
-
-//   // console.log({ids})
-//   // const deletePromises = ids.map(async ({ id, groupId }) => await deleteTransaction(id, groupId))
-//   // Promise.all(deletePromises)
-
-//   // revalidateTransactions()
-//   // revalidateAllTransactionsGetters()
-
-//   ids.forEach(async ({ groupId, id }) => {
-//     await deleteTransaction(id, groupId)
-//     // revalidatePath(`/dashboard/transactions/${groupId}`)
-//   })
-
-//   revalidatePath(`/dashboard/transactions/${ids[0].}`)
-//   revalidatePath(`/dashboard/analytics`)
-// }

@@ -11,12 +11,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const { id: groupId } = params
-
-  const group = await getTransactionsGroupById(groupId)
+  const group = await getTransactionsGroupById(params.id)
   if (!group) notFound()
 
-  const transactions = await getTransactionsById(groupId)
+  const transactions = await getTransactionsById(params.id)
   if (!transactions) notFound()
 
   const years = getTransactionsYears(transactions)
@@ -24,17 +22,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   const categories = getTransactionsCategories(transactions)
   const allRates = (await getAllTransactionsRates(transactions)) ?? []
 
-  const { title } = group
-
   return (
     <Shell className="my-4">
       <PageHeader separated>
         <PageHeaderHeading size="sm" className="flex items-center justify-between">
-          {title}
+          {group.title}
           <div className="flex items-center justify-center gap-1">
             <Link
               className={buttonVariants({ variant: 'ghost', size: 'icon' })}
-              href={`/dashboard/transactions/${groupId}?title=${title}`}
+              href={`/dashboard/transactions/${params.id}?title=${group.title}`}
             >
               <ListBulletIcon className="h-5 w-5" />
             </Link>
