@@ -24,11 +24,11 @@ export const createServerClient = async () => {
     : null
 }
 
-export const getSupabaseClient = async () => await createServerClient()
+export const getSupabaseServerClient = async () => await createServerClient()
 
-export const getSupabaseClientWithUser = async () => {
+export const getSupabaseServerClientWithUser = async () => {
   const supabase = await createServerClient()
-  const user = (await supabase?.auth.getUser())?.data.user
+  const user = (await supabase?.from('users').select('id'))?.data?.[0]
 
   return { supabase, user }
 }
