@@ -1,38 +1,36 @@
 'use server'
 
-import { getSupabaseClient, getSupabaseClientWithUser } from '@/lib/server'
+import { authOptions } from '@/lib/auth'
+import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
+import { getServerSession } from 'next-auth'
 import { unstable_cache as cache, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-// type GetTransactionGroupsProps = Promise<
-//   {
-//     created_at: string
-//     id: string
-//     title: string
-//     user_id: string | null
-//   }[] | null
-// >
-
 export async function getTransactionsGroup(): Promise<TransactionGroups[] | null> {
-  return await cache(
-    async () => {
-      const supabase = await getSupabaseClient()
-      if (!supabase) return null
+  const session = await getServerSession(authOptions)
+  const email = session?.user.email
 
-      const { data } = await supabase.from('transactions_groups').select('*')
-      if (!data) return null
+  return email
+    ? await cache(
+        async () => {
+          const supabase = await getSupabaseServerClient()
+          if (!supabase) return null
 
-      if (data.length === 0) {
-        await addTransactionsGroup({ title: 'Global' })
-        return getTransactionsGroup()
-      }
+          const { data } = await supabase.from('transactions_groups').select('*')
+          if (!data) return null
 
-      return data
-    },
-    ['transactions-group'],
-    { revalidate: false, tags: ['transactions-group'] },
-  )()
+          if (data.length === 0) {
+            await addTransactionsGroup({ title: 'Global' })
+            return getTransactionsGroup()
+          }
+
+          return data
+        },
+        [`transactions-group-${email}`],
+        { revalidate: false, tags: [`transactions-group-${email}`] },
+      )()
+    : null
 }
 
 export async function getTransactionsGroupById(id: string) {
@@ -41,7 +39,7 @@ export async function getTransactionsGroupById(id: string) {
 }
 
 export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
-  const { supabase, user } = await getSupabaseClientWithUser()
+  const { supabase, user } = await getSupabaseServerClientWithUser()
   if (!supabase || !user) return
 
   const formDataWithId = { ...formData, user_id: user.id }
@@ -58,7 +56,7 @@ export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
 }
 
 export async function updateTransactionsGroup(formData: TransactionGroupsUpdate) {
-  const supabase = await getSupabaseClient()
+  const supabase = await getSupabaseServerClient()
   if (!supabase || !formData.id) return
 
   await supabase
@@ -70,7 +68,7 @@ export async function updateTransactionsGroup(formData: TransactionGroupsUpdate)
 }
 
 export async function deleteTransactionsGroup(id: string) {
-  const supabase = await getSupabaseClient()
+  const supabase = await getSupabaseServerClient()
   if (!supabase) return
 
   await supabase.from('transactions').delete().eq('group_id', id)
