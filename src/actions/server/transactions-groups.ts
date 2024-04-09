@@ -3,7 +3,6 @@
 import { authOptions } from '@/lib/auth'
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
-import console from 'console'
 import { getServerSession } from 'next-auth'
 import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -89,6 +88,5 @@ export async function deleteTransactionsGroup(id: string) {
 async function revalidateGroup() {
   const session = await getServerSession(authOptions)
   const email = session?.user.email
-  console.log({ email })
   revalidateTag(`transactions-group-${email}`)
 }
