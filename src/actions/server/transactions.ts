@@ -6,21 +6,6 @@ import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
 import { getTransactionsGroup } from './transactions-groups'
 
-// export async function getTransactions() {
-//   return await cache(
-//     async () => {
-//       const supabase = await getSupabaseServerClient()
-//       if (!supabase) return null
-
-//       const { data } = await supabase.from('transactions').select('*')
-
-//       return data
-//     },
-//     ['transactions'],
-//     { revalidate: false, tags: ['transactions'] },
-//   )()
-// }
-
 export async function getTransactions() {
   const supabase = await getSupabaseServerClient()
   if (!supabase) return null
@@ -28,15 +13,13 @@ export async function getTransactions() {
   const groups = await getTransactionsGroup()
   if (!groups) return null
 
-  console.log(groups.length)
-
   const transactions: Transaction[] = []
   const ids = groups.map((map) => map.id)
 
   for (const groupId of ids) {
     const transactionsById = await getTransactionsById(groupId)
+
     if (transactionsById !== null) {
-      console.log(groupId)
       transactions.push(...transactionsById)
     }
   }
@@ -72,7 +55,6 @@ export async function addTransaction(formData: TransactionInsert) {
   await supabase.from('transactions').insert({ ...formDataWithId })
 
   revalidatePath(`/dashboard/transactions/${formData.group_id}`)
-  revalidatePath(`/dashboard/analytics`)
 }
 
 export async function updateTransaction(formData: TransactionUpdate) {
@@ -91,7 +73,6 @@ export async function updateTransaction(formData: TransactionUpdate) {
     .eq('id', id ?? '')
 
   revalidatePath(`/dashboard/transactions/${formData.group_id}`)
-  revalidatePath(`/dashboard/analytics`)
 }
 
 export async function updateTransactionGroup(transactionId: string, oldGroupId: string, newGroupId: string) {
@@ -102,7 +83,6 @@ export async function updateTransactionGroup(transactionId: string, oldGroupId: 
 
   revalidatePath(`/dashboard/transactions/${oldGroupId}`)
   revalidatePath(`/dashboard/transactions/${newGroupId}`)
-  revalidatePath(`/dashboard/analytics`)
 }
 
 export async function deleteTransaction(id: string, groupId?: string) {
@@ -112,5 +92,4 @@ export async function deleteTransaction(id: string, groupId?: string) {
   await supabase.from('transactions').delete().eq('id', id)
 
   revalidatePath(`/dashboard/transactions/${groupId}`)
-  revalidatePath(`/dashboard/analytics`)
 }
