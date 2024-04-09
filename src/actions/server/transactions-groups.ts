@@ -3,18 +3,26 @@
 import { authOptions } from '@/lib/auth'
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
+import console from 'console'
 import { getServerSession } from 'next-auth'
-import { unstable_cache as cache, revalidateTag } from 'next/cache'
+import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function getTransactionsGroup(): Promise<TransactionGroups[] | null> {
-  const session = await getServerSession(authOptions)
-  const email = session?.user.email
+type SupabaseCacheFn = {
+  supabase: ReturnType<typeof getSupabaseServerClient>
+  email: string | null | undefined
+}
 
-  return email
+export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Promise<TransactionGroups[] | null> {
+  const fnCache = supabaseCache || {
+    supabase: getSupabaseServerClient(),
+    email: (await getServerSession(authOptions))?.user.email,
+  }
+
+  return fnCache.email
     ? await cache(
         async () => {
-          const supabase = await getSupabaseServerClient()
+          const supabase = await fnCache.supabase
           if (!supabase) return null
 
           const { data } = await supabase.from('transactions_groups').select('*')
@@ -22,13 +30,13 @@ export async function getTransactionsGroup(): Promise<TransactionGroups[] | null
 
           if (data.length === 0) {
             await addTransactionsGroup({ title: 'Global' })
-            return getTransactionsGroup()
+            return getTransactionsGroup(fnCache)
           }
 
           return data
         },
-        [`transactions-group-${email}`],
-        { revalidate: false, tags: [`transactions-group-${email}`] },
+        [`transactions-group-${fnCache.email}`],
+        { revalidate: false, tags: [`transactions-group-${fnCache.email}`] },
       )()
     : null
 }
@@ -50,7 +58,7 @@ export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
     .select('id')
 
   if (!error) {
-    revalidateTag('get-transactions-group')
+    revalidateGroup()
     redirect(`/dashboard/transactions/${data[0].id}?title=${formData.title}`)
   }
 }
@@ -64,7 +72,7 @@ export async function updateTransactionsGroup(formData: TransactionGroupsUpdate)
     .update({ ...formData })
     .eq('id', formData.id)
 
-  revalidateTag('get-transactions-group')
+  revalidatePath(`/dashboard/transactions/${formData.id}`)
 }
 
 export async function deleteTransactionsGroup(id: string) {
@@ -74,11 +82,13 @@ export async function deleteTransactionsGroup(id: string) {
   await supabase.from('transactions').delete().eq('group_id', id)
   await supabase.from('transactions_groups').delete().eq('id', id)
 
-  revalidateTag('get-transactions-group')
-  redirect('/')
+  revalidateGroup()
+  redirect('/dashboard/transactions/')
 }
 
-// async function redirectToFirstTransactionsGroup() {
-//   const transactionsGroup = await getTransactionsGroup()
-//   if (!transactionsGroup) redirect('/')
-// }
+async function revalidateGroup() {
+  const session = await getServerSession(authOptions)
+  const email = session?.user.email
+  console.log({ email })
+  revalidateTag(`transactions-group-${email}`)
+}
