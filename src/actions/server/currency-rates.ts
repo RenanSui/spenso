@@ -4,19 +4,21 @@ import { removeArrayDuplicates } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { unstable_cache as cache } from 'next/cache'
 
-export const getRate = cache(
-  async (currency: string) => {
-    const url = `https://api.fxratesapi.com/latest?base=${currency.toUpperCase()}`
-    const response = await fetch(url)
+export async function getRate(currency: string) {
+  return await cache(
+    async () => {
+      const url = `https://api.fxratesapi.com/latest?base=${currency.toUpperCase()}`
+      const response = await fetch(url)
 
-    if (!response.ok) return null
+      if (!response.ok) return null
 
-    const rate = (await response.json()) as CurrencyRates
-    return rate
-  },
-  [],
-  { revalidate: false, tags: ['get-rates'] },
-)
+      const rate = (await response.json()) as CurrencyRates
+      return rate
+    },
+    [`rates-${currency}`],
+    { revalidate: 60 * 60 * 24, tags: [`rates-${currency}`] },
+  )()
+}
 
 export const getAllTransactionsRates = async (newTransaction: Transaction[] | null) => {
   if (!newTransaction) return null
