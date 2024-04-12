@@ -7,6 +7,8 @@
     "build": "pnpm run lint && next build",
     "build:test": "pnpm run test && pnpm run build",
     "start": "next start",
+    "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start && pnpm run dev",
+    "db:stop": "pnpm dlx supabase stop && wsl --shutdown",
     "lint": "next lint --fix",
     "test": "vitest ",
     "test:coverage": "vitest run --coverage",
