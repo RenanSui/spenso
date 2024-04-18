@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   creator: 'renansui',
   openGraph: {
     type: 'website',
-    locale: 'pt_BR',
+    locale: 'en',
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/opengraph-image.png`],
-    creator: '@LichterRenan',
+    creator: '@adsjksui',
   },
   icons: {
     icon: '/favicon.ico',
