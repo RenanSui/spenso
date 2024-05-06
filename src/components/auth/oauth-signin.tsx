@@ -15,17 +15,17 @@ export type OAuthProviders = {
 const oauthProviders: OAuthProviders[] = [
   { name: 'Google', providerType: 'google', icon: 'google' },
   { name: 'Discord', providerType: 'discord', icon: 'discord' },
-  { name: 'Github', providerType: 'github', icon: 'github' },
+  // { name: 'Github', providerType: 'github', icon: 'github' },
 ]
 
 export const OAuthSignIn = () => {
   const [isSigning, setIsSigning] = useState(false)
 
   return (
-    <>
+    <div className="grid grid-cols-2 gap-4">
       {oauthProviders.map((provider) => (
         <ProviderSignIn key={provider.name} disabled={isSigning} provider={provider} setIsSigning={setIsSigning} />
       ))}
-    </>
+    </div>
   )
 }
