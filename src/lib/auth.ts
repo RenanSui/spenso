@@ -1,10 +1,12 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
 import jwt from 'jsonwebtoken'
-import { AuthOptions } from 'next-auth'
+import { AuthOptions, getServerSession } from 'next-auth'
 import type { Adapter } from 'next-auth/adapters'
 import DiscordProvider from 'next-auth/providers/discord'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
+
+export const getUser = async () => (await getServerSession(authOptions))?.user
 
 export const authOptions: AuthOptions = {
   providers: [
