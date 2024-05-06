@@ -22,7 +22,7 @@ export const OAuthSignIn = () => {
   const [isSigning, setIsSigning] = useState(false)
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {oauthProviders.map((provider) => (
         <ProviderSignIn key={provider.name} disabled={isSigning} provider={provider} setIsSigning={setIsSigning} />
       ))}
