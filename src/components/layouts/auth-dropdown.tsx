@@ -1,4 +1,4 @@
-import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, ListBulletIcon } from '@radix-ui/react-icons'
+import { ExitIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -10,11 +10,11 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 import { User } from '@/types'
+import { Icons } from '../ui/icons'
 
 interface AuthDropdownProps extends React.ComponentPropsWithRef<typeof DropdownMenuTrigger>, ButtonProps {
   user: User | null
@@ -45,27 +45,21 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild className="pointer-events-none opacity-60">
-                <Link href="/dashboard/account">
-                  <AvatarIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              <DropdownMenuItem asChild>
+                <Link href={'/dashboard/groups'}>
+                  <Icons.dashboardIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={'/dashboard/account'} className="pointer-events-none opacity-60">
+                  <Icons.avatarIcon className="mr-2 h-4 w-4" aria-hidden="true" />
                   Account
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/analytics">
-                  <DashboardIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Analytics
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/transactions">
-                  <ListBulletIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Transactions
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="pointer-events-none opacity-60">
-                <Link href="/dashboard/settings">
-                  <GearIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Link href={'/dashboard/settings'} className="pointer-events-none opacity-60">
+                  <Icons.gearIcon className="mr-2 h-4 w-4" aria-hidden="true" />
                   Settings
                 </Link>
               </DropdownMenuItem>
@@ -75,7 +69,6 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
               <Link href="/signout">
                 <ExitIcon className="mr-2 size-4" aria-hidden="true" />
                 Log out
-                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
