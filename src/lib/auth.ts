@@ -6,7 +6,11 @@ import DiscordProvider from 'next-auth/providers/discord'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
-export const getUser = async () => (await getServerSession(authOptions))?.user
+export const getUser = async () => {
+  const session = await getServerSession(authOptions)
+  const user = session?.user
+  return user as (typeof user & { id: string | null | undefined }) | undefined
+}
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -44,7 +48,7 @@ export const authOptions: AuthOptions = {
         session.supabaseAccessToken = jwt.sign(payload, signingSecret)
       }
 
-      return session
+      return { ...session, user }
     },
   },
 }
