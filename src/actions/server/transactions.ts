@@ -4,13 +4,13 @@ import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/
 import { positiveOrNegative } from '@/lib/utils'
 import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
-import { getTransactionsGroup } from './transactions-groups'
+import { getGroups } from './transactions-groups'
 
 export async function getTransactions() {
   const supabase = await getSupabaseServerClient()
   if (!supabase) return null
 
-  const groups = await getTransactionsGroup()
+  const groups = await getGroups()
   if (!groups) return null
 
   const transactions: Transaction[] = []

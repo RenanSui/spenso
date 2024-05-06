@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteTransactionsGroup } from '@/actions/server/transactions-groups'
+import { deleteGroup } from '@/actions/server/transactions-groups'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +23,7 @@ interface DeleteTransactionsGroupProps extends HTMLAttributes<HTMLDivElement> {
 export const DeleteTransactionsGroup = ({ open, groupId, setOpen, setIsDeleting }: DeleteTransactionsGroupProps) => {
   const DeleteTransactionGroup = async () => {
     setIsDeleting(true)
-    await deleteTransactionsGroup(groupId)
+    await deleteGroup(groupId)
   }
 
   return (

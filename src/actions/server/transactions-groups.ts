@@ -12,7 +12,7 @@ type SupabaseCacheFn = {
   email: string | null | undefined
 }
 
-export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Promise<TransactionGroups[] | null> {
+export async function getGroups(supabaseCache?: SupabaseCacheFn): Promise<TransactionGroups[] | null> {
   const fnCache = supabaseCache || {
     supabase: getSupabaseServerClient(),
     email: (await getUser())?.email,
@@ -28,8 +28,8 @@ export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Pro
           if (!data) return null
 
           if (data.length === 0) {
-            await addTransactionsGroup({ title: 'Global' })
-            return getTransactionsGroup(fnCache)
+            await addGroup({ title: 'Global' })
+            return getGroups(fnCache)
           }
 
           return data
@@ -40,21 +40,22 @@ export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Pro
     : null
 }
 
-export async function getTransactionsGroupBySearch(input: string) {
-  const transactionsGroup = await getTransactionsGroup()
+export async function getGroupBySearch(input: string) {
+  const groups = await getGroups()
   const cleanInput = normalizeString(input.toLowerCase())
-  return transactionsGroup?.filter((group) => {
+
+  return groups?.filter((group) => {
     const cleanTitle = normalizeString(group.title.toLowerCase())
     return cleanTitle.includes(cleanInput)
   })
 }
 
-export async function getTransactionsGroupById(id: string) {
-  const transactionsGroup = await getTransactionsGroup()
-  return transactionsGroup?.find((group) => group.id === id)
+export async function getGroupById(id: string) {
+  const groups = await getGroups()
+  return groups?.find((group) => group.id === id)
 }
 
-export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
+export async function addGroup(formData: TransactionGroupsInsert) {
   const { supabase, user } = await getSupabaseServerClientWithUser()
   if (!supabase || !user) return null
 
@@ -66,7 +67,7 @@ export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
     .select('*')
 }
 
-export async function updateTransactionsGroup(formData: TransactionGroupsUpdate) {
+export async function updateGroup(formData: TransactionGroupsUpdate) {
   const supabase = await getSupabaseServerClient()
   if (!supabase || !formData.id) return
 
@@ -78,7 +79,7 @@ export async function updateTransactionsGroup(formData: TransactionGroupsUpdate)
   revalidatePath(`/dashboard/transactions/${formData.id}`)
 }
 
-export async function deleteTransactionsGroup(id: string) {
+export async function deleteGroup(id: string) {
   const supabase = await getSupabaseServerClient()
   if (!supabase) return
 

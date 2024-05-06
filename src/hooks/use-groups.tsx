@@ -1,11 +1,11 @@
-import { getTransactionsGroup } from '@/actions/server/transactions-groups'
+import { getGroups } from '@/actions/server/transactions-groups'
 import { useQuery } from '@tanstack/react-query'
 
 export function useGroups() {
   return useQuery({
     queryKey: ['transactions-groups'],
     queryFn: async () => {
-      const transactionsGroups = await getTransactionsGroup()
+      const transactionsGroups = await getGroups()
       if (!transactionsGroups) return null
       return transactionsGroups
     },

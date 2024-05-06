@@ -1,4 +1,6 @@
-import { addTransactionsGroup, revalidateGroup } from '@/actions/server/transactions-groups'
+'use client'
+
+import { addGroup, revalidateGroup } from '@/actions/server/transactions-groups'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -48,7 +50,7 @@ export function CreateGroupDialog({ userId, onOpenChange, ...props }: CreateGrou
   })
 
   async function onSubmit(input: CreateGroupSchema) {
-    const result = await addTransactionsGroup({ ...input, user_id: userId })
+    const result = await addGroup({ ...input, user_id: userId })
     if (!result) {
       toast.error('Error creating group. Try again.')
       return

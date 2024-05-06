@@ -1,6 +1,6 @@
 'use client'
 
-import { getTransactionsGroup, getTransactionsGroupBySearch } from '@/actions/server/transactions-groups'
+import { getGroups, getGroupBySearch } from '@/actions/server/transactions-groups'
 import { useDebounce } from '@/hooks/use-debounce'
 import { cn, isMacOs, normalizeString } from '@/lib/utils'
 import { TransactionGroups } from '@/types'
@@ -23,7 +23,7 @@ export default function GroupsCombobox() {
   React.useEffect(() => {
     async function initFetchData() {
       setLoading(true)
-      const result = await getTransactionsGroup()
+      const result = await getGroups()
       if (!result) {
         setLoading(false)
         return
@@ -45,7 +45,7 @@ export default function GroupsCombobox() {
 
     async function fetchData() {
       setLoading(true)
-      const result = await getTransactionsGroupBySearch(debouncedQuery)
+      const result = await getGroupBySearch(debouncedQuery)
       if (!result) {
         setLoading(false)
         return

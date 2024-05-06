@@ -1,4 +1,4 @@
-import { getTransactionsGroup } from '@/actions/server/transactions-groups'
+import { getGroups } from '@/actions/server/transactions-groups'
 import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
 import { addGroupsToNavbarNav } from '@/lib/utils-config'
@@ -9,7 +9,7 @@ import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
 
 export const SiteHeader = async ({ user }: { user: User | null }) => {
-  const transactionsGroups = await getTransactionsGroup()
+  const transactionsGroups = await getGroups()
 
   const SidebarNav = transactionsGroups
     ? await addGroupsToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
