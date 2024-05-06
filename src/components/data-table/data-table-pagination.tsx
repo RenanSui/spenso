@@ -22,7 +22,7 @@ export function DataTablePagination<TData>({
 
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
-      <div className="text-muted-foreground flex flex-1 items-center whitespace-nowrap text-sm">
+      <div className="flex flex-1 items-center whitespace-nowrap text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
         {rows.length !== 0 ? (
           <Button className="mx-2" size="sm" onClick={() => setDelete(true)}>
