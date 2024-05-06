@@ -23,30 +23,10 @@ export const Signout = () => {
           <span className="sr-only">Log out</span>
         </Button>
       ) : (
-        <Skeleton className={cn(buttonVariants({ size: 'sm' }), 'bg-muted text-muted-foreground w-full')}>
+        <Skeleton className={cn(buttonVariants({ size: 'sm' }), 'w-full bg-muted text-muted-foreground')}>
           Log out
         </Skeleton>
       )}
     </div>
   )
 }
-// export const Signout = ({ children, className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) => {
-//   const [isLoading, setIsLoading] = useState(false)
-
-//   return (
-//     <Button
-//       disabled={isLoading}
-//       className={cn(className)}
-//       variant="default"
-//       size="sm"
-//       onClick={() => {
-//         setIsLoading(true)
-//         signOut({ callbackUrl: '/' })
-//       }}
-//       {...props}
-//     >
-//       {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-//       {children}
-//     </Button>
-//   )
-// }
