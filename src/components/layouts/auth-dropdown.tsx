@@ -14,10 +14,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
-import { SessionUser } from '@/types'
+import { User } from '@/types'
 
 interface AuthDropdownProps extends React.ComponentPropsWithRef<typeof DropdownMenuTrigger>, ButtonProps {
-  user: SessionUser | null | undefined
+  user: User | null
 }
 
 export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {

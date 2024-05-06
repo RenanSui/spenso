@@ -1,13 +1,12 @@
 import { OAuthSignIn } from '@/components/auth/oauth-signin'
 import { Shell } from '@/components/shells/shell'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { authOptions } from '@/lib/auth'
-import { getServerSession } from 'next-auth'
+import { getUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 
 export default async function Page() {
-  const session = await getServerSession(authOptions)
-  if (session?.user) redirect('/signout')
+  const user = await getUser()
+  if (user) redirect('/signout')
 
   return (
     <Shell className="container max-w-lg">

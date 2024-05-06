@@ -1,9 +1,8 @@
 'use server'
 
-import { authOptions } from '@/lib/auth'
+import { getUser } from '@/lib/auth'
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
-import { getServerSession } from 'next-auth'
 import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -15,7 +14,7 @@ type SupabaseCacheFn = {
 export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Promise<TransactionGroups[] | null> {
   const fnCache = supabaseCache || {
     supabase: getSupabaseServerClient(),
-    email: (await getServerSession(authOptions))?.user.email,
+    email: (await getUser())?.email,
   }
 
   return fnCache.email
@@ -86,7 +85,7 @@ export async function deleteTransactionsGroup(id: string) {
 }
 
 async function revalidateGroup() {
-  const session = await getServerSession(authOptions)
-  const email = session?.user.email
+  const user = await getUser()
+  const email = user?.email
   revalidateTag(`transactions-group-${email}`)
 }

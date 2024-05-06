@@ -1,5 +1,8 @@
 import { Icons } from '@/components/ui/icons'
+import { getUser } from '@/lib/auth'
 import { Database } from './database.types'
+
+export type User = Awaited<ReturnType<typeof getUser>>
 
 export type TransactionTable = Database['next_auth']['Tables']['transactions']
 

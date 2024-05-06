@@ -2,12 +2,12 @@ import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
 import { addGroupsToNavbarNav } from '@/lib/utils-config'
-import { SessionUser } from '@/types'
 import { AuthDropdown } from './auth-dropdown'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
+import { User } from '@/types'
 
-export const SiteHeader = async ({ user }: { user: SessionUser | null | undefined }) => {
+export const SiteHeader = async ({ user }: { user: User | null }) => {
   const transactionsGroups = await getTransactionsGroup()
 
   const SidebarNav = transactionsGroups
