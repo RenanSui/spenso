@@ -1,7 +1,6 @@
-import { currencyStateAtom } from '@/atoms/global'
 import { cn, formatValue } from '@/lib/utils'
-import { useAtom } from 'jotai'
 import { HTMLAttributes } from 'react'
+import { useCurrencyAtom } from '../providers/currency-provider'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 
 export const AnalyticCard = ({
@@ -15,8 +14,7 @@ export const AnalyticCard = ({
     value: number
   }
 }) => {
-  const [currency] = useAtom(currencyStateAtom)
-
+  const currency = useCurrencyAtom()
   const formatted = formatValue(wallet.value, currency)
   const percent = parseInt(((wallet.length * 100) / total).toFixed(0))
   const percentFormatted = isNaN(percent) ? 100 : percent

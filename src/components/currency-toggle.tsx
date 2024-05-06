@@ -1,14 +1,14 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
-import { useAtom } from 'jotai'
+import { useStore } from 'jotai'
 import { useState } from 'react'
+import { currencyAtom, useCurrencyAtom } from './providers/currency-provider'
 import { ScrollArea } from './ui/scroll-area'
 import { Separator } from './ui/separator'
 import { Skeleton } from './ui/skeleton'
@@ -16,7 +16,8 @@ import { Skeleton } from './ui/skeleton'
 export const CurrencyToggle = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
-  const [currency, setCurrency] = useAtom(currencyStateAtom)
+  const currency = useCurrencyAtom()
+  const store = useStore()
   const { data: currencies, isFetching } = useCurrencies()
 
   return (
@@ -46,7 +47,7 @@ export const CurrencyToggle = () => {
                     value={currency}
                     onSelect={(currentValue) => {
                       setValue(currentValue === value ? '' : currentValue.toUpperCase())
-                      setCurrency(currentValue.toUpperCase())
+                      store.set(currencyAtom, currentValue.toUpperCase())
                       setOpen(false)
                     }}
                   >

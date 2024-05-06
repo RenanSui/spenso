@@ -1,13 +1,12 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn } from '@/lib/utils'
 import { CurrencyRates, TransactionTypeses } from '@/types'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
-import { useAtom } from 'jotai'
 import { useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 type TypeChartProps = {
   className: string
@@ -18,7 +17,7 @@ type TypeChartProps = {
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     const calculatedTypes = types.map((type) => {

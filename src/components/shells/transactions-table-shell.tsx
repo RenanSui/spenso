@@ -1,6 +1,5 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -15,13 +14,13 @@ import { transactionTypeses } from '@/config/dashboard'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
-import { useAtom } from 'jotai'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
 import { ChangeTransactionGroup } from '../transactions/change-transaction-group'
 import { DeleteTransaction } from '../transactions/delete-transaction'
 import { UpdateTransaction } from '../transactions/update-transaction'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
@@ -30,7 +29,7 @@ interface TransactionsTableShellProps {
 }
 
 export function TransactionsTableShell({ data: transactions, rates, groupId }: TransactionsTableShellProps) {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [

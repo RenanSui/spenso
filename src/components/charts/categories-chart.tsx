@@ -1,13 +1,12 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionCategories } from '@/types'
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
-import { useAtom } from 'jotai'
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -18,7 +17,7 @@ type CategoriesChartProps = {
 }
 
 export const CategoriesChart = ({ categories, className, rates }: CategoriesChartProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     const calculatedCategories = removeDuplicateCategories(getCalculatedCategories(categories, rates, currencyState))

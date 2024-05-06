@@ -1,4 +1,3 @@
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { toPositive } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
@@ -13,9 +12,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: (CurrencyRates | null)[]
@@ -42,7 +41,7 @@ const monthsOfTheYear = [
 ]
 
 export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     const months = monthsOfTheYear.map((month) => month.substring(0, 3))

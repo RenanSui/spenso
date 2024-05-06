@@ -1,12 +1,11 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
-import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
 import { CurrencyToggle } from '../currency-toggle'
+import { useCurrencyAtom } from '../providers/currency-provider'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
 type AnalyticTableProps = {
@@ -15,7 +14,7 @@ type AnalyticTableProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     return transactions

@@ -1,6 +1,5 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { removeArrayDuplicates, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionYears } from '@/types'
@@ -15,9 +14,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
@@ -28,7 +27,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, 
 ChartJS.defaults.elements.line.tension = 0.4
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     const allYears = removeArrayDuplicates(years.map((year) => year.year))

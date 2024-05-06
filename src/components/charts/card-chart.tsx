@@ -1,11 +1,10 @@
 'use client'
 
-import { currencyStateAtom } from '@/atoms/global'
 import { getCurrencyValue } from '@/lib/transactions'
 import { CurrencyRates, Transaction } from '@/types'
-import { useAtom } from 'jotai'
 import { HTMLAttributes, useMemo } from 'react'
 import { AnalyticCard } from '../cards/analytic-card'
+import { useCurrencyAtom } from '../providers/currency-provider'
 
 type CardChartShellProps = {
   transactions: Transaction[]
@@ -13,7 +12,7 @@ type CardChartShellProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const CardChartShell = ({ transactions, className, rates }: CardChartShellProps) => {
-  const [currencyState] = useAtom(currencyStateAtom)
+  const currencyState = useCurrencyAtom()
 
   const calculated = useMemo(() => {
     const sums = transactions.map((item) => {
