@@ -51,3 +51,9 @@ export const randomHex = (gratherThan: number): number => {
 
   return random
 }
+
+export function isMacOs() {
+  if (typeof window === 'undefined') return false
+
+  return window.navigator.userAgent.includes('Mac')
+}
