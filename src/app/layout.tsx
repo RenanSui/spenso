@@ -1,11 +1,10 @@
 import { Providers } from '@/components/providers/providers'
 import { siteConfig } from '@/config/site'
+import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import '../styles/globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Toaster } from '@/components/ui/Toaster'
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -42,8 +41,16 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={cn('bg-white text-black dark:bg-neutral-950 dark:text-white', inter.className)}>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
+          fontMono.variable,
+          fontHeading.variable,
+        )}
+      >
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   )
