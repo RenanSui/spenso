@@ -1,4 +1,4 @@
-import { DashboardIcon, ExitIcon } from '@radix-ui/react-icons'
+import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, ListBulletIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -39,17 +39,34 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{/* {user.firstName} {user.lastName} */}</p>
-                <p className="text-muted-foreground text-xs leading-none">{email}</p>
+                <p className="text-sm font-medium leading-none">{user.name}</p>
+                <p className="text-xs leading-none text-neutral-500">{email}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="pointer-events-none opacity-60">
+                <Link href="/dashboard/account">
+                  <AvatarIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Account
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/admin">
-                  <DashboardIcon className="mr-2 size-4" aria-hidden="true" />
-                  Admin
-                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                <Link href="/dashboard/analytics">
+                  <DashboardIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Analytics
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/transactions">
+                  <ListBulletIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Transactions
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="pointer-events-none opacity-60">
+                <Link href="/dashboard/settings">
+                  <GearIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  Settings
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
