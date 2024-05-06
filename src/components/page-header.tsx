@@ -40,7 +40,7 @@ function PageHeaderHeading({ className, size, as: Comp = 'h1', ...props }: PageH
   return <Comp className={cn(headingVariants({ size, className }))} {...props} />
 }
 
-const descriptionVariants = cva('max-w-[750px] text-muted-foreground', {
+const descriptionVariants = cva('max-w-[750px] text-neutral-900 dark:text-neutral-300', {
   variants: {
     size: {
       default: 'text-base sm:text-lg',
