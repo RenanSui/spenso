@@ -5,13 +5,10 @@
   "scripts": {
     "dev": "pnpm run lint && next dev",
     "build": "pnpm run lint && next build",
-    "build:test": "pnpm run test && pnpm run build",
     "start": "next start",
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start && pnpm run dev",
     "db:stop": "pnpm dlx supabase stop && wsl --shutdown",
     "lint": "next lint --fix",
-    "test": "vitest ",
-    "test:coverage": "vitest run --coverage",
     "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
     "analyze": "cross-env ANALYZE=true next build"
   },
@@ -61,27 +58,21 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^14.1.4",
     "@rocketseat/eslint-config": "^2.2.2",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.2",
-    "@testing-library/user-event": "^14.5.2",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/coverage-v8": "^1.4.0",
     "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.0.1",
     "eslint-plugin-jest-dom": "^5.1.0",
-    "eslint-plugin-testing-library": "^6.2.0",
     "happy-dom": "^12.10.3",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.4.3",
-    "vitest": "^1.4.0"
+    "typescript": "^5.4.3"
   }
 }

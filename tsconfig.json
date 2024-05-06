@@ -15,7 +15,6 @@
     "incremental": true,
     "plugins": [{"name": "next"}],
     "paths": {"@/*": ["./src/*"]},
-    "types": ["@testing-library/jest-dom/vitest"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "reset.d.ts"],
   "exclude": ["node_modules"]
