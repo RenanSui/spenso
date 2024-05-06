@@ -2,10 +2,11 @@ import { getTransactionsGroup } from '@/actions/server/transactions-groups'
 import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
 import { addGroupsToNavbarNav } from '@/lib/utils-config'
+import { User } from '@/types'
+import GroupsCombobox from '../groups-combobox'
 import { AuthDropdown } from './auth-dropdown'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
-import { User } from '@/types'
 
 export const SiteHeader = async ({ user }: { user: User | null }) => {
   const transactionsGroups = await getTransactionsGroup()
@@ -21,8 +22,7 @@ export const SiteHeader = async ({ user }: { user: User | null }) => {
         <MobileNav sidebarNavItems={SidebarNav} />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
-            {/* <ProductsCombobox /> */}
-            {/* <CartSheet /> */}
+            <GroupsCombobox />
             <AuthDropdown user={user} />
           </nav>
         </div>
