@@ -28,7 +28,6 @@ export const getSupabaseServerClient = async () => await createServerClient()
 
 export const getSupabaseServerClientWithUser = async () => {
   const supabase = await createServerClient()
-  const user = (await supabase?.from('users').select('id'))?.data?.[0]
-
+  const user = (await supabase?.from('users').select('*'))?.data?.[0]
   return { supabase, user }
 }
