@@ -2,6 +2,7 @@
 
 import { getUser } from '@/lib/auth'
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
+import { normalizeString } from '@/lib/utils'
 import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -39,6 +40,15 @@ export async function getTransactionsGroup(supabaseCache?: SupabaseCacheFn): Pro
     : null
 }
 
+export async function getTransactionsGroupBySearch(input: string) {
+  const transactionsGroup = await getTransactionsGroup()
+  const cleanInput = normalizeString(input.toLowerCase())
+  return transactionsGroup?.filter((group) => {
+    const cleanTitle = normalizeString(group.title.toLowerCase())
+    return cleanTitle.includes(cleanInput)
+  })
+}
+
 export async function getTransactionsGroupById(id: string) {
   const transactionsGroup = await getTransactionsGroup()
   return transactionsGroup?.find((group) => group.id === id)
@@ -46,19 +56,14 @@ export async function getTransactionsGroupById(id: string) {
 
 export async function addTransactionsGroup(formData: TransactionGroupsInsert) {
   const { supabase, user } = await getSupabaseServerClientWithUser()
-  if (!supabase || !user) return
+  if (!supabase || !user) return null
 
   const formDataWithId = { ...formData, user_id: user.id }
 
-  const { data, error } = await supabase
+  return await supabase
     .from('transactions_groups')
     .insert({ ...formDataWithId })
-    .select('id')
-
-  if (!error) {
-    revalidateGroup()
-    redirect(`/dashboard/transactions/${data[0].id}?title=${formData.title}`)
-  }
+    .select('*')
 }
 
 export async function updateTransactionsGroup(formData: TransactionGroupsUpdate) {
@@ -84,7 +89,7 @@ export async function deleteTransactionsGroup(id: string) {
   redirect('/dashboard/transactions/')
 }
 
-async function revalidateGroup() {
+export async function revalidateGroup() {
   const user = await getUser()
   const email = user?.email
   revalidateTag(`transactions-group-${email}`)
