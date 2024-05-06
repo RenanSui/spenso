@@ -1,34 +1,35 @@
 import { getTransactionsGroup } from '@/actions/server/transactions-groups'
-import { SidebarNav } from '@/components/layouts/sidebar-nav'
-import { SiteFooter } from '@/components/layouts/site-footer'
-import { SiteHeader } from '@/components/layouts/site-header'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { dashboardConfig } from '@/config/dashboard'
 import { getUser } from '@/lib/auth'
-import { addGroupsToNavbarNav } from '@/lib/utils-config'
 import { redirect } from 'next/navigation'
+import { DashboardHeader } from './_components/dashboard-header'
+import { DashboardSidebar } from './_components/dashboard-sidebar'
+import { DashboardSidebarSheet } from './_components/dashboard-sidebar-sheet'
+import { GroupSwitcher } from './_components/group-switcher'
+import { SidebarProvider } from './_components/sidebar-provider'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await getUser()
   if (!user) redirect('/signin')
 
-  const transactionsGroups = await getTransactionsGroup()
-  const newSidebarNav = transactionsGroups
-    ? await addGroupsToNavbarNav(dashboardConfig.SidebarNav, transactionsGroups)
-    : dashboardConfig.SidebarNav
+  const groupsPromise = getTransactionsGroup()
 
   return (
-    <div className="relative flex min-h-screen flex-col">
-      <SiteHeader user={user} />
-      <div className="mx-auto w-full max-w-[1440px] flex-1 items-start px-4 sm:px-8 md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
-        <aside className="-ml-2 hidden h-full border-r dark:border-neutral-900 md:block">
-          <ScrollArea className="py-6 pr-6 lg:py-8">
-            <SidebarNav items={newSidebarNav} className="p-1" />
-          </ScrollArea>
-        </aside>
-        <main className="flex w-full flex-col overflow-hidden">{children}</main>
+    <SidebarProvider>
+      <div className="grid min-h-screen w-full lg:grid-cols-[17.5rem_1fr]">
+        <DashboardSidebar className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block">
+          <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
+        </DashboardSidebar>
+        <div className="flex flex-col">
+          <DashboardHeader user={user}>
+            <DashboardSidebarSheet>
+              <DashboardSidebar>
+                <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
+              </DashboardSidebar>
+            </DashboardSidebarSheet>
+          </DashboardHeader>
+          <main className="flex-1 overflow-hidden px-6">{children}</main>
+        </div>
       </div>
-      <SiteFooter />
-    </div>
+    </SidebarProvider>
   )
 }
