@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
     <div className="relative grid min-h-screen grid-cols-1 overflow-hidden lg:grid-cols-2">
       <Link
         href="/"
-        className="absolute left-8 top-6 z-20 flex items-center text-lg font-bold tracking-tight text-neutral-950/80 transition-colors hover:text-neutral-950/80 dark:text-neutral-50/80 hover:dark:text-neutral-50"
+        className="absolute left-8 top-6 z-40 flex items-center text-lg font-bold tracking-tight text-neutral-50/80 transition-colors hover:text-neutral-50 lg:text-neutral-950/80 lg:hover:text-neutral-950 dark:lg:text-neutral-50/80 lg:hover:dark:text-neutral-50"
       >
         {/* <Icons.logo className="mr-2 size-6" aria-hidden="true" /> */}
         <span>{siteConfig.name}</span>
