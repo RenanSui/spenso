@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { updateGroupSchema } from '@/lib/validations/group'
 import { DeleteGroupDialog } from './_components/delete-group-dialog'
+import { notFound } from 'next/navigation'
 
 type GroupPageProps = {
   params: {
@@ -39,7 +40,9 @@ export async function generateMetadata(params: GroupPageProps) {
 export default async function Page(params: GroupPageProps) {
   const group = await getGroupFromParmas(params)
 
-  if (!group) return null
+  if (!group) {
+    notFound()
+  }
 
   const onSubmit = async (formData: FormData) => {
     'use server'
