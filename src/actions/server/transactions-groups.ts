@@ -76,7 +76,7 @@ export async function updateGroup(formData: TransactionGroupsUpdate) {
     .update({ ...formData })
     .eq('id', formData.id)
 
-  revalidatePath(`/dashboard/transactions/${formData.id}`)
+  revalidatePath(`/dashboard/groups/${formData.id}`)
 }
 
 export async function deleteGroup(id: string) {
@@ -86,8 +86,8 @@ export async function deleteGroup(id: string) {
   await supabase.from('transactions').delete().eq('group_id', id)
   await supabase.from('transactions_groups').delete().eq('id', id)
 
-  revalidateGroup()
-  redirect('/dashboard/transactions/')
+  revalidatePath(`/dashboard/groups`)
+  redirect('/dashboard/groups')
 }
 
 export async function revalidateGroup() {
