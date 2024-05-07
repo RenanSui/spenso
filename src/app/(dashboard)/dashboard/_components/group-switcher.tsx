@@ -67,7 +67,7 @@ export function GroupSwitcher({ userId, className, groupsPromise, ...props }: Gr
                       setOpen(false)
                       pathname.includes(group.id)
                         ? router.replace(pathname.replace(groupId, group.id))
-                        : router.push(`/dashboard/groups/${group.id}?title=${group.title}`)
+                        : router.push(`/dashboard/groups/${group.id}/transactions`)
                     }}
                     className="text-sm"
                   >
