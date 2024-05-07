@@ -1,5 +1,6 @@
 import { getTransactions } from '@/actions/server/transactions'
 import { getGroups } from '@/actions/server/transactions-groups'
+import { EmptyCard } from '@/components/empty-card'
 import { GroupCard } from '@/components/group-card'
 
 interface Groups {
@@ -28,13 +29,12 @@ export async function Groups({ groupsPromise }: Groups) {
           )
         })
       ) : (
-        <div></div>
-        // <EmptyCard
-        //   icon="store"
-        //   title="No groups found"
-        //   description="Add a new group to manage your transactions"
-        //   className="col-span-full"
-        // />
+        <EmptyCard
+          icon="dashboardIcon"
+          title="No groups found"
+          description="Add a new group to manage your transactions"
+          className="col-span-full"
+        />
       )}
     </>
   )
