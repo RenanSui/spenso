@@ -1,18 +1,25 @@
-import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+// @see https://github.com/shadcn-ui/ui/blob/main/apps/www/components/page-header.tsx
+
 import { cva, type VariantProps } from 'class-variance-authority'
-import { Balancer } from 'react-wrap-balancer'
+
+import { cn } from '@/lib/utils'
 
 interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: React.ElementType
-  separated?: boolean
+  withPadding?: boolean
 }
 
-function PageHeader({ className, children, as: Comp = 'section', separated = false, ...props }: PageHeaderProps) {
+function PageHeader({ className, children, as: Comp = 'section', withPadding = false, ...props }: PageHeaderProps) {
   return (
-    <Comp className={cn('grid gap-1', className)} {...props}>
+    <Comp
+      className={cn(
+        'flex max-w-[61.25rem] flex-col gap-1',
+        withPadding && 'py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-20',
+        className,
+      )}
+      {...props}
+    >
       {children}
-      {separated ? <Separator className="mt-2.5" /> : null}
     </Comp>
   )
 }
@@ -20,9 +27,9 @@ function PageHeader({ className, children, as: Comp = 'section', separated = fal
 const headingVariants = cva('font-bold leading-tight tracking-tighter lg:leading-[1.1]', {
   variants: {
     size: {
-      default: 'text-3xl md:text-4xl',
-      sm: 'text-2xl md:text-3xl',
-      lg: 'text-4xl md:text-5xl',
+      default: 'text-3xl md:text-5xl',
+      sm: 'text-xl md:text-3xl',
+      lg: 'text-3xl sm:text-5xl md:text-6xl lg:text-7xl',
     },
   },
   defaultVariants: {
@@ -40,7 +47,7 @@ function PageHeaderHeading({ className, size, as: Comp = 'h1', ...props }: PageH
   return <Comp className={cn(headingVariants({ size, className }))} {...props} />
 }
 
-const descriptionVariants = cva('max-w-[750px] text-neutral-900 dark:text-neutral-300', {
+const descriptionVariants = cva('max-w-[46.875rem] text-balance text-muted-foreground', {
   variants: {
     size: {
       default: 'text-base sm:text-lg',
@@ -54,11 +61,15 @@ const descriptionVariants = cva('max-w-[750px] text-neutral-900 dark:text-neutra
 })
 
 interface PageHeaderDescriptionProps
-  extends React.ComponentProps<typeof Balancer>,
+  extends React.HTMLAttributes<HTMLParagraphElement>,
     VariantProps<typeof descriptionVariants> {}
 
 function PageHeaderDescription({ className, size, ...props }: PageHeaderDescriptionProps) {
-  return <Balancer as="p" className={cn(descriptionVariants({ size, className }))} {...props} />
+  return <p className={cn(descriptionVariants({ size, className }))} {...props} />
 }
 
-export { PageHeader, PageHeaderDescription, PageHeaderHeading }
+function PageActions({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn('flex w-full items-center justify-center space-x-4 py-4 md:pb-10', className)} {...props} />
+}
+
+export { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading }
