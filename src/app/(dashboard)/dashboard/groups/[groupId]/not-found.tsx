@@ -5,8 +5,8 @@ export default function GroupNotFound() {
   return (
     <Shell variant="centered" className="max-w-md">
       <ErrorCard
-        title="Store not found"
-        description="The Store may have been deleted"
+        title="Group not found"
+        description="The Group may have been deleted"
         retryLink="/"
         retryLinkText="Go to Home"
       />
