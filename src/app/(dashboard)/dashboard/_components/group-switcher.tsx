@@ -1,6 +1,6 @@
 'use client'
 
-import { getTransactionsGroup } from '@/actions/server/transactions-groups'
+import { getGroups } from '@/actions/server/transactions-groups'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -21,7 +21,7 @@ import { CreateGroupDialog } from './create-group-dialog'
 
 interface GroupSwitcherProps extends React.ComponentPropsWithoutRef<typeof PopoverTrigger> {
   userId: string | null | undefined
-  groupsPromise: ReturnType<typeof getTransactionsGroup>
+  groupsPromise: ReturnType<typeof getGroups>
 }
 
 export function GroupSwitcher({ userId, className, groupsPromise, ...props }: GroupSwitcherProps) {
