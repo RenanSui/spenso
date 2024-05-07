@@ -8,14 +8,7 @@ const Card = React.forwardRef<
     as?: 'div' | 'section' | 'article'
   }
 >(({ className, as: Comp = 'div', ...props }, ref) => (
-  <Comp
-    ref={ref}
-    className={cn(
-      'rounded-xl border border-neutral-200 bg-white text-neutral-950 shadow dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
-      className,
-    )}
-    {...props}
-  />
+  <Comp ref={ref} className={cn('rounded-xl border bg-card text-card-foreground shadow', className)} {...props} />
 ))
 Card.displayName = 'Card'
 
@@ -26,16 +19,17 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 )
 CardHeader.displayName = 'CardHeader'
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn('font-semibold leading-none tracking-tight', className)} {...props} />
-  ),
-)
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement> & { as?: 'h1' | 'h2' | 'h3' | 'h4' }
+>(({ className, as: Comp = 'h3', ...props }, ref) => (
+  <Comp ref={ref} className={cn('font-semibold leading-tight tracking-tight', className)} {...props} />
+))
 CardTitle.displayName = 'CardTitle'
 
 const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-sm text-neutral-500 dark:text-neutral-400', className)} {...props} />
+    <p ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
   ),
 )
 CardDescription.displayName = 'CardDescription'
