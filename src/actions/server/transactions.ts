@@ -54,7 +54,7 @@ export async function addTransaction(formData: TransactionInsert) {
 
   await supabase.from('transactions').insert({ ...formDataWithId })
 
-  revalidatePath(`/dashboard/transactions/${formData.group_id}`)
+  revalidatePath(`/dashboard/groups/${formData.group_id}/transactions`)
 }
 
 export async function updateTransaction(formData: TransactionUpdate) {
@@ -72,7 +72,7 @@ export async function updateTransaction(formData: TransactionUpdate) {
     .update({ ...formattedData })
     .eq('id', id ?? '')
 
-  revalidatePath(`/dashboard/transactions/${formData.group_id}`)
+  revalidatePath(`/dashboard/groups/${formData.group_id}/transactions`)
 }
 
 export async function updateTransactionGroup(transactionId: string, oldGroupId: string, newGroupId: string) {
@@ -81,8 +81,8 @@ export async function updateTransactionGroup(transactionId: string, oldGroupId: 
 
   await supabase.from('transactions').update({ group_id: newGroupId }).eq('id', transactionId)
 
-  revalidatePath(`/dashboard/transactions/${oldGroupId}`)
-  revalidatePath(`/dashboard/transactions/${newGroupId}`)
+  revalidatePath(`/dashboard/groups/${oldGroupId}/transactions`)
+  revalidatePath(`/dashboard/groups/${newGroupId}/transactions`)
 }
 
 export async function deleteTransaction(id: string, groupId?: string) {
@@ -91,5 +91,5 @@ export async function deleteTransaction(id: string, groupId?: string) {
 
   await supabase.from('transactions').delete().eq('id', id)
 
-  revalidatePath(`/dashboard/transactions/${groupId}`)
+  revalidatePath(`/dashboard/groups/${groupId}/transactions`)
 }
