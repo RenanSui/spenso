@@ -23,7 +23,7 @@ async function getGroupFromParmas(params: GroupPageProps) {
 
 export default async function Page(params: GroupPageProps) {
   const group = await getGroupFromParmas(params)
-  if (!group) return null
+  if (!group) notFound()
 
   const transactions = await getTransactionsById(group.id)
   if (!transactions) notFound()
