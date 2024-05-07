@@ -5,93 +5,71 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { siteConfig } from '@/config/site'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
-import type { NavItemWithChildren, NavItemWithOptionalChildren, SidebarNavItem } from '@/types'
-import { DashboardIcon } from '@radix-ui/react-icons'
+import type { MainNavItem } from '@/types'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import * as React from 'react'
+import { Icons } from '../ui/icons'
 
 interface MobileNavProps {
-  sidebarNavItems: SidebarNavItem[]
+  items?: MainNavItem[]
 }
 
-interface MobileLinkProps extends React.PropsWithChildren {
-  href: string
-  disabled?: boolean
-  segment: string
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  className?: string
-}
-
-export function MobileNav({ sidebarNavItems }: MobileNavProps) {
+export function MobileNav({ items }: MobileNavProps) {
   const segment = useSelectedLayoutSegment()
-  const [isOpen, setIsOpen] = React.useState(false)
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const [open, setOpen] = React.useState(false)
 
-  const navItems = React.useMemo(() => {
-    const items: NavItemWithOptionalChildren[] = []
-    const myAccountItem = {
-      title: 'My Account',
-      items: sidebarNavItems,
-    }
-
-    const myAccountIndex = items.findIndex((item) => item.title === 'My Account')
-    if (myAccountIndex !== -1) {
-      items.splice(myAccountIndex, 1)
-    }
-
-    items.splice(1, 0, myAccountItem)
-
-    return items
-  }, [sidebarNavItems])
+  if (isDesktop) return null
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild aria-label="mobile-nav-trigger">
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+          size="icon"
+          className="size-5 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
         >
-          <DashboardIcon className="h-6 w-6" aria-hidden="true" />
+          <Icons.menu aria-hidden="true" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-
-      <SheetContent side="left" className="pl-1 pr-0">
-        <div className="px-7">
-          <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+      <SheetContent side="left" className="pl-1 pr-0 pt-9">
+        <div className="w-full px-7">
+          <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
+            {/* <Icons.logo className="mr-2 size-4" aria-hidden="true" /> */}
             <span className="font-bold">{siteConfig.name}</span>
             <span className="sr-only">Home</span>
           </Link>
         </div>
-
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="pl-1 pr-7">
-            <Accordion type="multiple" defaultValue={navItems.map((item) => item.title)} className="w-full">
-              {navItems?.map((item, index) => (
+            <Accordion type="multiple" className="w-full">
+              {items?.map((item, index) => (
                 <AccordionItem value={item.title} key={index}>
                   <AccordionTrigger className="text-sm capitalize">{item.title}</AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col space-y-2">
-                      {item.items?.map((subItem, subIndex) => {
-                        return subItem.items.length > 0 ? (
-                          <NestedAccordionNavItems key={subIndex} item={subItem} setIsOpen={setIsOpen} />
-                        ) : subItem.href ? (
+                      {item.items?.map((subItem, index) =>
+                        subItem.href ? (
                           <MobileLink
-                            key={subIndex}
+                            key={index}
                             href={String(subItem.href)}
                             segment={String(segment)}
-                            setIsOpen={setIsOpen}
+                            setOpen={setOpen}
                             disabled={subItem.disabled}
+                            className="m-1"
                           >
                             {subItem.title}
                           </MobileLink>
                         ) : (
-                          <div key={subIndex} className="text-neutral-400/70 transition-colors">
+                          <div key={index} className="text-foreground/70 transition-colors">
                             {item.title}
                           </div>
-                        )
-                      })}
+                        ),
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -104,56 +82,25 @@ export function MobileNav({ sidebarNavItems }: MobileNavProps) {
   )
 }
 
-interface NestedAccordionNavItemsProps {
-  item: NavItemWithChildren
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+interface MobileLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  href: string
+  disabled?: boolean
+  segment: string
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NestedAccordionNavItems = ({ item, setIsOpen, ...props }: NestedAccordionNavItemsProps) => {
-  const segment = useSelectedLayoutSegment()
-
-  return (
-    <Accordion type="multiple" defaultValue={[item.title]} className="w-full" {...props}>
-      <AccordionItem value={item.title}>
-        <AccordionTrigger className="py-0 text-sm capitalize">{item.title}</AccordionTrigger>
-        <AccordionContent>
-          <div className="flex flex-col space-y-2 pt-2">
-            {item.items?.map((subItem, index) =>
-              subItem.href ? (
-                <MobileLink
-                  className="pl-4"
-                  key={index}
-                  href={String(subItem.href)}
-                  segment={String(segment)}
-                  setIsOpen={setIsOpen}
-                  disabled={subItem.disabled}
-                >
-                  {subItem.title}
-                </MobileLink>
-              ) : (
-                <div key={index} className="text-neutral-400/70 transition-colors">
-                  {item.title}
-                </div>
-              ),
-            )}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  )
-}
-
-function MobileLink({ children, href, disabled, segment, setIsOpen, className }: MobileLinkProps) {
+function MobileLink({ children, href, disabled, segment, setOpen, className, ...props }: MobileLinkProps) {
   return (
     <Link
       href={href}
       className={cn(
-        'text-neutral-900 transition-colors hover:text-neutral-400 dark:text-neutral-100 hover:dark:text-neutral-300',
-        href.includes(segment) && 'text-neutral-900 dark:text-neutral-100',
+        'text-foreground/70 transition-colors hover:text-foreground',
+        href.includes(segment) && 'text-foreground',
         disabled && 'pointer-events-none opacity-60',
         className,
       )}
-      onClick={() => setIsOpen(false)}
+      onClick={() => setOpen(false)}
+      {...props}
     >
       {children}
     </Link>
