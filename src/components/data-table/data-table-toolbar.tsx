@@ -12,7 +12,7 @@ interface DataTableToolbarProps<TData> {
   AddNewItem?: ({ groupId }: { groupId: string }) => JSX.Element
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
-  groupId: string
+  groupId?: string
 }
 
 export function DataTableToolbar<TData>({
@@ -65,7 +65,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center space-x-2">
-        {AddNewItem ? <AddNewItem groupId={groupId} /> : null}
+        {groupId ? AddNewItem ? <AddNewItem groupId={groupId} /> : null : null}
         <CurrencyToggle />
         <DataTableViewOptions table={table} />
       </div>

@@ -24,7 +24,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
-  groupId: string
+  groupId?: string
 }
 
 export function DataTable<TData, TValue>({
