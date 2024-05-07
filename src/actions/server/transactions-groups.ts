@@ -3,41 +3,37 @@
 import { getUser } from '@/lib/auth'
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { normalizeString } from '@/lib/utils'
-import { TransactionGroups, TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
+import { TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-type SupabaseCacheFn = {
-  supabase: ReturnType<typeof getSupabaseServerClient>
-  email: string | null | undefined
-}
+export async function getGroups() {
+  const { supabase, user } = await getSupabaseServerClientWithUser()
+  if (!supabase || !user) return null
 
-export async function getGroups(supabaseCache?: SupabaseCacheFn): Promise<TransactionGroups[] | null> {
-  const fnCache = supabaseCache || {
-    supabase: getSupabaseServerClient(),
-    email: (await getUser())?.email,
-  }
+  return await cache(
+    async () => {
+      const { data } = await supabase.from('transactions_groups').select('*')
+      if (!data) return null
 
-  return fnCache.email
-    ? await cache(
-        async () => {
-          const supabase = await fnCache.supabase
-          if (!supabase) return null
+      if (data.length === 0) {
+        const result = await addGroup({ title: 'Global' })
+        if (!result) return null
 
-          const { data } = await supabase.from('transactions_groups').select('*')
-          if (!data) return null
+        const { data, error } = result
+        if (!data || error) return null
 
-          if (data.length === 0) {
-            await addGroup({ title: 'Global' })
-            return getGroups(fnCache)
-          }
+        return data
+      }
 
-          return data
-        },
-        [`transactions-group-${fnCache.email}`],
-        { revalidate: false, tags: [`transactions-group-${fnCache.email}`] },
-      )()
-    : null
+      return data
+    },
+    [`transactions-group-${user.email}`],
+    {
+      revalidate: false,
+      tags: [`transactions-group-${user.email}`],
+    },
+  )()
 }
 
 export async function getGroupBySearch(input: string) {
