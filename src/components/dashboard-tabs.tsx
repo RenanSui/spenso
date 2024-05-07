@@ -13,7 +13,7 @@ export function DashboardTabs() {
 
   const tabs = [
     {
-      title: 'Group',
+      title: 'Groups',
       href: `/dashboard/groups`,
       isActive: segment === null,
     },
