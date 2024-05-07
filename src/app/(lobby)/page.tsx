@@ -44,7 +44,7 @@ export default async function Page() {
           brighter financial future. Find Happiness In Budgeting!
         </span>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link className={buttonVariants()} href="/dashboard/analytics">
+          <Link className={buttonVariants()} href="/dashboard/groups">
             Try now
           </Link>
           <Link className={buttonVariants({ variant: 'outline' })} href="/signin">
