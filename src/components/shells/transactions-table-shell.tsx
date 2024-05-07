@@ -17,15 +17,15 @@ import { Column, ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { DataTable } from '../data-table/data-table'
+import { useCurrencyAtom } from '../providers/currency-provider'
 import { ChangeTransactionGroup } from '../transactions/change-transaction-group'
 import { DeleteTransaction } from '../transactions/delete-transaction'
 import { UpdateTransaction } from '../transactions/update-transaction'
-import { useCurrencyAtom } from '../providers/currency-provider'
 
 interface TransactionsTableShellProps {
   data: Transaction[]
   rates: (CurrencyRates | null)[]
-  groupId: string
+  groupId?: string
 }
 
 export function TransactionsTableShell({ data: transactions, rates, groupId }: TransactionsTableShellProps) {
@@ -35,20 +35,22 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
     () => [
       {
         id: 'select',
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value: unknown) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value: unknown) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        ),
+        header: ({ table }) =>
+          groupId ? (
+            <Checkbox
+              checked={table.getIsAllPageRowsSelected()}
+              onCheckedChange={(value: unknown) => table.toggleAllPageRowsSelected(!!value)}
+              aria-label="Select all"
+            />
+          ) : null,
+        cell: ({ row }) =>
+          groupId ? (
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={(value: unknown) => row.toggleSelected(!!value)}
+              aria-label="Select row"
+            />
+          ) : null,
         enableSorting: false,
         enableHiding: false,
       },
@@ -65,7 +67,7 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
       },
       {
         accessorKey: 'product',
-        header: () => <>Product</>,
+        header: ({ column }) => <SortableHeader column={column}>Item</SortableHeader>,
       },
       {
         accessorKey: 'amount',
@@ -127,10 +129,10 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
       },
       {
         id: 'actions',
-        cell: ({ row }) => <TableDropdown transaction={row.original} />,
+        cell: ({ row }) => (groupId ? <TableDropdown transaction={row.original} /> : null),
       },
     ],
-    [currencyState, rates],
+    [currencyState, groupId, rates],
   )
 
   return (
