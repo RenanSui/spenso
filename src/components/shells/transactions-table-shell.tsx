@@ -204,11 +204,12 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => handleUpdate()}>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleUpdate(true)}>Duplicate</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleChangeGroup()}>Change Group</DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => handleDelete()} title="destructive">
             Delete
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleUpdate(true)}>Duplicate</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleChangeGroup()}>Change Group</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
