@@ -2,9 +2,10 @@
 
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
 import { positiveOrNegative } from '@/lib/utils'
-import { Transaction, TransactionInsert, TransactionUpdate } from '@/types'
+import { TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
 import { getGroups } from './transactions-groups'
+import { sortRecentTransactions } from '@/lib/transactions'
 
 export async function getTransactions() {
   const supabase = await getSupabaseServerClient()
@@ -13,18 +14,18 @@ export async function getTransactions() {
   const groups = await getGroups()
   if (!groups) return null
 
-  const transactions: Transaction[] = []
   const ids = groups.map((map) => map.id)
 
-  for (const groupId of ids) {
-    const transactionsById = await getTransactionsById(groupId)
+  const transactionsArray = await Promise.all(
+    ids.map(async (id) => {
+      const transactionsById = await getTransactionsById(id)
+      return transactionsById || []
+    }),
+  )
 
-    if (transactionsById !== null) {
-      transactions.push(...transactionsById)
-    }
-  }
+  const transactions = transactionsArray.flat()
 
-  return transactions
+  return sortRecentTransactions(transactions)
 }
 
 export async function getTransactionsById(groupId: string) {
@@ -34,9 +35,10 @@ export async function getTransactionsById(groupId: string) {
     async () => {
       if (!supabase) return null
 
-      const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
+      const { data: transactions } = await supabase.from('transactions').select('*').eq('group_id', groupId)
+      if (!transactions) return null
 
-      return data
+      return sortRecentTransactions(transactions)
     },
     [`transactions-${groupId}`],
     { revalidate: false, tags: [`transactions-${groupId}`] },
