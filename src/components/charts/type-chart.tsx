@@ -60,7 +60,7 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
         className,
       )}
     >
-      <div className="flex w-full items-center justify-center ">
+      <div className={cn('flex w-full items-center justify-center', className)}>
         {types.length !== 0 ? <Doughnut data={data} /> : null}
       </div>
     </div>
