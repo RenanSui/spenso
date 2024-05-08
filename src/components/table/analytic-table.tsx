@@ -7,6 +7,7 @@ import { CurrencyRates, Transaction } from '@/types'
 import { HTMLAttributes, useMemo } from 'react'
 import { CurrencyToggle } from '../currency-toggle'
 import { useCurrencyAtom } from '../providers/currency-provider'
+import { Skeleton } from '../ui/skeleton'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
 type AnalyticTableProps = {
@@ -70,5 +71,7 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
         </TableBody>
       </Table>
     </div>
-  ) : null
+  ) : (
+    <Skeleton className={cn('h-full w-full', className)} />
+  )
 }
