@@ -28,13 +28,18 @@ export const TransactionAnalyticsShell = async ({
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <CardChartShell transactions={transactions} rates={allRates} />
 
-      <LineChartShell className="lg:col-span-2" transactions={transactions} years={sortedYears} rates={allRates} />
+      <LineChartShell
+        className="h-[350px] lg:col-span-2"
+        transactions={transactions}
+        years={sortedYears}
+        rates={allRates}
+      />
 
-      <AnalyticTable className="lg:row-span-2 lg:h-[712px]" transactions={transactions} rates={allRates} />
+      <AnalyticTable className="h-[716px] lg:row-span-2" transactions={transactions} rates={allRates} />
 
-      <TypeChart className="lg:col-span-2" types={types} rates={allRates} />
+      <TypeChart className="lg:col-span-2 lg:h-[350px]" types={types} rates={allRates} />
 
-      <CategoriesChart className="lg:col-span-3" categories={categories} rates={allRates} />
+      <CategoriesChart className="h-[350px] lg:col-span-3" categories={categories} rates={allRates} />
     </div>
   )
 }
