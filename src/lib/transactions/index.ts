@@ -82,7 +82,7 @@ export const getTransactionsYears = (transactions: Transaction[]) => {
       yearsMap.set(key, group)
     }
 
-    group.sum = transaction.amount
+    group.sum += transaction.amount
   })
 
   return Array.from(yearsMap.values())
