@@ -8,6 +8,7 @@ import { useMemo } from 'react'
 import GroupPill from './group-pill'
 import { useCurrencyAtom } from './providers/currency-provider'
 import { Icons } from './ui/icons'
+import { Skeleton } from './ui/skeleton'
 
 interface FormatGroupPillProps {
   transactions: Transaction[] | null
@@ -51,5 +52,7 @@ export default function FormatGroupPill({ transactions, rates }: FormatGroupPill
         ? `${formatValue(calculated.revenue.value, currencyState)} revenue`
         : `${formatValue(calculated.expenses.value, currencyState)} expenses`}
     </GroupPill>
-  ) : null
+  ) : (
+    <Skeleton className="h-4 w-36 rounded-sm"></Skeleton>
+  )
 }
