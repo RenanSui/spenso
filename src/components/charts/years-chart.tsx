@@ -67,28 +67,31 @@ export const YearsChart = ({ years, rates }: YearsChartProps) => {
 }
 
 function fillRemainingYears(years: TransactionYears[]) {
-  const formatYears = new Map<string, TransactionYears>()
+  const yearsMap = new Map<string, TransactionYears>()
 
   for (const year of years) {
     const { currency, sum, type, year: tYear } = year
-
-    let group = formatYears.get(tYear + type + currency)
+    let group = yearsMap.get(tYear + type + currency)
 
     if (!group) {
       group = { currency, type, year: tYear, sum }
-      formatYears.set(tYear + type + currency, group)
-    }
-
-    const oppositeType = type === 'income' ? 'expense' : 'income'
-    let group2 = formatYears.get(tYear + oppositeType + currency)
-
-    if (!group2) {
-      group2 = { currency, type: oppositeType, year: tYear, sum: 0 }
-      formatYears.set(tYear + oppositeType + currency, group2)
+      yearsMap.set(tYear + type + currency, group)
     }
   }
 
-  return Array.from(formatYears.values()).sort((item1, item2) => Number(item1.year) - Number(item2.year))
+  // create opposite map if "year" or "type" do not exist
+  for (const year of years) {
+    const { currency, type, year: tYear } = year
+    const oppositeType = type === 'income' ? 'expense' : 'income'
+    let group = yearsMap.get(tYear + oppositeType + currency)
+
+    if (!group) {
+      group = { currency, type: oppositeType, year: tYear, sum: 0 }
+      yearsMap.set(tYear + oppositeType + currency, group)
+    }
+  }
+
+  return Array.from(yearsMap.values()).sort((item1, item2) => Number(item1.year) - Number(item2.year))
 }
 
 function sumTransactionsByYear(transactions: TransactionYears[]) {
