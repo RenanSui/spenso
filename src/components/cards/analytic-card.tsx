@@ -5,6 +5,7 @@ import { cn, formatValue } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Skeleton } from '../ui/skeleton'
 
 export const AnalyticCard = ({
   wallet,
@@ -35,5 +36,7 @@ export const AnalyticCard = ({
         <p className="text-xs text-neutral-500 dark:text-neutral-400">{`${percentFormatted}%`} of Transactions</p>
       </CardContent>
     </Card>
-  ) : null
+  ) : (
+    <Skeleton className="h-[126px] w-full" />
+  )
 }
