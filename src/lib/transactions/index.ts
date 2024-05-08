@@ -68,7 +68,7 @@ export const getTransactionsCategories = (transactions: Transaction[]) => {
 }
 
 export const getTransactionsYears = (transactions: Transaction[]) => {
-  const newTransactions = transactions.toSorted((item1, item2) => Number(item1.year) - Number(item2.year))
+  const newTransactions = [...transactions].sort((item1, item2) => Number(item1.year) - Number(item2.year))
   const yearsMap = new Map<string, TransactionYears>()
 
   newTransactions.forEach((transaction) => {
