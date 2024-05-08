@@ -1,6 +1,6 @@
 'use client'
 
-import { getCurrencyValue } from '@/lib/transactions'
+import { getCurrencyValue, sortRecentTransactions } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { HTMLAttributes, useMemo } from 'react'
@@ -17,9 +17,8 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
-    return transactions
+    return sortRecentTransactions(transactions)
       .map((item) => ({ ...item, amount: getCurrencyValue(item.amount, item.currency, rates, currencyState) }))
-      .reverse()
       .slice(0, 12)
   }, [currencyState, rates, transactions])
 
