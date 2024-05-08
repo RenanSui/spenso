@@ -1,5 +1,6 @@
 'use client'
 
+import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn } from '@/lib/utils'
 import { CurrencyRates, TransactionTypeses } from '@/types'
@@ -7,6 +8,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import { useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
+import { Skeleton } from '../ui/skeleton'
 
 type TypeChartProps = {
   className: string
@@ -18,6 +20,7 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 
 export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
   const currencyState = useCurrencyAtom()
+  const mounted = useMounted()
 
   const data = useMemo(() => {
     const calculatedTypes = types.map((type) => {
@@ -53,7 +56,7 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
     }
   }, [currencyState, rates, types])
 
-  return (
+  return mounted ? (
     <div
       className={cn(
         'relative flex w-full items-center justify-center rounded-xl border p-2 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900',
@@ -61,8 +64,10 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
       )}
     >
       <div className={cn('flex w-full items-center justify-center', className)}>
-        {types.length !== 0 ? <Doughnut data={data} /> : null}
+        {types.length !== 0 ? <Doughnut className="max-h-[300px]" data={data} /> : null}
       </div>
     </div>
+  ) : (
+    <Skeleton className={cn('h-[350px] lg:col-span-2', className)} />
   )
 }
