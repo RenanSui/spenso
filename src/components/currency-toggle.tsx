@@ -38,9 +38,9 @@ export const CurrencyToggle = () => {
             <ScrollArea className="h-32">
               {isFetching ? (
                 <div className="flex flex-col gap-1">
-                  {[''].map((_a, index) => {
-                    return <Skeleton className="h-6 w-full rounded-sm bg-red-500" key={index} />
-                  })}
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <Skeleton className="h-7 w-full rounded-sm" key={index} />
+                  ))}
                 </div>
               ) : (
                 currencies?.map((currency) => (
