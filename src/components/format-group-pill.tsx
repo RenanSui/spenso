@@ -46,7 +46,7 @@ export default function FormatGroupPill({ transactions, rates }: FormatGroupPill
   const isRevenueGreater = calculated.revenue.value > toPositive(calculated.expenses.value)
 
   return mounted ? (
-    <GroupPill className={cn('flex items-center text-xs', isRevenueGreater ? 'text-foreground' : 'text-red-400')}>
+    <GroupPill className={cn('flex items-center text-xs', isRevenueGreater ? 'text-foreground' : 'text-destructive')}>
       <Icons.activity className="mr-1.5 size-3.5" aria-hidden="true" />
       {isRevenueGreater
         ? `${formatValue(calculated.revenue.value, currencyState)} revenue`
