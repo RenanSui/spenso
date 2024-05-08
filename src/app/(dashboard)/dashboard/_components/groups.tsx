@@ -5,11 +5,12 @@ import { GroupCard } from '@/components/group-card'
 
 interface Groups {
   groupsPromise: ReturnType<typeof getGroups>
+  transactionsPromise: ReturnType<typeof getTransactions>
 }
 
-export async function Groups({ groupsPromise }: Groups) {
+export async function Groups({ groupsPromise, transactionsPromise }: Groups) {
   const groups = await groupsPromise
-  const transactions = await getTransactions()
+  const transactions = await transactionsPromise
 
   return (
     <>

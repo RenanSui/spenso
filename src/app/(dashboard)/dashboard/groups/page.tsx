@@ -1,5 +1,7 @@
+import { getTransactions } from '@/actions/server/transactions'
 import { getGroups } from '@/actions/server/transactions-groups'
 import { CurrencyToggle } from '@/components/currency-toggle'
+import { DashboardTabs } from '@/components/dashboard-tabs'
 import { GroupCardSkeleton } from '@/components/group-card-skeleton'
 import { PageHeader, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
@@ -8,7 +10,6 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { CreateGroupDialog } from '../_components/create-group-dialog'
 import { Groups } from '../_components/groups'
-import { DashboardTabs } from '@/components/dashboard-tabs'
 
 export default async function GroupsPage() {
   const user = await getUser()
@@ -17,6 +18,7 @@ export default async function GroupsPage() {
   }
 
   const groupsPromise = getGroups()
+  const transactionsPromise = getTransactions()
 
   return (
     <Shell variant="sidebar">
@@ -34,7 +36,7 @@ export default async function GroupsPage() {
             <GroupCardSkeleton key={i} />
           ))}
         >
-          <Groups groupsPromise={groupsPromise} />
+          <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} />
         </React.Suspense>
       </section>
     </Shell>
