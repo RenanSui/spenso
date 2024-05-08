@@ -28,9 +28,10 @@ export async function getTransactions() {
 }
 
 export async function getTransactionsById(groupId: string) {
+  const supabase = await getSupabaseServerClient()
+
   return await cache(
     async () => {
-      const supabase = await getSupabaseServerClient()
       if (!supabase) return null
 
       const { data } = await supabase.from('transactions').select('*').eq('group_id', groupId)
