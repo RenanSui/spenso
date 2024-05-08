@@ -8,7 +8,11 @@ import {
 } from '@/types'
 
 export const sortRecentTransactions = (transactions: Transaction[]): Transaction[] => {
-  return transactions?.sort((item1, item2) => item1.created_at.localeCompare(item2.created_at)).reverse()
+  return transactions
+    .sort((item1, item2) => {
+      return new Date(item1.date).getTime() - new Date(item2.date).getTime()
+    })
+    .reverse()
 }
 
 export const getCurrencyValue = (
@@ -64,7 +68,7 @@ export const getTransactionsCategories = (transactions: Transaction[]) => {
 }
 
 export const getTransactionsYears = (transactions: Transaction[]) => {
-  const newTransactions = transactions.sort((item1, item2) => Number(item1.year) - Number(item2.year))
+  const newTransactions = transactions.toSorted((item1, item2) => Number(item1.year) - Number(item2.year))
   const yearsMap = new Map<string, TransactionYears>()
 
   newTransactions.forEach((transaction) => {
