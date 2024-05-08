@@ -15,8 +15,10 @@ interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
+  const sortedYears = years.sort((item1, item2) => Number(item1.year) - Number(item2.year))
+
   const [isChecked, setChecked] = useState(true)
-  const [year, setYear] = useState(years[years.length - 1]?.year ?? 'XXXX') // ?.year ?? 'XXXX'
+  const [year, setYear] = useState(sortedYears[sortedYears.length - 1].year ?? 'XXXX')
 
   return (
     <div
@@ -35,7 +37,7 @@ export const LineChartShell = ({ rates, years, className, transactions }: LineCh
             ) : (
               <div className="flex gap-1">
                 <span>Monthly</span>
-                <YearToggle years={years} year={year} setYear={setYear} />
+                <YearToggle years={sortedYears} year={year} setYear={setYear} />
               </div>
             )}
           </span>
@@ -43,7 +45,7 @@ export const LineChartShell = ({ rates, years, className, transactions }: LineCh
       </div>
 
       {!isChecked ? <MonthsChart transactions={transactions} rates={rates} year={year} /> : null}
-      {isChecked ? <YearsChart years={years} rates={rates} /> : null}
+      {isChecked ? <YearsChart years={sortedYears} rates={rates} /> : null}
     </div>
   )
 }
