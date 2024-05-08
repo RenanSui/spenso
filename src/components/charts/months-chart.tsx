@@ -1,3 +1,4 @@
+import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { toPositive } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
@@ -15,6 +16,7 @@ import {
 import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
+import { Skeleton } from '../ui/skeleton'
 
 interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: (CurrencyRates | null)[]
@@ -41,6 +43,7 @@ const monthsOfTheYear = [
 ]
 
 export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => {
+  const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
@@ -85,7 +88,7 @@ export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => 
     }
   }, [currencyState, rates, transactions, year])
 
-  return transactions.length !== 0 ? <Line data={data} /> : null
+  return mounted ? <Line className="max-h-[300px]" data={data} /> : <Skeleton className="h-[300px] w-full"></Skeleton>
 }
 
 type TransactionMonth = {
