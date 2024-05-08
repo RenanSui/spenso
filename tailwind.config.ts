@@ -71,10 +71,60 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        wiggle: {
+          '0%, 100%': {
+            transform: 'translateX(0%)',
+            transformOrigin: '50% 50%',
+          },
+          '15%': { transform: 'translateX(-6px) rotate(-6deg)' },
+          '30%': { transform: 'translateX(9px) rotate(6deg)' },
+          '45%': { transform: 'translateX(-9px) rotate(-3.6deg)' },
+          '60%': { transform: 'translateX(3px) rotate(2.4deg)' },
+          '75%': { transform: 'translateX(-2px) rotate(-1.2deg)' },
+        },
+        /**
+         * Original source:
+         * @see https://github.com/juliusmarminge/acme-corp/blob/main/tooling/tailwind/index.ts
+         */
+        'fade-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)',
+          },
+          '75%': {
+            opacity: '0.6',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'fade-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-10px)',
+          },
+          '75%': {
+            opacity: '0.6',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' },
+        },
       },
+      /* */
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        wiggle: 'wiggle 0.8s both',
+        'fade-up': 'fade-up 0.5s ease-out',
+        'fade-down': 'fade-down 0.5s ease-out',
+        'caret-blink': 'caret-blink 1.25s ease-out infinite',
       },
     },
   },
