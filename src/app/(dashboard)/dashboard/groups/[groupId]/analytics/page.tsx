@@ -39,7 +39,7 @@ export default async function Page(params: GroupPageProps) {
         <h2 className="text-2xl font-bold tracking-tight">{group.title}</h2>
       </div>
       <TransactionAnalyticsShell
-        transactions={transactions ?? []}
+        transactions={transactions}
         categories={categories}
         types={types}
         years={years}

@@ -22,7 +22,7 @@ export default async function AnalyticsPage() {
   return (
     <div className="space-y-6">
       <TransactionAnalyticsShell
-        transactions={transactions ?? []}
+        transactions={transactions}
         categories={categories}
         types={types}
         years={years}
