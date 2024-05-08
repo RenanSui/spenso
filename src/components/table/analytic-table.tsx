@@ -50,11 +50,18 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
 
             return (
               <TableRow key={id}>
-                <TableCell className={cn('text-sm font-medium capitalize', type === 'expense' ? 'text-red-400' : null)}>
+                <TableCell
+                  className={cn(
+                    'text-sm font-medium capitalize',
+                    type === 'expense' ? 'text-red-600 dark:text-red-400' : null,
+                  )}
+                >
                   {type}
                 </TableCell>
                 <TableCell className="text-xs">{product}</TableCell>
-                <TableCell className={cn('text-xs', type === 'expense' ? 'text-red-400' : null)}>{formatted}</TableCell>
+                <TableCell className={cn('text-xs', type === 'expense' ? 'text-red-600 dark:text-red-400' : null)}>
+                  {formatted}
+                </TableCell>
               </TableRow>
             )
           })}

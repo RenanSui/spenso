@@ -57,7 +57,11 @@ export function LobbyTransactionsTable({ data: transactions, rates, groupId }: L
         header: ({ column }) => <SortableHeader column={column}>Type</SortableHeader>,
         cell: ({ row }) => {
           const type = String(row.getValue('type'))
-          return <span className={cn('pl-4 capitalize', type === 'expense' ? 'text-red-400' : null)}>{type}</span>
+          return (
+            <span className={cn('pl-4 capitalize', type === 'expense' ? 'text-red-600 dark:text-red-400' : null)}>
+              {type}
+            </span>
+          )
         },
         filterFn: (row, id, value) => {
           return value.includes(row.getValue(id))
@@ -86,7 +90,11 @@ export function LobbyTransactionsTable({ data: transactions, rates, groupId }: L
 
           const formatted = returnFormatted()
 
-          return <div className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-400' : '')}>{formatted}</div>
+          return (
+            <div className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-600 dark:text-red-400' : '')}>
+              {formatted}
+            </div>
+          )
         },
       },
       {
