@@ -108,11 +108,7 @@ export function LobbyDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <LobbyDataTablePagination
-        table={table}
-        rows={table.getSelectedRowModel().flatRows}
-        resetRows={table.resetRowSelection}
-      />
+      <LobbyDataTablePagination table={table} rows={table.getSelectedRowModel().flatRows} />
     </div>
   )
 }

@@ -9,13 +9,11 @@ interface LobbyDataTablePaginationProps<TData> {
   table: Table<TData>
   pageSizeOptions?: number[]
   rows: Row<unknown>[]
-  resetRows: (defaultState?: boolean | undefined) => void
 }
 
 export function LobbyDataTablePagination<TData>({
   table,
   rows,
-  resetRows,
   pageSizeOptions = [10, 20, 30, 40, 50],
 }: LobbyDataTablePaginationProps<TData>) {
   return (
@@ -23,7 +21,7 @@ export function LobbyDataTablePagination<TData>({
       <div className="flex flex-1 items-center whitespace-nowrap text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
         {rows.length !== 0 ? (
-          <Button className="mx-2" size="sm" onClick={() => resetRows()}>
+          <Button className="mx-2" size="sm" onClick={() => table.resetRowSelection()}>
             Delete Selections
           </Button>
         ) : null}
