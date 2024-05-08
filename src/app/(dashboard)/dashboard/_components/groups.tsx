@@ -26,7 +26,7 @@ export async function Groups({ groupsPromise, transactionsPromise, href }: Group
               key={group.id}
               group={group}
               transactions={groupTransactions}
-              href={href || `/dashboard/groups/${group.id}/transactions`}
+              href={href || `/dashboard/groups/${group.id}`}
             />
           )
         })
