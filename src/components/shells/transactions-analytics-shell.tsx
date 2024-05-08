@@ -6,7 +6,7 @@ import { TypeChart } from '../charts/type-chart'
 import { AnalyticTable } from '../table/analytic-table'
 
 type AnalyticsProps = {
-  transactions: Transaction[] | null
+  transactions: Transaction[]
   categories: TransactionCategories[]
   types: TransactionTypeses[]
   years: TransactionYears[]
