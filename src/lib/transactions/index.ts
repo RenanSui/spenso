@@ -7,8 +7,7 @@ import {
   TransactionYears,
 } from '@/types'
 
-export const sortTransactions = (transactions: Transaction[] | null): Transaction[] | null => {
-  if (!transactions) return null
+export const sortRecentTransactions = (transactions: Transaction[]): Transaction[] => {
   return transactions?.sort((item1, item2) => item1.created_at.localeCompare(item2.created_at)).reverse()
 }
 
