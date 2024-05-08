@@ -1,5 +1,6 @@
 'use client'
 
+import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionCategories } from '@/types'
@@ -7,6 +8,7 @@ import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
+import { Skeleton } from '../ui/skeleton'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -17,6 +19,7 @@ type CategoriesChartProps = {
 }
 
 export const CategoriesChart = ({ categories, className, rates }: CategoriesChartProps) => {
+  const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
@@ -38,7 +41,7 @@ export const CategoriesChart = ({ categories, className, rates }: CategoriesChar
     }
   }, [categories, currencyState, rates])
 
-  return (
+  return mounted ? (
     <div
       className={cn(
         'relative flex w-full items-center justify-center rounded-xl border p-2 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900',
@@ -47,6 +50,8 @@ export const CategoriesChart = ({ categories, className, rates }: CategoriesChar
     >
       {categories.length !== 0 ? <Bar data={data} /> : null}
     </div>
+  ) : (
+    <Skeleton className={cn('h-[350px] lg:col-span-2', className)} />
   )
 }
 
