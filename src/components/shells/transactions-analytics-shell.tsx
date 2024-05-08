@@ -30,7 +30,7 @@ export const TransactionAnalyticsShell = async ({
 
       <LineChartShell className="lg:col-span-2" transactions={transactions} years={sortedYears} rates={allRates} />
 
-      <AnalyticTable className="lg:row-span-2" transactions={transactions} rates={allRates} />
+      <AnalyticTable className="lg:row-span-2 lg:h-[712px]" transactions={transactions} rates={allRates} />
 
       <TypeChart className="lg:col-span-2" types={types} rates={allRates} />
 
