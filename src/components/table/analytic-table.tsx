@@ -20,13 +20,13 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
     return transactions
       .map((item) => ({ ...item, amount: getCurrencyValue(item.amount, item.currency, rates, currencyState) }))
       .reverse()
-      .slice(0, 20)
+      .slice(0, 12)
   }, [currencyState, rates, transactions])
 
   return (
     <div
       className={cn(
-        'dialog-scroll h-[708px] overflow-hidden overflow-y-scroll rounded-xl border dark:border-neutral-800 ',
+        'dialog-scroll overflow-hidden overflow-y-scroll rounded-xl border dark:border-neutral-800 ',
         className,
       )}
     >

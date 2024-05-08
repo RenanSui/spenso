@@ -21,7 +21,7 @@ export const LineChartShell = ({ rates, years, className, transactions }: LineCh
   return (
     <div
       className={cn(
-        'relative flex h-[350px] w-full flex-col items-center justify-center rounded-xl border p-2 pt-6 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900',
+        'relative flex w-full flex-col items-center justify-center rounded-xl border p-2 pt-6 hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900',
         className,
       )}
     >
