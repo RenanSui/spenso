@@ -25,7 +25,7 @@ export const TransactionAnalyticsShell = async ({
   const sortedYears = years.sort((item1, item2) => Number(item1.year) - Number(item2.year))
 
   return (
-    <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <CardChartShell transactions={transactions} rates={allRates} />
 
       <LineChartShell className="lg:col-span-2" transactions={transactions} years={sortedYears} rates={allRates} />
