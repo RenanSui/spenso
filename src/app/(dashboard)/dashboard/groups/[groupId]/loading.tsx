@@ -4,6 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default function GroupLoading() {
   return (
     <div className="space-y-10">
+      <Skeleton className="h-8 w-48" />
       <Card>
         <CardHeader className="space-y-2">
           <Skeleton className="h-6 w-1/4" />
@@ -14,10 +15,6 @@ export default function GroupLoading() {
             <div className="space-y-2.5">
               <Skeleton className="h-4 w-32" />
               <Skeleton className="h-6" />
-            </div>
-            <div className="space-y-2.5">
-              <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-20" />
             </div>
           </div>
         </CardContent>
