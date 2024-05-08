@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useCurrencies } from '@/hooks/use-currencies'
+import { useMounted } from '@/hooks/use-mounted'
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
 import { useStore } from 'jotai'
@@ -14,13 +15,14 @@ import { Separator } from './ui/separator'
 import { Skeleton } from './ui/skeleton'
 
 export const CurrencyToggle = () => {
+  const mounted = useMounted()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const currency = useCurrencyAtom()
   const store = useStore()
   const { data: currencies, isFetching } = useCurrencies()
 
-  return (
+  return mounted ? (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-fit justify-between">
@@ -62,5 +64,7 @@ export const CurrencyToggle = () => {
         </Command>
       </PopoverContent>
     </Popover>
+  ) : (
+    <Skeleton className="h-9 px-11 py-2"></Skeleton>
   )
 }
