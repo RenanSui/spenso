@@ -28,7 +28,6 @@ export default function GroupsCombobox() {
         setLoading(false)
         return
       }
-      console.log({ result })
       setData(result)
       setLoading(false)
     }
@@ -50,7 +49,6 @@ export default function GroupsCombobox() {
         setLoading(false)
         return
       }
-      console.log({ result })
       setData(result)
       setLoading(false)
     }

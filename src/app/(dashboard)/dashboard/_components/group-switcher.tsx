@@ -34,9 +34,6 @@ export function GroupSwitcher({ userId, className, groupsPromise, ...props }: Gr
   const groups = React.use(groupsPromise)
   const selectedGroup = groups?.find((group) => group.id === groupId)
 
-  const abc = Number(123)
-  if (abc === 321) console.log({ userId })
-
   return (
     <>
       <CreateGroupDialog userId={userId} open={showNewGroupDialog} onOpenChange={setShowNewGroupDialog} />
