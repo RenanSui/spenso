@@ -6,9 +6,10 @@ import { GroupCard } from '@/components/group-card'
 interface Groups {
   groupsPromise: ReturnType<typeof getGroups>
   transactionsPromise: ReturnType<typeof getTransactions>
+  href?: string
 }
 
-export async function Groups({ groupsPromise, transactionsPromise }: Groups) {
+export async function Groups({ groupsPromise, transactionsPromise, href }: Groups) {
   const groups = await groupsPromise
   const transactions = await transactionsPromise
 
@@ -25,7 +26,7 @@ export async function Groups({ groupsPromise, transactionsPromise }: Groups) {
               key={group.id}
               group={group}
               transactions={groupTransactions}
-              href={`/dashboard/groups/${group.id}/transactions`}
+              href={href || `/dashboard/groups/${group.id}/transactions`}
             />
           )
         })
