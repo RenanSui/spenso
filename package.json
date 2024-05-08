@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run lint && next dev",
+    "dev": "pnpm run lint && next dev --turbo",
     "build": "pnpm run lint && next build",
     "start": "next start",
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start && pnpm run dev",
