@@ -21,6 +21,7 @@ interface DeleteSelectedTransactionsProps extends HTMLAttributes<HTMLDivElement>
   rows: Row<unknown>[]
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  resetRows: (defaultState?: boolean | undefined) => void
 }
 
 export const DeleteSelectedTransaction = ({
@@ -29,10 +30,12 @@ export const DeleteSelectedTransaction = ({
   rows,
   open,
   setOpen,
+  resetRows,
 }: DeleteSelectedTransactionsProps) => {
   const deleteSelections = () => {
     const transactions = rows.map((row) => row.original) as Transaction[]
     transactions.forEach(async (transaction) => await deleteTransaction(transaction.id, transaction.group_id ?? ''))
+    resetRows()
   }
 
   return (

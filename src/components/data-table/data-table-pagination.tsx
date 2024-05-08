@@ -31,7 +31,12 @@ export function DataTablePagination<TData>({
         ) : null}
       </div>
 
-      <DeleteSelectedTransaction open={openDelete} setOpen={setDelete} rows={rows} />
+      <DeleteSelectedTransaction
+        open={openDelete}
+        setOpen={setDelete}
+        rows={rows}
+        resetRows={table.resetRowSelection}
+      />
 
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
