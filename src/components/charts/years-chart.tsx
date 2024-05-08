@@ -1,5 +1,6 @@
 'use client'
 
+import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { removeArrayDuplicates, toPositive } from '@/lib/utils'
 import { CurrencyRates, TransactionYears } from '@/types'
@@ -17,6 +18,7 @@ import {
 import { HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
+import { Skeleton } from '../ui/skeleton'
 
 interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
@@ -27,6 +29,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, 
 ChartJS.defaults.elements.line.tension = 0.4
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
+  const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
@@ -63,7 +66,7 @@ export const YearsChart = ({ years, rates }: YearsChartProps) => {
     }
   }, [currencyState, rates, years])
 
-  return years.length !== 0 ? <Line data={data} /> : null
+  return mounted ? <Line className="max-h-[300px]" data={data} /> : <Skeleton className="h-[300px] w-full"></Skeleton>
 }
 
 function fillRemainingYears(years: TransactionYears[]) {
