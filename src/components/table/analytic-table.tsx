@@ -1,5 +1,6 @@
 'use client'
 
+import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
@@ -15,6 +16,7 @@ type AnalyticTableProps = {
 
 export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableProps) => {
   const currencyState = useCurrencyAtom()
+  const mounted = useMounted()
 
   const data = useMemo(() => {
     return transactions
@@ -22,7 +24,7 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
       .slice(0, 12)
   }, [currencyState, rates, transactions])
 
-  return (
+  return mounted ? (
     <div
       className={cn(
         'dialog-scroll overflow-hidden overflow-y-scroll rounded-xl border dark:border-neutral-800 ',
@@ -68,5 +70,5 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
         </TableBody>
       </Table>
     </div>
-  )
+  ) : null
 }

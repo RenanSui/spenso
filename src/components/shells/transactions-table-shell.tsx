@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { transactionTypeses } from '@/config/dashboard'
+import { useMounted } from '@/hooks/use-mounted'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
@@ -30,6 +31,7 @@ interface TransactionsTableShellProps {
 
 export function TransactionsTableShell({ data: transactions, rates, groupId }: TransactionsTableShellProps) {
   const currencyState = useCurrencyAtom()
+  const mounted = useMounted()
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
     () => [
@@ -135,7 +137,7 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
     [currencyState, groupId, rates],
   )
 
-  return (
+  return mounted ? (
     <DataTable
       groupId={groupId}
       data={transactions}
@@ -143,7 +145,7 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
       searchableColumns={[{ id: 'product', title: 'Product' }]}
       filterableColumns={[{ id: 'type', title: 'Type', options: transactionTypeses }]}
     />
-  )
+  ) : null
 }
 
 const SortableHeader = ({ children, column }: { children: ReactNode; column: Column<Transaction, unknown> }) => (

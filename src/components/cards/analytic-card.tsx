@@ -1,3 +1,6 @@
+'use client'
+
+import { useMounted } from '@/hooks/use-mounted'
 import { cn, formatValue } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
 import { useCurrencyAtom } from '../providers/currency-provider'
@@ -14,12 +17,13 @@ export const AnalyticCard = ({
     value: number
   }
 }) => {
+  const mounted = useMounted()
   const currency = useCurrencyAtom()
   const formatted = formatValue(wallet.value, currency)
   const percent = parseInt(((wallet.length * 100) / total).toFixed(0))
   const percentFormatted = isNaN(percent) ? 100 : percent
 
-  return (
+  return mounted ? (
     <Card className={cn('', 'hover:bg-neutral-100 hover:dark:bg-neutral-900')}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium capitalize">{children}</CardTitle>
@@ -31,5 +35,5 @@ export const AnalyticCard = ({
         <p className="text-xs text-neutral-500 dark:text-neutral-400">{`${percentFormatted}%`} of Transactions</p>
       </CardContent>
     </Card>
-  )
+  ) : null
 }
