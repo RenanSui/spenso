@@ -10,22 +10,6 @@ export const dashboardConfig: DashboardConfig = {
       description: 'Manage your finances',
       items: [],
     },
-    // {
-    //   title: 'Transactions',
-    //   href: '/dashboard/transactions',
-    //   disabled: false,
-    //   icon: 'listBulletIcon',
-    //   description: 'Manage your transactions',
-    //   items: [],
-    // },
-    // {
-    //   title: 'Analytics',
-    //   href: '/dashboard/analytics',
-    //   disabled: false,
-    //   icon: 'dashboardIcon',
-    //   description: 'Analyze your transactions',
-    //   items: [],
-    // },
     {
       title: 'Account',
       href: '/dashboard/account',
