@@ -21,7 +21,7 @@ interface AuthDropdownProps extends React.ComponentPropsWithRef<typeof DropdownM
 }
 
 export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
-  const initials = `${user?.name?.split(' ')[0].charAt(0)} ${user?.name?.split(' ')[1].charAt(0)}`
+  const initials = `${user?.name?.split(' ')[0]?.charAt(0)} ${user?.name?.split(' ')[1]?.charAt(0)}`
   const email = `${user?.email}`
 
   return (
