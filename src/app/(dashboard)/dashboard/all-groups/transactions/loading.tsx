@@ -15,6 +15,7 @@ export default async function Loading() {
 
           <div className="flex items-center gap-2">
             <Skeleton className="ml-auto h-[30px] w-[75px]" />
+            <Skeleton className="ml-auto h-[30px] w-[75px]" />
             <Skeleton className="hidden h-[28px] w-[75px] lg:block" />
           </div>
         </div>
