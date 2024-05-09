@@ -1,6 +1,14 @@
 import { Transaction, TransactionCategories, TransactionGroups } from '@/types'
 import { sortRecentTransactions } from './transactions'
 
+const user = {
+  address: '',
+  name: 'guest',
+  email: 'guest@email.com',
+  image: null,
+  id: '123guest',
+}
+
 const groups: TransactionGroups[] = [
   { created_at: '', id: 'group-1', title: 'Finances', user_id: 'user-1' },
   { created_at: '', id: 'group-2', title: 'Games', user_id: 'user-2' },
@@ -73,5 +81,6 @@ const transactions: Transaction[] = [
 const mockGroups = Promise.resolve(groups)
 const mockCategories = Promise.resolve(categories)
 const mockTransactions = Promise.resolve(sortRecentTransactions(transactions))
+const mockUser = user
 
-export { mockCategories, mockGroups, mockTransactions }
+export { mockCategories, mockGroups, mockTransactions, mockUser }
