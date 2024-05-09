@@ -3,11 +3,11 @@ import { DashboardConfig, TransactionTypes } from '@/types'
 export const dashboardConfig: DashboardConfig = {
   SidebarNav: [
     {
-      title: 'Groups',
+      title: 'Finances',
       href: '/dashboard/groups',
       disabled: false,
       icon: 'listBulletIcon',
-      description: 'Manage your groups',
+      description: 'Manage your finances',
       items: [],
     },
     // {
