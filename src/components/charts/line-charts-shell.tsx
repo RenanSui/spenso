@@ -24,7 +24,7 @@ interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
 export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
   const sortedYears = years.sort((item1, item2) => Number(item1.year) - Number(item2.year))
   const [year, setYear] = useState(sortedYears[sortedYears.length - 1]?.year ?? 'XXXX')
-  const [chart, setChart] = useState<'Yearly' | 'Monthly'>('Yearly')
+  const [chart, setChart] = useState<'Yearly' | 'Monthly'>('Monthly')
   const mounted = useMounted()
 
   return mounted ? (
