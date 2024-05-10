@@ -40,8 +40,11 @@ export function GuestDeleteGroupDialog({ groupId }: GuestDeleteGroupDialogProps)
 
   const onDelete = async () => {
     setLoading(true)
-    router.push('/guest/groups')
-    setTimeout(() => guest.deleteGroup(groupId), 150)
+    router.push('/guest/groups?deleting=true')
+    setTimeout(() => {
+      guest.deleteGroup(groupId)
+      router.replace('/guest/groups?deleting=false')
+    }, 1000)
     setLoading(false)
   }
 
