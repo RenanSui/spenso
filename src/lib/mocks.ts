@@ -9,7 +9,7 @@ const user = {
   id: '123guest',
 }
 
-const groups: TransactionGroups[] = [
+export const groups: TransactionGroups[] = [
   { created_at: '', id: 'group-1', title: 'Finances', user_id: 'user-1' },
   { created_at: '', id: 'group-2', title: 'Games', user_id: 'user-2' },
   { created_at: '', id: 'group-3', title: 'Traveling', user_id: 'user-3' },
