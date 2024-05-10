@@ -13,13 +13,7 @@ type AnalyticsProps = {
   allRates: (CurrencyRates | null)[]
 }
 
-export const TransactionAnalyticsShell = async ({
-  transactions,
-  allRates,
-  categories,
-  types,
-  years,
-}: AnalyticsProps) => {
+export const TransactionAnalyticsShell = ({ transactions, allRates, categories, types, years }: AnalyticsProps) => {
   if (!transactions) return null
 
   return (
