@@ -5,7 +5,9 @@ import { ContentSection } from '@/components/content-section'
 import { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { buttonVariants } from '@/components/ui/button'
+import { getUser } from '@/lib/auth'
 import { mockCategories, mockGroups, mockTransactions } from '@/lib/mocks'
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { LobbyTransactionsTable } from './lobby-transactions-table'
 
@@ -14,12 +16,20 @@ interface LobbyProps {
   transactionsPromise: typeof mockTransactions
   categoriesPromise: typeof mockCategories
   ratesPromise: ReturnType<typeof getRate>
+  userPromise: ReturnType<typeof getUser>
 }
 
-export async function Lobby({ ratesPromise, categoriesPromise, groupsPromise, transactionsPromise }: LobbyProps) {
+export async function Lobby({
+  ratesPromise,
+  categoriesPromise,
+  groupsPromise,
+  transactionsPromise,
+  userPromise,
+}: LobbyProps) {
   const transactions = await transactionsPromise
   const categories = await categoriesPromise
   const rates = await ratesPromise
+  const user = await userPromise
 
   return (
     <Shell className="max-w-6xl gap-0">
@@ -34,13 +44,36 @@ export async function Lobby({ ratesPromise, categoriesPromise, groupsPromise, tr
           Take charge of your finances with Spenso. Our free budget tracker helps you understand your spending for a
           brighter financial future. Find Happiness In Budgeting!
         </PageHeaderDescription>
-        <PageActions className="animate-fade-up" style={{ animationDelay: '0.40s', animationFillMode: 'both' }}>
-          <Link className={buttonVariants()} href="/dashboard/groups">
-            Try now
-          </Link>
-          <Link className={buttonVariants({ variant: 'outline' })} href="/signin">
-            Sign in
-          </Link>
+        <PageActions className="grid space-x-0 space-y-4">
+          <div className="animate-fade-up space-x-4" style={{ animationDelay: '0.40s', animationFillMode: 'both' }}>
+            <Link className={buttonVariants()} href="/dashboard/groups">
+              Try now
+            </Link>
+            <Link className={buttonVariants({ variant: 'outline' })} href="/signin">
+              Sign in
+            </Link>
+          </div>
+
+          {!user ? (
+            <>
+              <div className="relative animate-fade-up" style={{ animationDelay: '0.50s', animationFillMode: 'both' }}>
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                </div>
+              </div>
+
+              <Link
+                className={cn(buttonVariants(), 'animate-fade-up px-16')}
+                style={{ animationDelay: '0.50s', animationFillMode: 'both' }}
+                href="/guest/groups"
+              >
+                Continue as guest
+              </Link>
+            </>
+          ) : null}
         </PageActions>
       </PageHeader>
       <ContentSection
