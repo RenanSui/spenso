@@ -66,7 +66,7 @@ export async function Lobby({
               </div>
 
               <Link
-                className={cn(buttonVariants(), 'animate-fade-up px-16')}
+                className={cn(buttonVariants(), 'animate-fade-up')}
                 style={{ animationDelay: '0.50s', animationFillMode: 'both' }}
                 href="/guest/groups"
               >
