@@ -1,6 +1,8 @@
+import { PageHeaderDescription } from '@/components/page-header'
 import { CurrencyProvider } from '@/components/providers/currency-provider'
 import { getUser } from '@/lib/auth'
 import { mockUser } from '@/lib/mocks'
+import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { GuestDashboardHeader } from './_components/guest-dashboard-header'
 import { GuestDashboardSidebar } from './_components/guest-dashboard-sidebar'
@@ -32,7 +34,16 @@ export default async function GuestLayout({ children }: { children: React.ReactN
                   </GuestDashboardSidebar>
                 </GuestDashboardSidebarSheet>
               </GuestDashboardHeader>
-              <main className="flex-1 overflow-hidden px-6">{children}</main>
+              <main className="flex-1 overflow-hidden px-6">
+                {children}
+                <PageHeaderDescription size="sm">All your data will be deleted upon close.</PageHeaderDescription>
+                <PageHeaderDescription size="sm">
+                  <Link href="/signin" className="underline transition-all hover:text-foreground">
+                    Sign In
+                  </Link>{' '}
+                  to sync your data.
+                </PageHeaderDescription>
+              </main>
             </div>
           </div>
         </SidebarProvider>
