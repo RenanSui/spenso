@@ -4,7 +4,15 @@ import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { mockProducts } from '@/lib/mocks'
 import { positiveOrNegative } from '@/lib/utils'
-import { CurrencyRates, Transaction, TransactionGroups, TransactionInsert, TransactionUpdate } from '@/types'
+import {
+  CurrencyRates,
+  Transaction,
+  TransactionGroups,
+  TransactionGroupsInsert,
+  TransactionInsert,
+  TransactionUpdate,
+} from '@/types'
+import { PostgrestError } from '@supabase/supabase-js'
 import * as React from 'react'
 
 export interface TransactionsContext {
@@ -15,7 +23,9 @@ export interface TransactionsContext {
   updateTransaction: (transaction: TransactionUpdate) => void
   updateTransactionGroup: (transactionId: string, oldGroupId: string, newGroupId: string) => void
   deleteTransaction: (id: string) => void
-  createGroup: (group: TransactionGroups) => void
+  createGroup: (
+    group: TransactionGroupsInsert,
+  ) => Promise<{ data: TransactionGroups[] | null; error: PostgrestError | null }>
   updateGroup: (group: TransactionGroups) => void
   deleteGroup: (id: string) => void
 }
@@ -28,7 +38,7 @@ export const TransactionsContext = React.createContext<TransactionsContext>({
   updateTransaction: () => {},
   updateTransactionGroup: () => {},
   deleteTransaction: () => {},
-  createGroup: () => {},
+  createGroup: () => Promise.resolve({ data: null, error: null }),
   updateGroup: () => {},
   deleteGroup: () => {},
 })
@@ -103,8 +113,17 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
     setTransactions(filteredTransactions)
   }
 
-  const createGroup = (group: TransactionGroups) => {
-    setGroups([...groups, group])
+  const createGroup = (group: TransactionGroupsInsert) => {
+    const formattedGroup: TransactionGroups = {
+      id: group.id ?? String(Math.floor(Math.random() * 1000000000)),
+      created_at: group.created_at ?? new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
+      title: group.title ?? 'Global Placeholder',
+      user_id: group.user_id ?? String(Math.floor(Math.random() * 1000000000)),
+    }
+
+    setGroups([...groups, formattedGroup])
+
+    return Promise.resolve({ data: [formattedGroup], error: null })
   }
 
   const updateGroup = (group: TransactionGroups) => {
