@@ -1,5 +1,10 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import { deleteTransaction, getTransactionsByGroupId, updateTransactionGroup } from '@/actions/server/transactions'
+import {
+  deleteTransaction,
+  getTransactionsByGroupId,
+  updateTransaction,
+  updateTransactionGroup,
+} from '@/actions/server/transactions'
 import { getGroupById } from '@/actions/server/transactions-groups'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { notFound } from 'next/navigation'
@@ -38,8 +43,9 @@ export default async function Page(params: GroupPageProps) {
         groupId={group.id}
         data={transactions}
         rates={allRates}
-        deleteTransaction={deleteTransaction}
+        updateTransaction={updateTransaction}
         updateTransactionGroup={updateTransactionGroup}
+        deleteTransaction={deleteTransaction}
       />
     </div>
   )

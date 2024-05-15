@@ -13,7 +13,7 @@ import {
 import { transactionTypeses } from '@/config/dashboard'
 import { useMounted } from '@/hooks/use-mounted'
 import { cn, formatValue } from '@/lib/utils'
-import { CurrencyRates, Transaction } from '@/types'
+import { CurrencyRates, Transaction, TransactionUpdate } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -27,6 +27,7 @@ interface TransactionsTableShellProps {
   data: Transaction[]
   rates: (CurrencyRates | null)[]
   groupId?: string
+  updateTransaction?: (formData: TransactionUpdate) => unknown
   updateTransactionGroup?: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
   deleteTransaction?: (transactionId: string) => unknown
 }
@@ -35,6 +36,7 @@ export function TransactionsTableShell({
   data: transactions,
   rates,
   groupId,
+  updateTransaction,
   updateTransactionGroup,
   deleteTransaction,
 }: TransactionsTableShellProps) {
@@ -142,6 +144,7 @@ export function TransactionsTableShell({
         cell: ({ row }) =>
           groupId ? (
             <TableDropdown
+              updateTransaction={updateTransaction}
               transaction={row.original}
               updateTransactionGroup={updateTransactionGroup}
               deleteTransaction={deleteTransaction}
@@ -149,7 +152,7 @@ export function TransactionsTableShell({
           ) : null,
       },
     ],
-    [currencyState, deleteTransaction, groupId, rates, updateTransactionGroup],
+    [currencyState, deleteTransaction, groupId, rates, updateTransaction, updateTransactionGroup],
   )
 
   return mounted ? (
@@ -176,11 +179,17 @@ const SortableHeader = ({ children, column }: { children: ReactNode; column: Col
 
 type TableDropdownProps = {
   transaction: Transaction
+  updateTransaction?: (formData: TransactionUpdate) => unknown
   updateTransactionGroup?: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
   deleteTransaction?: (transactionId: string) => unknown
 }
 
-const TableDropdown = ({ transaction, updateTransactionGroup, deleteTransaction }: TableDropdownProps) => {
+const TableDropdown = ({
+  transaction,
+  updateTransactionGroup,
+  deleteTransaction,
+  updateTransaction,
+}: TableDropdownProps) => {
   const [open, setOpen] = useState(false)
 
   const [isDisable, setIsDisable] = useState(false)
@@ -238,13 +247,16 @@ const TableDropdown = ({ transaction, updateTransactionGroup, deleteTransaction 
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <UpdateTransaction
-        open={openUpdate}
-        setOpen={setUpdate}
-        transaction={transaction}
-        setIsDisable={setIsDisable}
-        isDuplicateItem={openDuplicate}
-      />
+      {updateTransaction ? (
+        <UpdateTransaction
+          open={openUpdate}
+          setOpen={setUpdate}
+          transaction={transaction}
+          setIsDisable={setIsDisable}
+          isDuplicateItem={openDuplicate}
+          updateTransaction={updateTransaction}
+        />
+      ) : null}
 
       {updateTransactionGroup ? (
         <ChangeTransactionGroup

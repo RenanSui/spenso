@@ -1,9 +1,10 @@
 'use client'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Transaction } from '@/types'
+import { Transaction, TransactionUpdate } from '@/types'
 import { Separator } from '@radix-ui/react-dropdown-menu'
 import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
-import { TransactionForm } from './transaction-form'
+import { UpdateTransactionForm } from './update-transaction-form'
+import { updateTransaction } from '@/actions/server/transactions'
 
 interface UpdateTransactionProps extends HTMLAttributes<HTMLDivElement> {
   open: boolean
@@ -11,6 +12,7 @@ interface UpdateTransactionProps extends HTMLAttributes<HTMLDivElement> {
   isDuplicateItem?: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   setIsDisable?: Dispatch<SetStateAction<boolean>>
+  updateTransaction: (formData: TransactionUpdate) => unknown
 }
 
 export const UpdateTransaction = ({
@@ -35,7 +37,7 @@ export const UpdateTransaction = ({
           <DialogTitle>{isDuplicateItem ? 'Duplicate' : 'Update'} Transaction</DialogTitle>
         </DialogHeader>
         <Separator />
-        <TransactionForm formAction={isDuplicateItem ? 'add' : 'update'} setOpen={setOpen} transaction={transaction} />
+        <UpdateTransactionForm setOpen={setOpen} transaction={transaction} updateTransaction={updateTransaction} />
       </DialogContent>
     </Dialog>
   )
