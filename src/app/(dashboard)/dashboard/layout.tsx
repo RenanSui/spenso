@@ -1,5 +1,6 @@
 import { getGroups } from '@/actions/server/transactions-groups'
 import { CurrencyProvider } from '@/components/providers/currency-provider'
+import { dashboardConfig } from '@/config/dashboard'
 import { getUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { DashboardHeader } from './_components/dashboard-header'
@@ -18,13 +19,16 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <CurrencyProvider>
       <SidebarProvider>
         <div className="grid min-h-screen w-full lg:grid-cols-[17.5rem_1fr]">
-          <DashboardSidebar className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block">
+          <DashboardSidebar
+            className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block"
+            sidebarItems={dashboardConfig.SidebarNav}
+          >
             <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
           </DashboardSidebar>
           <div className="flex flex-col">
             <DashboardHeader user={user}>
               <DashboardSidebarSheet>
-                <DashboardSidebar>
+                <DashboardSidebar sidebarItems={dashboardConfig.SidebarNav}>
                   <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
                 </DashboardSidebar>
               </DashboardSidebarSheet>

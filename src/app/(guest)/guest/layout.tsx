@@ -1,11 +1,12 @@
+import { DashboardSidebar } from '@/app/(dashboard)/dashboard/_components/dashboard-sidebar'
 import { PageHeaderDescription } from '@/components/page-header'
 import { CurrencyProvider } from '@/components/providers/currency-provider'
+import { guestDashboardConfig } from '@/config/guest'
 import { getUser } from '@/lib/auth'
 import { mockUser } from '@/lib/mocks'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { GuestDashboardHeader } from './_components/guest-dashboard-header'
-import { GuestDashboardSidebar } from './_components/guest-dashboard-sidebar'
 import { GuestDashboardSidebarSheet } from './_components/guest-dashboard-sidebar-sheet'
 import { GuestGroupSwitcher } from './_components/guest-group-switcher'
 import { GuestProvider } from './_components/guest-provider'
@@ -23,15 +24,18 @@ export default async function GuestLayout({ children }: { children: React.ReactN
       <CurrencyProvider>
         <SidebarProvider>
           <div className="grid min-h-screen w-full lg:grid-cols-[17.5rem_1fr]">
-            <GuestDashboardSidebar className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block">
+            <DashboardSidebar
+              className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block"
+              sidebarItems={guestDashboardConfig.SidebarNav}
+            >
               <GuestGroupSwitcher userId={user.id} />
-            </GuestDashboardSidebar>
+            </DashboardSidebar>
             <div className="flex flex-col">
               <GuestDashboardHeader user={null}>
                 <GuestDashboardSidebarSheet>
-                  <GuestDashboardSidebar>
+                  <DashboardSidebar sidebarItems={guestDashboardConfig.SidebarNav}>
                     <GuestGroupSwitcher userId={user.id} />
-                  </GuestDashboardSidebar>
+                  </DashboardSidebar>
                 </GuestDashboardSidebarSheet>
               </GuestDashboardHeader>
               <main className="flex-1 overflow-hidden px-6">
