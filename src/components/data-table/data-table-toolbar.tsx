@@ -1,18 +1,20 @@
-import { DataTableFilterableColumn, DataTableSearchableColumn } from '@/types'
+import { DataTableFilterableColumn, DataTableSearchableColumn, TransactionInsert } from '@/types'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 import { CurrencyToggle } from '../currency-toggle'
+import { NewTransaction } from '../new-transaction'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 import { DataTableViewOptions } from './data-table-view-options'
 
 interface DataTableToolbarProps<TData> {
+  groupId?: string
   table: Table<TData>
-  AddNewItem?: ({ groupId }: { groupId: string }) => JSX.Element
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
-  groupId?: string
+  AddNewItem?: typeof NewTransaction
+  addTransaction?: (formData: TransactionInsert) => unknown
 }
 
 export function DataTableToolbar<TData>({
@@ -21,6 +23,7 @@ export function DataTableToolbar<TData>({
   filterableColumns = [],
   searchableColumns = [],
   groupId,
+  addTransaction,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -65,7 +68,9 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center space-x-2">
-        {groupId ? AddNewItem ? <AddNewItem groupId={groupId} /> : null : null}
+        {AddNewItem && groupId && addTransaction ? (
+          <AddNewItem groupId={groupId} addTransaction={addTransaction} />
+        ) : null}
         <CurrencyToggle />
         <DataTableViewOptions table={table} />
       </div>

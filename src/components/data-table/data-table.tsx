@@ -1,7 +1,7 @@
 'use client'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { DataTableFilterableColumn, DataTableSearchableColumn } from '@/types'
+import { DataTableFilterableColumn, DataTableSearchableColumn, TransactionInsert } from '@/types'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,6 +25,7 @@ interface DataTableProps<TData, TValue> {
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
   groupId?: string
+  addTransaction?: (formData: TransactionInsert) => unknown
 }
 
 export function DataTable<TData, TValue>({
@@ -33,6 +34,7 @@ export function DataTable<TData, TValue>({
   filterableColumns,
   searchableColumns,
   groupId,
+  addTransaction,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -64,6 +66,7 @@ export function DataTable<TData, TValue>({
       <DataTableToolbar
         groupId={groupId}
         table={table}
+        addTransaction={addTransaction}
         AddNewItem={NewTransaction}
         filterableColumns={filterableColumns}
         searchableColumns={searchableColumns}

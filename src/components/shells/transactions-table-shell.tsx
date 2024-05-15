@@ -13,7 +13,7 @@ import {
 import { transactionTypeses } from '@/config/dashboard'
 import { useMounted } from '@/hooks/use-mounted'
 import { cn, formatValue } from '@/lib/utils'
-import { CurrencyRates, Transaction, TransactionUpdate } from '@/types'
+import { CurrencyRates, Transaction, TransactionInsert, TransactionUpdate } from '@/types'
 import { Column, ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -27,6 +27,7 @@ interface TransactionsTableShellProps {
   data: Transaction[]
   rates: (CurrencyRates | null)[]
   groupId?: string
+  addTransaction?: (formData: TransactionInsert) => unknown
   updateTransaction?: (formData: TransactionUpdate) => unknown
   updateTransactionGroup?: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
   deleteTransaction?: (transactionId: string) => unknown
@@ -36,6 +37,7 @@ export function TransactionsTableShell({
   data: transactions,
   rates,
   groupId,
+  addTransaction,
   updateTransaction,
   updateTransactionGroup,
   deleteTransaction,
@@ -160,6 +162,7 @@ export function TransactionsTableShell({
       groupId={groupId}
       data={transactions}
       columns={columns}
+      addTransaction={addTransaction}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
       filterableColumns={[{ id: 'type', title: 'Type', options: transactionTypeses }]}
     />

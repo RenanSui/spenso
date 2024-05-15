@@ -1,5 +1,6 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import {
+  addTransaction,
   deleteTransaction,
   getTransactionsByGroupId,
   updateTransaction,
@@ -43,6 +44,7 @@ export default async function Page(params: GroupPageProps) {
         groupId={group.id}
         data={transactions}
         rates={allRates}
+        addTransaction={addTransaction}
         updateTransaction={updateTransaction}
         updateTransactionGroup={updateTransactionGroup}
         deleteTransaction={deleteTransaction}
