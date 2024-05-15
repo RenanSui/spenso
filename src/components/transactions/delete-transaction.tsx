@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteTransaction } from '@/actions/server/transactions'
+// import { deleteTransaction } from '@/actions/server/transactions'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +20,7 @@ interface DeleteTransactionProps extends HTMLAttributes<HTMLDivElement> {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   setIsDisable: Dispatch<SetStateAction<boolean>>
+  deleteTransaction: (transactionId: string) => unknown
 }
 
 export const DeleteTransaction = ({
@@ -29,6 +30,7 @@ export const DeleteTransaction = ({
   className,
   setIsDisable,
   transactionId,
+  deleteTransaction,
 }: DeleteTransactionProps) => {
   const DeleteTransaction = async () => await deleteTransaction(transactionId)
 

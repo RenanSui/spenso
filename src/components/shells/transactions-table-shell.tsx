@@ -27,9 +27,15 @@ interface TransactionsTableShellProps {
   data: Transaction[]
   rates: (CurrencyRates | null)[]
   groupId?: string
+  deleteTransaction?: (transactionId: string) => unknown
 }
 
-export function TransactionsTableShell({ data: transactions, rates, groupId }: TransactionsTableShellProps) {
+export function TransactionsTableShell({
+  data: transactions,
+  rates,
+  groupId,
+  deleteTransaction,
+}: TransactionsTableShellProps) {
   const currencyState = useCurrencyAtom()
   const mounted = useMounted()
 
@@ -131,10 +137,11 @@ export function TransactionsTableShell({ data: transactions, rates, groupId }: T
       },
       {
         id: 'actions',
-        cell: ({ row }) => (groupId ? <TableDropdown transaction={row.original} /> : null),
+        cell: ({ row }) =>
+          groupId ? <TableDropdown transaction={row.original} deleteTransaction={deleteTransaction} /> : null,
       },
     ],
-    [currencyState, groupId, rates],
+    [currencyState, deleteTransaction, groupId, rates],
   )
 
   return mounted ? (
@@ -159,7 +166,12 @@ const SortableHeader = ({ children, column }: { children: ReactNode; column: Col
   </Button>
 )
 
-const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
+type TableDropdownProps = {
+  transaction: Transaction
+  deleteTransaction?: (transactionId: string) => unknown
+}
+
+const TableDropdown = ({ transaction, deleteTransaction }: TableDropdownProps) => {
   const [open, setOpen] = useState(false)
 
   const [isDisable, setIsDisable] = useState(false)
@@ -233,13 +245,15 @@ const TableDropdown = ({ transaction }: { transaction: Transaction }) => {
         transactionGroupId={transaction.group_id ?? ''}
       />
 
-      <DeleteTransaction
-        open={openDelete}
-        setOpen={setDelete}
-        groupId={transaction.group_id ?? ''}
-        transactionId={transaction.id}
-        setIsDisable={setIsDisable}
-      />
+      {deleteTransaction ? (
+        <DeleteTransaction
+          open={openDelete}
+          setOpen={setDelete}
+          transactionId={transaction.id}
+          setIsDisable={setIsDisable}
+          deleteTransaction={deleteTransaction}
+        />
+      ) : null}
     </>
   )
 }

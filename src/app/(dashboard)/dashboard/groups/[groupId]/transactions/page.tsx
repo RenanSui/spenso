@@ -1,5 +1,5 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import { getTransactionsByGroupId } from '@/actions/server/transactions'
+import { deleteTransaction, getTransactionsByGroupId } from '@/actions/server/transactions'
 import { getGroupById } from '@/actions/server/transactions-groups'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { notFound } from 'next/navigation'
@@ -34,7 +34,12 @@ export default async function Page(params: GroupPageProps) {
       <div className="flex flex-col gap-4 xs:flex-row xs:items-center xs:justify-between">
         <h2 className="text-2xl font-bold tracking-tight">{group.title}</h2>
       </div>
-      <TransactionsTableShell groupId={group.id} data={transactions} rates={allRates} />
+      <TransactionsTableShell
+        groupId={group.id}
+        data={transactions}
+        rates={allRates}
+        deleteTransaction={deleteTransaction}
+      />
     </div>
   )
 }
