@@ -1,4 +1,4 @@
-import { getGroups } from '@/actions/server/transactions-groups'
+import { addGroup, getGroups } from '@/actions/server/transactions-groups'
 import { CurrencyProvider } from '@/components/providers/currency-provider'
 import { dashboardConfig } from '@/config/dashboard'
 import { getUser } from '@/lib/auth'
@@ -23,13 +23,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
             className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block"
             sidebarItems={dashboardConfig.SidebarNav}
           >
-            <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
+            <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} createGroup={addGroup} />
           </DashboardSidebar>
           <div className="flex flex-col">
             <DashboardHeader user={user}>
               <DashboardSidebarSheet>
                 <DashboardSidebar sidebarItems={dashboardConfig.SidebarNav}>
-                  <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} />
+                  <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} createGroup={addGroup} />
                 </DashboardSidebar>
               </DashboardSidebarSheet>
             </DashboardHeader>

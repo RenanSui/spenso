@@ -1,3 +1,4 @@
+import { addGroup } from '@/actions/server/transactions-groups'
 import { CurrencyToggle } from '@/components/currency-toggle'
 import { DashboardTabs } from '@/components/dashboard-tabs'
 import { PageHeader, PageHeaderHeading } from '@/components/page-header'
@@ -22,7 +23,7 @@ export default async function AllGroupLayout({ children }: GroupLayoutProps) {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog userId={user.id} />
+        <CreateGroupDialog userId={user.id} route="dashboard" createGroup={addGroup} />
       </PageHeader>
       <DashboardTabs />
       <div className="overflow-hidden">{children}</div>

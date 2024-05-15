@@ -1,5 +1,5 @@
 import { getTransactions } from '@/actions/server/transactions'
-import { getGroups } from '@/actions/server/transactions-groups'
+import { addGroup, getGroups } from '@/actions/server/transactions-groups'
 import { CurrencyToggle } from '@/components/currency-toggle'
 import { DashboardTabs } from '@/components/dashboard-tabs'
 import { GroupCardSkeleton } from '@/components/group-card-skeleton'
@@ -27,7 +27,7 @@ export default async function GroupsPage() {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog userId={user.id} />
+        <CreateGroupDialog userId={user.id} route="dashboard" createGroup={addGroup} />
       </PageHeader>
       <DashboardTabs />
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

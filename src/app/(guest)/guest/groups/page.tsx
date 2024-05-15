@@ -1,5 +1,6 @@
 'use client'
 
+import { CreateGroupDialog } from '@/app/(dashboard)/dashboard/_components/create-group-dialog'
 import { CurrencyToggle } from '@/components/currency-toggle'
 import { GroupCardSkeleton } from '@/components/group-card-skeleton'
 import { PageHeader, PageHeaderHeading } from '@/components/page-header'
@@ -7,7 +8,6 @@ import { Shell } from '@/components/shells/shell'
 import { mockUser } from '@/lib/mocks'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
-import { GuestCreateGroupDialog } from '../_components/guest-create-group-dialog'
 import { GuestDashboardTabs } from '../_components/guest-dashboard-tabs'
 import { GuestGroups } from '../_components/guest-groups'
 import { TransactionsContext } from '../_components/guest-provider'
@@ -19,7 +19,7 @@ type PageParams = {
 }
 
 export default function Page(params: PageParams) {
-  const { transactions, groups } = React.useContext(TransactionsContext)
+  const guest = React.useContext(TransactionsContext)
   const user = mockUser
 
   const deleting = params.searchParams.deleting ?? 'false'
@@ -32,7 +32,7 @@ export default function Page(params: PageParams) {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <GuestCreateGroupDialog userId={user.id} />
+        <CreateGroupDialog userId={user.id} route="guest" createGroup={guest.createGroup} />
       </PageHeader>
       <GuestDashboardTabs />
       <section
@@ -46,7 +46,7 @@ export default function Page(params: PageParams) {
             <GroupCardSkeleton key={i} />
           ))}
         >
-          <GuestGroups groups={groups} transactions={transactions} />
+          <GuestGroups groups={guest.groups} transactions={guest.transactions} />
         </React.Suspense>
       </section>
     </Shell>
