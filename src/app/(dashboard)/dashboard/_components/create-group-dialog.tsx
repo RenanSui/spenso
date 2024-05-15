@@ -1,6 +1,5 @@
 'use client'
 
-import { addGroup, revalidateGroup } from '@/actions/server/transactions-groups'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -27,7 +26,9 @@ import { Input } from '@/components/ui/input'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
 import { CreateGroupSchema, createGroupSchema } from '@/lib/validations/group'
+import { GroupsRoute, TransactionGroups, TransactionGroupsInsert } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { PostgrestError } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { UseFormReturn, useForm } from 'react-hook-form'
@@ -35,9 +36,19 @@ import { toast } from 'sonner'
 
 interface CreateGroupDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   userId: string | null | undefined
+  createGroup: (
+    formData: TransactionGroupsInsert,
+  ) => Promise<{ data: TransactionGroups[] | null; error: PostgrestError | null } | null>
+  route?: GroupsRoute
 }
 
-export function CreateGroupDialog({ userId, onOpenChange, ...props }: CreateGroupDialogProps) {
+export function CreateGroupDialog({
+  userId,
+  onOpenChange,
+  route = 'dashboard',
+  createGroup,
+  ...props
+}: CreateGroupDialogProps) {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
   const isDesktop = useMediaQuery('(min-width: 640px)')
@@ -50,7 +61,8 @@ export function CreateGroupDialog({ userId, onOpenChange, ...props }: CreateGrou
   })
 
   async function onSubmit(input: CreateGroupSchema) {
-    const result = await addGroup({ ...input, user_id: userId })
+    const result = await createGroup({ ...input, user_id: userId })
+
     if (!result) {
       toast.error('Error creating group. Try again.')
       return
@@ -64,8 +76,7 @@ export function CreateGroupDialog({ userId, onOpenChange, ...props }: CreateGrou
     }
 
     if (data) {
-      revalidateGroup()
-      router.push(`/dashboard/groups/${data[0].id}?title=${data[0].title}`)
+      router.push(`/${route}/groups/${data[0].id}`)
       toast.success('Group created')
     }
 
