@@ -15,6 +15,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils'
 import { CaretSortIcon, CheckIcon, FrameIcon, PlusCircledIcon } from '@radix-ui/react-icons'
 
+import { GroupsRoute, TransactionGroups, TransactionGroupsInsert } from '@/types'
+import { PostgrestError } from '@supabase/supabase-js'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { CreateGroupDialog } from './create-group-dialog'
@@ -22,10 +24,20 @@ import { CreateGroupDialog } from './create-group-dialog'
 interface GroupSwitcherProps extends React.ComponentPropsWithoutRef<typeof PopoverTrigger> {
   userId: string | null | undefined
   groupsPromise: ReturnType<typeof getGroups>
-  route?: 'dashboard' | 'guest'
+  route?: GroupsRoute
+  createGroup: (
+    formData: TransactionGroupsInsert,
+  ) => Promise<{ data: TransactionGroups[] | null; error: PostgrestError | null } | null>
 }
 
-export function GroupSwitcher({ userId, className, groupsPromise, route = 'dashboard', ...props }: GroupSwitcherProps) {
+export function GroupSwitcher({
+  userId,
+  className,
+  groupsPromise,
+  route = 'dashboard',
+  createGroup,
+  ...props
+}: GroupSwitcherProps) {
   const { groupId } = useParams<{ groupId: string }>()
   const router = useRouter()
   const pathname = usePathname()
@@ -37,7 +49,13 @@ export function GroupSwitcher({ userId, className, groupsPromise, route = 'dashb
 
   return (
     <>
-      <CreateGroupDialog userId={userId} open={showNewGroupDialog} onOpenChange={setShowNewGroupDialog} />
+      <CreateGroupDialog
+        userId={userId}
+        open={showNewGroupDialog}
+        onOpenChange={setShowNewGroupDialog}
+        route={route}
+        createGroup={createGroup}
+      />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
