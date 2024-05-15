@@ -2,13 +2,13 @@
 
 import { CreateGroupDialog } from '@/app/(dashboard)/dashboard/_components/create-group-dialog'
 import { CurrencyToggle } from '@/components/currency-toggle'
+import { DashboardTabs } from '@/components/dashboard-tabs'
 import { GroupCardSkeleton } from '@/components/group-card-skeleton'
 import { PageHeader, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 import { mockUser } from '@/lib/mocks'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
-import { GuestDashboardTabs } from '../_components/guest-dashboard-tabs'
 import { GuestGroups } from '../_components/guest-groups'
 import { TransactionsContext } from '../_components/guest-provider'
 
@@ -34,7 +34,7 @@ export default function Page(params: PageParams) {
         <CurrencyToggle />
         <CreateGroupDialog userId={user.id} route="guest" createGroup={guest.createGroup} />
       </PageHeader>
-      <GuestDashboardTabs />
+      <DashboardTabs route="guest" />
       <section
         className={cn(
           'grid gap-4 transition-all md:grid-cols-2 xl:grid-cols-4',

@@ -1,4 +1,4 @@
-import { GuestGroupTabs } from '@/app/(guest)/guest/_components/guest-group-tabs'
+import { GroupTabs } from '@/components/group-tabs'
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
 
@@ -17,7 +17,7 @@ export default async function GroupLayout({ children, params }: GroupLayoutProps
         <PageHeaderHeading size="sm">Dashboard</PageHeaderHeading>
         <PageHeaderDescription size="sm">Manage your group</PageHeaderDescription>
       </PageHeader>
-      <GuestGroupTabs groupId={groupId} />
+      <GroupTabs groupId={groupId} route="guest" />
       <div className="overflow-hidden">{children}</div>
     </Shell>
   )

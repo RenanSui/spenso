@@ -5,7 +5,7 @@ import { getUser } from '@/lib/auth'
 import { mockUser } from '@/lib/mocks'
 import { notFound, redirect } from 'next/navigation'
 import { CreateGroupDialogShell } from '../_components/create-group-dialog-shell'
-import { GuestDashboardTabs } from '../_components/guest-dashboard-tabs'
+import { DashboardTabs } from '@/components/dashboard-tabs'
 
 type GroupLayoutProps = React.PropsWithChildren
 
@@ -25,7 +25,7 @@ export default async function AllGroupLayout({ children }: GroupLayoutProps) {
         <CurrencyToggle />
         <CreateGroupDialogShell userId={user.id} />
       </PageHeader>
-      <GuestDashboardTabs />
+      <DashboardTabs route="guest" />
       <div className="overflow-hidden">{children}</div>
     </Shell>
   )
