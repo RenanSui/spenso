@@ -2,14 +2,16 @@ import { getTransactions } from '@/actions/server/transactions'
 import { getGroups } from '@/actions/server/transactions-groups'
 import { EmptyCard } from '@/components/empty-card'
 import { GroupCard } from '@/components/group-card'
+import { GroupsRoute } from '@/types'
 
 interface Groups {
   groupsPromise: ReturnType<typeof getGroups>
   transactionsPromise: ReturnType<typeof getTransactions>
   href?: string
+  route?: GroupsRoute
 }
 
-export async function Groups({ groupsPromise, transactionsPromise, href }: Groups) {
+export async function Groups({ groupsPromise, transactionsPromise, href, route = 'dashboard' }: Groups) {
   const groups = await groupsPromise
   const transactions = await transactionsPromise
 
@@ -26,7 +28,7 @@ export async function Groups({ groupsPromise, transactionsPromise, href }: Group
               key={group.id}
               group={group}
               transactions={groupTransactions}
-              href={href || `/dashboard/groups/${group.id}`}
+              href={href || `/${route}/groups/${group.id}`}
             />
           )
         })

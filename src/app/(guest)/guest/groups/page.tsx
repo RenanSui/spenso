@@ -63,7 +63,7 @@ export default function Page(params: PageParams) {
           ))}
         >
           {groupsPromise && transactionsPromise ? (
-            <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} />
+            <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} route="guest" />
           ) : null}
         </React.Suspense>
       </section>
