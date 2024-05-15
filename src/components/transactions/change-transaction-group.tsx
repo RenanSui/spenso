@@ -1,6 +1,5 @@
 'use client'
 
-import { updateTransactionGroup } from '@/actions/server/transactions'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { useGroups } from '@/hooks/use-groups'
@@ -11,13 +10,14 @@ import * as z from 'zod'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Separator } from '../ui/separator'
+import { Transaction } from '@/types'
 
 interface ChangeTransactionGroupProps extends HTMLAttributes<HTMLDivElement> {
-  transactionId: string
-  transactionGroupId: string
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  transaction: Transaction
   setIsDisable?: Dispatch<SetStateAction<boolean>>
+  updateTransactionGroup: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
 }
 
 const formSchema = z.object({
@@ -29,23 +29,23 @@ export const ChangeTransactionGroup = ({
   setOpen,
   children,
   setIsDisable,
-  transactionId,
-  transactionGroupId,
+  transaction,
+  updateTransactionGroup,
 }: ChangeTransactionGroupProps) => {
   const { data: transactionsGroups } = useGroups()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      groupId: transactionGroupId,
+      groupId: transaction.group_id ?? '',
     },
   })
 
   const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
-    if (values.groupId !== transactionGroupId) {
-      const oldGroupId = transactionGroupId
+    if (values.groupId !== transaction.group_id) {
+      const oldGroupId = transaction.group_id ?? ''
       const newGroupId = values.groupId
-      await updateTransactionGroup(transactionId, oldGroupId, newGroupId)
+      await updateTransactionGroup(transaction.id, oldGroupId, newGroupId)
     }
 
     setOpen(false)

@@ -27,6 +27,7 @@ interface TransactionsTableShellProps {
   data: Transaction[]
   rates: (CurrencyRates | null)[]
   groupId?: string
+  updateTransactionGroup?: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
   deleteTransaction?: (transactionId: string) => unknown
 }
 
@@ -34,6 +35,7 @@ export function TransactionsTableShell({
   data: transactions,
   rates,
   groupId,
+  updateTransactionGroup,
   deleteTransaction,
 }: TransactionsTableShellProps) {
   const currencyState = useCurrencyAtom()
@@ -138,10 +140,16 @@ export function TransactionsTableShell({
       {
         id: 'actions',
         cell: ({ row }) =>
-          groupId ? <TableDropdown transaction={row.original} deleteTransaction={deleteTransaction} /> : null,
+          groupId ? (
+            <TableDropdown
+              transaction={row.original}
+              updateTransactionGroup={updateTransactionGroup}
+              deleteTransaction={deleteTransaction}
+            />
+          ) : null,
       },
     ],
-    [currencyState, deleteTransaction, groupId, rates],
+    [currencyState, deleteTransaction, groupId, rates, updateTransactionGroup],
   )
 
   return mounted ? (
@@ -168,10 +176,11 @@ const SortableHeader = ({ children, column }: { children: ReactNode; column: Col
 
 type TableDropdownProps = {
   transaction: Transaction
+  updateTransactionGroup?: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
   deleteTransaction?: (transactionId: string) => unknown
 }
 
-const TableDropdown = ({ transaction, deleteTransaction }: TableDropdownProps) => {
+const TableDropdown = ({ transaction, updateTransactionGroup, deleteTransaction }: TableDropdownProps) => {
   const [open, setOpen] = useState(false)
 
   const [isDisable, setIsDisable] = useState(false)
@@ -237,13 +246,15 @@ const TableDropdown = ({ transaction, deleteTransaction }: TableDropdownProps) =
         isDuplicateItem={openDuplicate}
       />
 
-      <ChangeTransactionGroup
-        open={openChangeGroup}
-        setOpen={setChangeGroup}
-        setIsDisable={setIsDisable}
-        transactionId={transaction.id}
-        transactionGroupId={transaction.group_id ?? ''}
-      />
+      {updateTransactionGroup ? (
+        <ChangeTransactionGroup
+          open={openChangeGroup}
+          setOpen={setChangeGroup}
+          setIsDisable={setIsDisable}
+          transaction={transaction}
+          updateTransactionGroup={updateTransactionGroup}
+        />
+      ) : null}
 
       {deleteTransaction ? (
         <DeleteTransaction
