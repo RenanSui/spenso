@@ -1,24 +1,21 @@
 'use server'
 
 import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
+import { sortRecentTransactions } from '@/lib/transactions'
 import { positiveOrNegative } from '@/lib/utils'
 import { TransactionInsert, TransactionUpdate } from '@/types'
 import { unstable_cache as cache, revalidatePath } from 'next/cache'
 import { getGroups } from './transactions-groups'
-import { sortRecentTransactions } from '@/lib/transactions'
 
 export async function getTransactions() {
-  const supabase = await getSupabaseServerClient()
-  if (!supabase) return null
-
   const groups = await getGroups()
   if (!groups) return null
 
-  const ids = groups.map((map) => map.id)
+  const groupIds = groups.map((map) => map.id)
 
   const transactionsArray = await Promise.all(
-    ids.map(async (id) => {
-      const transactionsById = await getTransactionsById(id)
+    groupIds.map(async (groupId) => {
+      const transactionsById = await getTransactionsByGroupId(groupId)
       return transactionsById || []
     }),
   )
@@ -28,7 +25,17 @@ export async function getTransactions() {
   return sortRecentTransactions(transactions)
 }
 
-export async function getTransactionsById(groupId: string) {
+export async function getTransactionById(transactionId: string) {
+  const transactions = await getTransactions()
+  if (!transactions) return null
+
+  const transaction = transactions.find((transaction) => transaction.id === transactionId)
+  if (!transaction) return null
+
+  return transaction
+}
+
+export async function getTransactionsByGroupId(groupId: string) {
   const supabase = await getSupabaseServerClient()
 
   return await cache(
@@ -88,11 +95,14 @@ export async function updateTransactionGroup(transactionId: string, oldGroupId: 
   revalidatePath(`/dashboard/groups/${newGroupId}/transactions`)
 }
 
-export async function deleteTransaction(id: string, groupId?: string) {
+export async function deleteTransaction(transactionId: string) {
   const supabase = await getSupabaseServerClient()
   if (!supabase) return
 
-  await supabase.from('transactions').delete().eq('id', id)
+  const result = await getTransactionById(transactionId)
+  if (!result) return
 
-  revalidatePath(`/dashboard/groups/${groupId}/transactions`)
+  await supabase.from('transactions').delete().eq('id', transactionId)
+
+  revalidatePath(`/dashboard/groups/${result.group_id}/transactions`)
 }
