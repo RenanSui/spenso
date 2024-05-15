@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
 
 interface DashboardTabsProps {
-  route: GroupsRoute
+  route?: GroupsRoute
 }
 
 export function DashboardTabs({ route = 'dashboard' }: DashboardTabsProps) {
