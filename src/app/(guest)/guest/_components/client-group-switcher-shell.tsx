@@ -7,7 +7,7 @@ import { TransactionsContext } from './guest-provider'
 
 export function ClientGroupSwitcherShell({ userId }: { userId: string }) {
   const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<typeof getGroups> | null>(null)
-  const { groups } = React.useContext(TransactionsContext)
+  const { groups, createGroup } = React.useContext(TransactionsContext)
 
   React.useEffect(() => {
     function initLoad() {
@@ -17,5 +17,7 @@ export function ClientGroupSwitcherShell({ userId }: { userId: string }) {
     initLoad()
   }, [groups])
 
-  return groupsPromise ? <GroupSwitcher route="guest" userId={userId} groupsPromise={groupsPromise} /> : null
+  return groupsPromise ? (
+    <GroupSwitcher route="guest" userId={userId} groupsPromise={groupsPromise} createGroup={createGroup} />
+  ) : null
 }
