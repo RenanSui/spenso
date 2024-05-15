@@ -163,6 +163,7 @@ export function TransactionsTableShell({
       data={transactions}
       columns={columns}
       addTransaction={addTransaction}
+      deleteTransaction={deleteTransaction}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
       filterableColumns={[{ id: 'type', title: 'Type', options: transactionTypeses }]}
     />

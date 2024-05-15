@@ -1,6 +1,5 @@
 'use client'
 
-import { deleteTransaction } from '@/actions/server/transactions'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +21,7 @@ interface DeleteSelectedTransactionsProps extends HTMLAttributes<HTMLDivElement>
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   resetRows: (defaultState?: boolean | undefined) => void
+  deleteTransaction: (transactionId: string) => unknown
 }
 
 export const DeleteSelectedTransaction = ({
@@ -31,6 +31,7 @@ export const DeleteSelectedTransaction = ({
   open,
   setOpen,
   resetRows,
+  deleteTransaction,
 }: DeleteSelectedTransactionsProps) => {
   const deleteSelections = () => {
     const transactions = rows.map((row) => row.original) as Transaction[]
