@@ -90,3 +90,5 @@ export type SessionUser = {
   email?: string | null | undefined
   image?: string | null | undefined
 }
+
+export type GroupsRoute = 'dashboard' | 'guest'
