@@ -22,9 +22,10 @@ import { CreateGroupDialog } from './create-group-dialog'
 interface GroupSwitcherProps extends React.ComponentPropsWithoutRef<typeof PopoverTrigger> {
   userId: string | null | undefined
   groupsPromise: ReturnType<typeof getGroups>
+  route?: 'dashboard' | 'guest'
 }
 
-export function GroupSwitcher({ userId, className, groupsPromise, ...props }: GroupSwitcherProps) {
+export function GroupSwitcher({ userId, className, groupsPromise, route = 'dashboard', ...props }: GroupSwitcherProps) {
   const { groupId } = useParams<{ groupId: string }>()
   const router = useRouter()
   const pathname = usePathname()
@@ -64,7 +65,7 @@ export function GroupSwitcher({ userId, className, groupsPromise, ...props }: Gr
                       setOpen(false)
                       pathname.includes(group.id)
                         ? router.replace(pathname.replace(groupId, group.id))
-                        : router.push(`/dashboard/groups/${group.id}/transactions`)
+                        : router.push(`/${route}/groups/${group.id}/transactions`)
                     }}
                     className="text-sm"
                   >
