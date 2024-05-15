@@ -1,9 +1,9 @@
 'use client'
 
+import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { notFound } from 'next/navigation'
 import * as React from 'react'
 import { TransactionsContext } from '../../../_components/guest-provider'
-import { GuestTransactionsTableShell } from '../../../_components/guest-transactions-table-shell'
 
 type GroupPageProps = {
   params: {
@@ -27,7 +27,15 @@ export default function Page(params: GroupPageProps) {
         <h2 className="text-2xl font-bold tracking-tight">{group?.title}</h2>
       </div>
 
-      <GuestTransactionsTableShell groupId={groupId} data={transactions} rates={rates} />
+      <TransactionsTableShell
+        groupId={groupId}
+        data={transactions}
+        rates={rates}
+        addTransaction={guest.createTransaction}
+        updateTransaction={guest.updateTransaction}
+        updateTransactionGroup={guest.updateTransactionGroup}
+        deleteTransaction={guest.deleteTransaction}
+      />
     </div>
   )
 }
