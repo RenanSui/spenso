@@ -57,10 +57,14 @@ export async function addGroup(formData: TransactionGroupsInsert) {
 
   const formDataWithId = { ...formData, user_id: user.id }
 
-  return await supabase
+  const { data, error } = await supabase
     .from('transactions_groups')
     .insert({ ...formDataWithId })
     .select('*')
+
+  revalidatePath(`/dashboard/groups`)
+
+  return { data, error }
 }
 
 export async function updateGroup(formData: TransactionGroupsUpdate) {
