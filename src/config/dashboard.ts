@@ -21,7 +21,7 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: 'Settings',
       href: '/dashboard/settings',
-      disabled: true,
+      disabled: false,
       icon: 'gearIcon',
       description: 'Manage the website settings',
       items: [],
