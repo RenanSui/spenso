@@ -34,7 +34,7 @@ export const DeleteSelectedTransaction = ({
 }: DeleteSelectedTransactionsProps) => {
   const deleteSelections = () => {
     const transactions = rows.map((row) => row.original) as Transaction[]
-    transactions.forEach(async (transaction) => await deleteTransaction(transaction.id, transaction.group_id ?? ''))
+    transactions.forEach(async (transaction) => await deleteTransaction(transaction.id))
     resetRows()
   }
 

@@ -1,5 +1,5 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import { getTransactionsById } from '@/actions/server/transactions'
+import { getTransactionsByGroupId } from '@/actions/server/transactions'
 import { getGroupById } from '@/actions/server/transactions-groups'
 import { TransactionsTableShell } from '@/components/shells/transactions-table-shell'
 import { notFound } from 'next/navigation'
@@ -24,7 +24,7 @@ export default async function Page(params: GroupPageProps) {
   const group = await getGroupFromParmas(params)
   if (!group) notFound()
 
-  const transactions = await getTransactionsById(group.id)
+  const transactions = await getTransactionsByGroupId(group.id)
   if (!transactions) notFound()
 
   const allRates = (await getAllTransactionsRates(transactions)) ?? []

@@ -17,7 +17,6 @@ import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 
 interface DeleteTransactionProps extends HTMLAttributes<HTMLDivElement> {
   transactionId: string
-  groupId: string
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   setIsDisable: Dispatch<SetStateAction<boolean>>
@@ -26,13 +25,12 @@ interface DeleteTransactionProps extends HTMLAttributes<HTMLDivElement> {
 export const DeleteTransaction = ({
   open,
   setOpen,
-  groupId,
   children,
   className,
   setIsDisable,
   transactionId,
 }: DeleteTransactionProps) => {
-  const DeleteTransaction = async () => await deleteTransaction(transactionId, groupId)
+  const DeleteTransaction = async () => await deleteTransaction(transactionId)
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
