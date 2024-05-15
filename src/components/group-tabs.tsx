@@ -3,31 +3,34 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
+import { GroupsRoute } from '@/types'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
 import Link from 'next/link'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
 
 interface GroupTabsProps {
   groupId: string
+  route?: GroupsRoute
 }
-export function GroupTabs({ groupId }: GroupTabsProps) {
+
+export function GroupTabs({ groupId, route = 'dashboard' }: GroupTabsProps) {
   const router = useRouter()
   const segment = useSelectedLayoutSegment()
 
   const tabs = [
     {
       title: 'Group',
-      href: `/dashboard/groups/${groupId}`,
+      href: `/${route}/groups/${groupId}`,
       isActive: segment === null,
     },
     {
       title: 'Transactions',
-      href: `/dashboard/groups/${groupId}/transactions`,
+      href: `/${route}/groups/${groupId}/transactions`,
       isActive: segment === 'transactions',
     },
     {
       title: 'Analytics',
-      href: `/dashboard/groups/${groupId}/analytics`,
+      href: `/${route}/groups/${groupId}/analytics`,
       isActive: segment === 'analytics',
     },
   ]
