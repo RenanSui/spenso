@@ -1,9 +1,11 @@
-import { MainNavItem } from '@/types'
+import { FooterItem, MainNavItem } from '@/types'
 import { dashboardConfig } from './dashboard'
 
 const links = {
+  x: 'https://twitter.com/adsjksui',
   github: 'https://github.com/RenanSui/spenso',
   githubAccount: 'https://github.com/RenanSui',
+  discord: 'https://discord.com/users/seyonsui',
 }
 
 const lobby = {
@@ -48,4 +50,42 @@ export const siteConfig = {
       ],
     },
   ] satisfies MainNavItem[],
+
+  footerNav: [
+    {
+      title: 'Help',
+      items: [
+        {
+          title: 'About',
+          href: '/about',
+          external: false,
+        },
+        {
+          title: 'Contact',
+          href: '/contact',
+          external: false,
+        },
+      ],
+    },
+    {
+      title: 'Social',
+      items: [
+        {
+          title: 'X',
+          href: links.x,
+          external: true,
+        },
+        {
+          title: 'GitHub',
+          href: links.githubAccount,
+          external: true,
+        },
+        {
+          title: 'Discord',
+          href: links.discord,
+          external: true,
+        },
+      ],
+    },
+  ] satisfies FooterItem[],
 }
