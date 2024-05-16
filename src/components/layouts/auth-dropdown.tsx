@@ -1,6 +1,5 @@
 import { ExitIcon, SunIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import {
@@ -59,7 +58,7 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={'/dashboard/settings'} className="pointer-events-none opacity-60">
+                <Link href={'/dashboard/settings'}>
                   <Icons.gearIcon className="mr-2 h-4 w-4" aria-hidden="true" />
                   Settings
                 </Link>
