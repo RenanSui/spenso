@@ -1,4 +1,4 @@
-import { ExitIcon } from '@radix-ui/react-icons'
+import { ExitIcon, SunIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -15,6 +15,7 @@ import {
 import { cn } from '@/lib/utils'
 import { User } from '@/types'
 import { Icons } from '../ui/icons'
+import { ThemeToggle } from './theme-toggle'
 
 interface AuthDropdownProps extends React.ComponentPropsWithRef<typeof DropdownMenuTrigger>, ButtonProps {
   user: User | null
@@ -63,6 +64,16 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
                   Settings
                 </Link>
               </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <div className="flex items-center justify-between px-2 py-1.5">
+                <div className="flex items-center text-sm">
+                  <SunIcon className="mr-2 size-4" aria-hidden="true" />
+                  Theme
+                </div>
+                <ThemeToggle combobox />
+              </div>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
