@@ -1,3 +1,4 @@
+import { DataTableSkeleton } from '@/components/data-table/data-table-skeleton'
 import { PageHeader } from '@/components/page-header'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -18,7 +19,16 @@ export default async function Loading() {
         <Skeleton className="h-[350px] lg:col-span-2" />
 
         {/* analytic table */}
-        <Skeleton className="h-full lg:row-span-2" />
+        <DataTableSkeleton
+          columnCount={3}
+          rowCount={16}
+          cellWidths={['1rem', '4rem', '1rem']}
+          shrinkZero
+          withPagination={false}
+          showViewOptions={false}
+          className="h-full space-y-0 lg:row-span-2"
+        />
+        {/* <Skeleton className="h-full lg:row-span-2" /> */}
 
         {/* pie chart */}
         <Skeleton className="h-[350px] lg:col-span-2" />
