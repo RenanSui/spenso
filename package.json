@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run lint && next dev --turbo",
-    "build": "pnpm run lint && next build",
+    "dev": "next dev --turbo",
+    "build": "next build",
     "start": "next start",
     "db:start": "pnpm dlx supabase start",
     "db:stop": "pnpm dlx supabase stop",
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start",
-    "lint": "next lint --fix",
+    "lint": "next lint",
     "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
     "analyze": "cross-env ANALYZE=true next build"
   },
