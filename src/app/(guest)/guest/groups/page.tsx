@@ -21,10 +21,14 @@ type PageParams = {
 }
 
 export default function Page(params: PageParams) {
-  const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<typeof getGroups> | null>(null)
-  const [transactionsPromise, setTransactionsPromise] = React.useState<ReturnType<typeof getTransactions> | null>(null)
+  const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<
+    typeof getGroups
+  > | null>(null)
+  const [transactionsPromise, setTransactionsPromise] =
+    React.useState<ReturnType<typeof getTransactions> | null>(null)
 
-  const { groups, transactions, createGroup } = React.useContext(TransactionsContext)
+  const { groups, transactions, createGroup } =
+    React.useContext(TransactionsContext)
   const user = mockUser
 
   const deleting = params.searchParams.deleting ?? 'false'
@@ -48,7 +52,11 @@ export default function Page(params: PageParams) {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog userId={user.id} route="guest" createGroup={createGroup} />
+        <CreateGroupDialog
+          userId={user.id}
+          route="guest"
+          createGroup={createGroup}
+        />
       </PageHeader>
       <DashboardTabs route="guest" />
       <section
@@ -63,7 +71,11 @@ export default function Page(params: PageParams) {
           ))}
         >
           {groupsPromise && transactionsPromise ? (
-            <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} route="guest" />
+            <Groups
+              groupsPromise={groupsPromise}
+              transactionsPromise={transactionsPromise}
+              route="guest"
+            />
           ) : null}
         </React.Suspense>
       </section>

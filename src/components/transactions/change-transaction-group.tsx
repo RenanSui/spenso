@@ -1,14 +1,32 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
 import { useGroups } from '@/hooks/use-groups'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 import { Separator } from '../ui/separator'
 import { Transaction } from '@/types'
 
@@ -17,7 +35,11 @@ interface ChangeTransactionGroupProps extends HTMLAttributes<HTMLDivElement> {
   setOpen: Dispatch<SetStateAction<boolean>>
   transaction: Transaction
   setIsDisable?: Dispatch<SetStateAction<boolean>>
-  updateTransactionGroup: (transactionId: string, oldGroupId: string, newGroupId: string) => unknown
+  updateTransactionGroup: (
+    transactionId: string,
+    oldGroupId: string,
+    newGroupId: string,
+  ) => unknown
 }
 
 const formSchema = z.object({
@@ -41,7 +63,9 @@ export const ChangeTransactionGroup = ({
     },
   })
 
-  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
+  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
+    values: z.infer<typeof formSchema>,
+  ) => {
     if (values.groupId !== transaction.group_id) {
       const oldGroupId = transaction.group_id ?? ''
       const newGroupId = values.groupId
@@ -78,7 +102,10 @@ export const ChangeTransactionGroup = ({
                     Group
                     <Required />
                   </FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a group" />
@@ -87,7 +114,11 @@ export const ChangeTransactionGroup = ({
                     <SelectContent>
                       {transactionsGroups?.map((group, index) => {
                         return (
-                          <SelectItem className="capitalize" key={index} value={group.id}>
+                          <SelectItem
+                            className="capitalize"
+                            key={index}
+                            value={group.id}
+                          >
                             {group.title}
                           </SelectItem>
                         )

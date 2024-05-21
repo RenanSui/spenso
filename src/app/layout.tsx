@@ -10,7 +10,15 @@ export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
   metadataBase: new URL('https://spenso.vercel.app'),
-  keywords: ['nextjs', 'react', 'react server components', 'expense', 'income', 'revenue', 'tracker'],
+  keywords: [
+    'nextjs',
+    'react',
+    'react server components',
+    'expense',
+    'income',
+    'revenue',
+    'tracker',
+  ],
   authors: [
     {
       name: 'renansui',
@@ -38,7 +46,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body

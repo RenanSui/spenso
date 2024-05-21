@@ -36,16 +36,21 @@ export const DeleteTransaction = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className={cn(className)}>{children}</AlertDialogTrigger>
+      <AlertDialogTrigger className={cn(className)}>
+        {children}
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Transaction</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your transaction.
+            This action cannot be undone. This will permanently delete your
+            transaction.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setIsDisable(false)}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setIsDisable(false)}>
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               DeleteTransaction()

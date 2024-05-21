@@ -24,7 +24,12 @@ export const OAuthSignIn = () => {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {oauthProviders.map((provider) => (
-        <ProviderSignIn key={provider.name} disabled={isSigning} provider={provider} setIsSigning={setIsSigning} />
+        <ProviderSignIn
+          key={provider.name}
+          disabled={isSigning}
+          provider={provider}
+          setIsSigning={setIsSigning}
+        />
       ))}
     </div>
   )

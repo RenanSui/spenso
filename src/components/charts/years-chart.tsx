@@ -25,7 +25,16 @@ interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: (CurrencyRates | null)[]
 }
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Tooltip, Legend)
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Title,
+  Tooltip,
+  Legend,
+)
 ChartJS.defaults.elements.line.tension = 0.4
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
@@ -39,11 +48,17 @@ export const YearsChart = ({ years, rates }: YearsChartProps) => {
     const incomes = filledYears.filter((year) => year.type === 'income')
     const expenses = filledYears.filter((year) => year.type === 'expense')
 
-    const calculatedIncomes = sumTransactionsByYear(getCalculatedYears(incomes, rates, currencyState))
-    const calculatedExpenses = sumTransactionsByYear(getCalculatedYears(expenses, rates, currencyState))
+    const calculatedIncomes = sumTransactionsByYear(
+      getCalculatedYears(incomes, rates, currencyState),
+    )
+    const calculatedExpenses = sumTransactionsByYear(
+      getCalculatedYears(expenses, rates, currencyState),
+    )
 
     const incomeValues = calculatedIncomes.map((year) => year.sum)
-    const expenseValues = calculatedExpenses.map((year) => year.sum).map((sum) => toPositive(sum))
+    const expenseValues = calculatedExpenses
+      .map((year) => year.sum)
+      .map((sum) => toPositive(sum))
 
     return {
       labels: allYears.map((year) => year),
@@ -66,7 +81,11 @@ export const YearsChart = ({ years, rates }: YearsChartProps) => {
     }
   }, [currencyState, rates, years])
 
-  return mounted ? <Line className="max-h-[300px]" data={data} /> : <Skeleton className="h-[300px] w-full"></Skeleton>
+  return mounted ? (
+    <Line className="max-h-[300px]" data={data} />
+  ) : (
+    <Skeleton className="h-[300px] w-full"></Skeleton>
+  )
 }
 
 function fillRemainingYears(years: TransactionYears[]) {
@@ -94,7 +113,9 @@ function fillRemainingYears(years: TransactionYears[]) {
     }
   }
 
-  return Array.from(yearsMap.values()).sort((item1, item2) => Number(item1.year) - Number(item2.year))
+  return Array.from(yearsMap.values()).sort(
+    (item1, item2) => Number(item1.year) - Number(item2.year),
+  )
 }
 
 function sumTransactionsByYear(transactions: TransactionYears[]) {
@@ -114,7 +135,11 @@ function sumTransactionsByYear(transactions: TransactionYears[]) {
   return Object.values(yearSums)
 }
 
-function getCalculatedYears(years: TransactionYears[], rates: (CurrencyRates | null)[], currencyState: string) {
+function getCalculatedYears(
+  years: TransactionYears[],
+  rates: (CurrencyRates | null)[],
+  currencyState: string,
+) {
   return years.map((year) => ({
     ...year,
     sum: getCurrencyValue(year.sum, year.currency, rates, currencyState),

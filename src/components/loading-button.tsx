@@ -3,7 +3,11 @@
 import * as React from 'react'
 import { useFormStatus } from 'react-dom'
 
-import { Button, buttonVariants, type ButtonProps } from '@/components/ui/button'
+import {
+  Button,
+  buttonVariants,
+  type ButtonProps,
+} from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useMounted } from '@/hooks/use-mounted'
 import { cn } from '@/lib/utils'
@@ -22,7 +26,12 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
 
     if (!mounted)
       return (
-        <Skeleton className={cn(buttonVariants({ variant, size, className }), 'bg-muted text-muted-foreground')}>
+        <Skeleton
+          className={cn(
+            buttonVariants({ variant, size, className }),
+            'bg-muted text-muted-foreground',
+          )}
+        >
           {children}
         </Skeleton>
       )
@@ -41,8 +50,18 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
           }
         }}
       >
-        {del && pending && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
-        {update && pending && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
+        {del && pending && (
+          <Icons.spinner
+            className="mr-2 size-4 animate-spin"
+            aria-hidden="true"
+          />
+        )}
+        {update && pending && (
+          <Icons.spinner
+            className="mr-2 size-4 animate-spin"
+            aria-hidden="true"
+          />
+        )}
         {children}
       </Button>
     )

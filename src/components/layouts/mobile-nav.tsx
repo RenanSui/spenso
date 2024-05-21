@@ -1,6 +1,11 @@
 'use client'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
@@ -38,7 +43,11 @@ export function MobileNav({ items }: MobileNavProps) {
       </SheetTrigger>
       <SheetContent side="left" className="pl-1 pr-0 pt-9">
         <div className="w-full px-7">
-          <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <Link
+            href="/"
+            className="flex items-center"
+            onClick={() => setOpen(false)}
+          >
             {/* <Icons.logo className="mr-2 size-4" aria-hidden="true" /> */}
             <span className="font-bold">{siteConfig.name}</span>
             <span className="sr-only">Home</span>
@@ -49,7 +58,9 @@ export function MobileNav({ items }: MobileNavProps) {
             <Accordion type="multiple" className="w-full">
               {items?.map((item, index) => (
                 <AccordionItem value={item.title} key={index}>
-                  <AccordionTrigger className="text-sm capitalize">{item.title}</AccordionTrigger>
+                  <AccordionTrigger className="text-sm capitalize">
+                    {item.title}
+                  </AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col space-y-2">
                       {item.items?.map((subItem, index) =>
@@ -65,7 +76,10 @@ export function MobileNav({ items }: MobileNavProps) {
                             {subItem.title}
                           </MobileLink>
                         ) : (
-                          <div key={index} className="text-foreground/70 transition-colors">
+                          <div
+                            key={index}
+                            className="text-foreground/70 transition-colors"
+                          >
                             {item.title}
                           </div>
                         ),
@@ -82,14 +96,23 @@ export function MobileNav({ items }: MobileNavProps) {
   )
 }
 
-interface MobileLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface MobileLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
   disabled?: boolean
   segment: string
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function MobileLink({ children, href, disabled, segment, setOpen, className, ...props }: MobileLinkProps) {
+function MobileLink({
+  children,
+  href,
+  disabled,
+  segment,
+  setOpen,
+  className,
+  ...props
+}: MobileLinkProps) {
   return (
     <Link
       href={href}

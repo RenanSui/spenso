@@ -8,8 +8,16 @@ type CreateGroupDialogShellProps = {
   userId: string | null | undefined
 }
 
-export function CreateGroupDialogShell({ userId }: CreateGroupDialogShellProps) {
+export function CreateGroupDialogShell({
+  userId,
+}: CreateGroupDialogShellProps) {
   const guest = React.useContext(TransactionsContext)
 
-  return <CreateGroupDialog userId={userId} route="guest" createGroup={guest.createGroup} />
+  return (
+    <CreateGroupDialog
+      userId={userId}
+      route="guest"
+      createGroup={guest.createGroup}
+    />
+  )
 }

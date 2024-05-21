@@ -16,7 +16,9 @@ import { User } from '@/types'
 import { Icons } from '../ui/icons'
 import { ThemeToggle } from './theme-toggle'
 
-interface AuthDropdownProps extends React.ComponentPropsWithRef<typeof DropdownMenuTrigger>, ButtonProps {
+interface AuthDropdownProps
+  extends React.ComponentPropsWithRef<typeof DropdownMenuTrigger>,
+    ButtonProps {
   user: User | null
 }
 
@@ -29,10 +31,16 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" className={cn('size-8 rounded-full', className)} {...props}>
+            <Button
+              variant="secondary"
+              className={cn('size-8 rounded-full', className)}
+              {...props}
+            >
               <Avatar className="size-8">
                 <AvatarImage src={user.image ?? ''} alt={user.name ?? ''} />
-                <AvatarFallback className="capitalize">{initials}</AvatarFallback>
+                <AvatarFallback className="capitalize">
+                  {initials}
+                </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
@@ -47,13 +55,22 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link href={'/dashboard/groups'}>
-                  <Icons.dashboardIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                  <Icons.dashboardIcon
+                    className="mr-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
                   Dashboard
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={'/dashboard/account'} className="pointer-events-none opacity-60">
-                  <Icons.avatarIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Link
+                  href={'/dashboard/account'}
+                  className="pointer-events-none opacity-60"
+                >
+                  <Icons.avatarIcon
+                    className="mr-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
                   Account
                 </Link>
               </DropdownMenuItem>

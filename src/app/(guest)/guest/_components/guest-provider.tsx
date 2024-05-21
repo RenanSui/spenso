@@ -21,11 +21,16 @@ export interface TransactionsContext {
   rates: (CurrencyRates | null)[]
   createTransaction: (transaction: TransactionInsert) => void
   updateTransaction: (transaction: TransactionUpdate) => void
-  updateTransactionGroup: (transactionId: string, oldGroupId: string, newGroupId: string) => void
+  updateTransactionGroup: (
+    transactionId: string,
+    oldGroupId: string,
+    newGroupId: string,
+  ) => void
   deleteTransaction: (id: string) => void
-  createGroup: (
-    group: TransactionGroupsInsert,
-  ) => Promise<{ data: TransactionGroups[] | null; error: PostgrestError | null }>
+  createGroup: (group: TransactionGroupsInsert) => Promise<{
+    data: TransactionGroups[] | null
+    error: PostgrestError | null
+  }>
   updateGroup: (group: TransactionGroups) => void
   deleteGroup: (id: string) => void
 }
@@ -44,8 +49,12 @@ export const TransactionsContext = React.createContext<TransactionsContext>({
 })
 
 export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
-  const [transactions, setTransactions] = React.useState<Transaction[]>([useRandomTransaction()])
-  const [groups, setGroups] = React.useState<TransactionGroups[]>([useRandomGroup()])
+  const [transactions, setTransactions] = React.useState<Transaction[]>([
+    useRandomTransaction(),
+  ])
+  const [groups, setGroups] = React.useState<TransactionGroups[]>([
+    useRandomGroup(),
+  ])
   const [rates, setRates] = React.useState<(CurrencyRates | null)[]>([])
 
   React.useEffect(() => {
@@ -60,15 +69,25 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
     const formattedTransaction: Transaction = {
       product: transaction.product ?? '',
       date: transaction.date ?? '',
-      amount: transaction.type ? positiveOrNegative(transaction.type, transaction.amount) : 0,
+      amount: transaction.type
+        ? positiveOrNegative(transaction.type, transaction.amount)
+        : 0,
       type: transaction.type ?? '',
-      category: transaction.category ?? transactionCategory[Math.floor(Math.random() * transactionCategory.length)],
-      year: transaction.date ? new Date(transaction.date).getFullYear().toString() : '',
+      category:
+        transaction.category ??
+        transactionCategory[
+          Math.floor(Math.random() * transactionCategory.length)
+        ],
+      year: transaction.date
+        ? new Date(transaction.date).getFullYear().toString()
+        : '',
       currency: transaction.currency ?? '',
       group_id: transaction.group_id ?? '',
       // random
       id: String(Math.floor(Math.random() * 1000000000)),
-      created_at: new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
+      created_at: new Date(
+        new Date().valueOf() - Math.random() * 1e12,
+      ).toString(),
       user_id: 'user-1',
     }
 
@@ -99,7 +118,11 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const updateTransactionGroup = (transactionId: string, oldGroupId: string, newGroupId: string) => {
+  const updateTransactionGroup = (
+    transactionId: string,
+    oldGroupId: string,
+    newGroupId: string,
+  ) => {
     const index = transactions.findIndex((t) => t.id === transactionId)
     if (index !== -1) {
       const transaction = transactions[index]
@@ -116,7 +139,9 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
   const createGroup = (group: TransactionGroupsInsert) => {
     const formattedGroup: TransactionGroups = {
       id: group.id ?? String(Math.floor(Math.random() * 1000000000)),
-      created_at: group.created_at ?? new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
+      created_at:
+        group.created_at ??
+        new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
       title: group.title ?? 'Global Placeholder',
       user_id: group.user_id ?? String(Math.floor(Math.random() * 1000000000)),
     }
@@ -164,16 +189,22 @@ const useRandomTransaction = () => {
 
   const date = new Date(new Date().valueOf() - Math.random() * 1e12)
   const amount = Number((Math.random() * 100000).toFixed(2))
-  const type = transactionType[Math.floor(Math.random() * transactionType.length)]
+  const type =
+    transactionType[Math.floor(Math.random() * transactionType.length)]
 
   const transactionSchema = {
     id: String(Math.floor(Math.random() * 1000000000)),
-    created_at: new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
+    created_at: new Date(
+      new Date().valueOf() - Math.random() * 1e12,
+    ).toString(),
     product: products[Math.floor(Math.random() * 30)],
     date: date.toString(),
     amount: positiveOrNegative(type, amount),
     type,
-    category: transactionCategory[Math.floor(Math.random() * transactionCategory.length)],
+    category:
+      transactionCategory[
+        Math.floor(Math.random() * transactionCategory.length)
+      ],
     user_id: 'user-1',
     year: date.getFullYear().toString(),
     currency: 'BRL',
@@ -185,7 +216,9 @@ const useRandomTransaction = () => {
 
 const useRandomGroup = () => {
   const groupSchema: TransactionGroups = {
-    created_at: new Date(new Date().valueOf() - Math.random() * 1e12).toString(),
+    created_at: new Date(
+      new Date().valueOf() - Math.random() * 1e12,
+    ).toString(),
     id: 'group-1',
     title: 'Global',
     user_id: 'user-1',

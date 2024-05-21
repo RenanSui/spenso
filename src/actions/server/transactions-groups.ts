@@ -1,10 +1,17 @@
 'use server'
 
 import { getUser } from '@/lib/auth'
-import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
+import {
+  getSupabaseServerClient,
+  getSupabaseServerClientWithUser,
+} from '@/lib/server'
 import { normalizeString } from '@/lib/utils'
 import { TransactionGroupsInsert, TransactionGroupsUpdate } from '@/types'
-import { unstable_cache as cache, revalidatePath, revalidateTag } from 'next/cache'
+import {
+  unstable_cache as cache,
+  revalidatePath,
+  revalidateTag,
+} from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export async function getGroups() {

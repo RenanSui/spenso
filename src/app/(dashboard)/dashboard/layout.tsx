@@ -9,7 +9,11 @@ import { DashboardSidebarSheet } from './_components/dashboard-sidebar-sheet'
 import { GroupSwitcher } from './_components/group-switcher'
 import { SidebarProvider } from './_components/sidebar-provider'
 
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const user = await getUser()
   if (!user) redirect('/signin')
 
@@ -23,13 +27,21 @@ export default async function DashboardLayout({ children }: { children: React.Re
             className="top-0 z-30 hidden flex-col gap-4 border-r border-border/60 lg:sticky lg:block"
             sidebarItems={dashboardConfig.SidebarNav}
           >
-            <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} createGroup={addGroup} />
+            <GroupSwitcher
+              userId={user.id}
+              groupsPromise={groupsPromise}
+              createGroup={addGroup}
+            />
           </DashboardSidebar>
           <div className="flex flex-col">
             <DashboardHeader user={user}>
               <DashboardSidebarSheet>
                 <DashboardSidebar sidebarItems={dashboardConfig.SidebarNav}>
-                  <GroupSwitcher userId={user.id} groupsPromise={groupsPromise} createGroup={addGroup} />
+                  <GroupSwitcher
+                    userId={user.id}
+                    groupsPromise={groupsPromise}
+                    createGroup={addGroup}
+                  />
                 </DashboardSidebar>
               </DashboardSidebarSheet>
             </DashboardHeader>

@@ -1,6 +1,9 @@
 'use client'
 
-import { getGroups, getGroupBySearch } from '@/actions/server/transactions-groups'
+import {
+  getGroups,
+  getGroupBySearch,
+} from '@/actions/server/transactions-groups'
 import { useDebounce } from '@/hooks/use-debounce'
 import { cn, isMacOs, normalizeString } from '@/lib/utils'
 import { TransactionGroups } from '@/types'
@@ -9,7 +12,14 @@ import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { Kbd } from './kbd'
 import { Button } from './ui/button'
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/command'
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from './ui/command'
 import { Skeleton } from './ui/skeleton'
 
 export default function GroupsCombobox() {
@@ -98,9 +108,17 @@ export default function GroupsCombobox() {
           }
         }}
       >
-        <CommandInput placeholder="Search groups..." value={query} onValueChange={setQuery} />
+        <CommandInput
+          placeholder="Search groups..."
+          value={query}
+          onValueChange={setQuery}
+        />
         <CommandList>
-          <CommandEmpty className={cn(loading ? 'hidden' : 'py-6 text-center text-sm')}>No groups found.</CommandEmpty>
+          <CommandEmpty
+            className={cn(loading ? 'hidden' : 'py-6 text-center text-sm')}
+          >
+            No groups found.
+          </CommandEmpty>
           {loading ? (
             <div className="space-y-1 overflow-hidden px-1 py-2">
               <Skeleton className="h-4 w-10 rounded" />
@@ -115,9 +133,18 @@ export default function GroupsCombobox() {
                     key={group.id}
                     className="h-9"
                     value={normalizeString(group.title)}
-                    onSelect={() => onSelect(() => router.push(`/dashboard/groups/${group.id}?title=${group.title}`))}
+                    onSelect={() =>
+                      onSelect(() =>
+                        router.push(
+                          `/dashboard/groups/${group.id}?title=${group.title}`,
+                        ),
+                      )
+                    }
                   >
-                    <GroupIcon className="mr-2.5 size-3 text-muted-foreground" aria-hidden="true" />
+                    <GroupIcon
+                      className="mr-2.5 size-3 text-muted-foreground"
+                      aria-hidden="true"
+                    />
                     <span className="truncate">{group.title}</span>
                   </CommandItem>
                 ))}

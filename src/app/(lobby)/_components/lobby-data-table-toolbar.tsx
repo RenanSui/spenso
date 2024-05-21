@@ -34,8 +34,16 @@ export function LobbyDataTableToolbar<TData>({
                 <Input
                   key={String(column.id)}
                   placeholder={`Filter ${column.title}...`}
-                  value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ''}
-                  onChange={(event) => table.getColumn(String(column.id))?.setFilterValue(event.target.value)}
+                  value={
+                    (table
+                      .getColumn(String(column.id))
+                      ?.getFilterValue() as string) ?? ''
+                  }
+                  onChange={(event) =>
+                    table
+                      .getColumn(String(column.id))
+                      ?.setFilterValue(event.target.value)
+                  }
                   className="h-8 w-[150px] lg:w-[250px]"
                 />
               ),

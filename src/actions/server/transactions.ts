@@ -1,6 +1,9 @@
 'use server'
 
-import { getSupabaseServerClient, getSupabaseServerClientWithUser } from '@/lib/server'
+import {
+  getSupabaseServerClient,
+  getSupabaseServerClientWithUser,
+} from '@/lib/server'
 import { sortRecentTransactions } from '@/lib/transactions'
 import { positiveOrNegative } from '@/lib/utils'
 import { TransactionInsert, TransactionUpdate } from '@/types'
@@ -29,7 +32,9 @@ export async function getTransactionById(transactionId: string) {
   const transactions = await getTransactions()
   if (!transactions) return null
 
-  const transaction = transactions.find((transaction) => transaction.id === transactionId)
+  const transaction = transactions.find(
+    (transaction) => transaction.id === transactionId,
+  )
   if (!transaction) return null
 
   return transaction
@@ -42,7 +47,10 @@ export async function getTransactionsByGroupId(groupId: string) {
     async () => {
       if (!supabase) return null
 
-      const { data: transactions } = await supabase.from('transactions').select('*').eq('group_id', groupId)
+      const { data: transactions } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('group_id', groupId)
       if (!transactions) return null
 
       return sortRecentTransactions(transactions)
@@ -85,11 +93,18 @@ export async function updateTransaction(formData: TransactionUpdate) {
   revalidatePath(`/dashboard/groups/${formData.group_id}/transactions`)
 }
 
-export async function updateTransactionGroup(transactionId: string, oldGroupId: string, newGroupId: string) {
+export async function updateTransactionGroup(
+  transactionId: string,
+  oldGroupId: string,
+  newGroupId: string,
+) {
   const supabase = await getSupabaseServerClient()
   if (!supabase) return
 
-  await supabase.from('transactions').update({ group_id: newGroupId }).eq('id', transactionId)
+  await supabase
+    .from('transactions')
+    .update({ group_id: newGroupId })
+    .eq('id', transactionId)
 
   revalidatePath(`/dashboard/groups/${oldGroupId}/transactions`)
   revalidatePath(`/dashboard/groups/${newGroupId}/transactions`)

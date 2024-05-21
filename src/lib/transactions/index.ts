@@ -7,7 +7,9 @@ import {
   TransactionYears,
 } from '@/types'
 
-export const sortRecentTransactions = (transactions: Transaction[]): Transaction[] => {
+export const sortRecentTransactions = (
+  transactions: Transaction[],
+): Transaction[] => {
   return transactions
     .sort((item1, item2) => {
       return new Date(item1.date).getTime() - new Date(item2.date).getTime()
@@ -47,7 +49,9 @@ export const getTransactionsTypes = (transactions: Transaction[]) => {
 }
 
 export const getTransactionsCategories = (transactions: Transaction[]) => {
-  const newTransactions = transactions.filter((item) => item.type.toLowerCase() === 'expense')
+  const newTransactions = transactions.filter(
+    (item) => item.type.toLowerCase() === 'expense',
+  )
   const categoriesMap = new Map<string, TransactionCategories>()
 
   newTransactions.forEach((transaction) => {
@@ -68,7 +72,9 @@ export const getTransactionsCategories = (transactions: Transaction[]) => {
 }
 
 export const getTransactionsYears = (transactions: Transaction[]) => {
-  const newTransactions = [...transactions].sort((item1, item2) => Number(item1.year) - Number(item2.year))
+  const newTransactions = [...transactions].sort(
+    (item1, item2) => Number(item1.year) - Number(item2.year),
+  )
   const yearsMap = new Map<string, TransactionYears>()
 
   newTransactions.forEach((transaction) => {

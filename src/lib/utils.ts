@@ -7,13 +7,17 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export const getObjFromEntries = (iterableObj: Iterable<readonly [PropertyKey, unknown]>) => {
+export const getObjFromEntries = (
+  iterableObj: Iterable<readonly [PropertyKey, unknown]>,
+) => {
   const obj = JSON.parse(JSON.stringify(Object.fromEntries(iterableObj)))
   return obj
 }
 
 export const toSentenceCase = (str: string) => {
-  return str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())
+  return str
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (str) => str.toUpperCase())
 }
 
 export const removeArrayDuplicates: RemoveDuplicate = (array) => {

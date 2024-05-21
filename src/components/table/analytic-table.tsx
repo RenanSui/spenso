@@ -8,20 +8,40 @@ import { HTMLAttributes, useMemo } from 'react'
 import { CurrencyToggle } from '../currency-toggle'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table'
 
 type AnalyticTableProps = {
   transactions: Transaction[]
   rates: (CurrencyRates | null)[]
 } & HTMLAttributes<HTMLDivElement>
 
-export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableProps) => {
+export const AnalyticTable = ({
+  className,
+  transactions,
+  rates,
+}: AnalyticTableProps) => {
   const currencyState = useCurrencyAtom()
   const mounted = useMounted()
 
   const data = useMemo(() => {
     return transactions
-      .map((item) => ({ ...item, amount: getCurrencyValue(item.amount, item.currency, rates, currencyState) }))
+      .map((item) => ({
+        ...item,
+        amount: getCurrencyValue(
+          item.amount,
+          item.currency,
+          rates,
+          currencyState,
+        ),
+      }))
       .slice(0, 12)
   }, [currencyState, rates, transactions])
 
@@ -56,13 +76,22 @@ export const AnalyticTable = ({ className, transactions, rates }: AnalyticTableP
                 <TableCell
                   className={cn(
                     'text-sm font-medium capitalize',
-                    type === 'expense' ? 'text-red-600 dark:text-red-400' : null,
+                    type === 'expense'
+                      ? 'text-red-600 dark:text-red-400'
+                      : null,
                   )}
                 >
                   {type}
                 </TableCell>
                 <TableCell className="text-xs">{product}</TableCell>
-                <TableCell className={cn('text-xs', type === 'expense' ? 'text-red-600 dark:text-red-400' : null)}>
+                <TableCell
+                  className={cn(
+                    'text-xs',
+                    type === 'expense'
+                      ? 'text-red-600 dark:text-red-400'
+                      : null,
+                  )}
+                >
                   {formatted}
                 </TableCell>
               </TableRow>

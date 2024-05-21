@@ -28,7 +28,10 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
         <div className="absolute inset-0 bg-gradient-to-t from-white to-black/80 dark:from-black lg:to-black/40" />
         <div className="absolute bottom-4 right-4 z-20 line-clamp-1 rounded-md bg-muted px-3 py-1.5 text-sm text-neutral-500">
           Photo by{' '}
-          <a href={siteConfig.unsplash.auth.authorUrl} className="underline transition-colors hover:text-neutral-900">
+          <a
+            href={siteConfig.unsplash.auth.authorUrl}
+            className="underline transition-colors hover:text-neutral-900"
+          >
             {siteConfig.unsplash.auth.author}{' '}
           </a>
           {' on '}

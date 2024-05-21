@@ -34,7 +34,10 @@ export function ErrorCard({
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
-      className={cn('flex w-full min-w-0 flex-col items-center justify-center overflow-hidden p-10', className)}
+      className={cn(
+        'flex w-full min-w-0 flex-col items-center justify-center overflow-hidden p-10',
+        className,
+      )}
       {...props}
     >
       <div className="grid place-items-center rounded-full border border-dashed border-muted-foreground/75 p-6">
@@ -42,7 +45,9 @@ export function ErrorCard({
       </div>
       <div className="flex flex-col items-center justify-center space-y-1.5 py-14 text-center">
         <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription className="line-clamp-4">{description}</CardDescription>
+        <CardDescription className="line-clamp-4">
+          {description}
+        </CardDescription>
       </div>
       {retryLink ? (
         <Link

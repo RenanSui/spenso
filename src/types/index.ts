@@ -12,7 +12,11 @@ export type TransactionInsert = TransactionTable['Insert']
 
 export type TransactionUpdate = TransactionTable['Update']
 
-export type TransactionCategories = { category: string; sum: number; currency: string }
+export type TransactionCategories = {
+  category: string
+  sum: number
+  currency: string
+}
 
 export type TransactionTypes = 'income' | 'expense'
 
@@ -25,7 +29,8 @@ export type TransactionYears = {
   currency: string
 }
 
-export type TransactionGroupsTable = Database['next_auth']['Tables']['transactions_groups']
+export type TransactionGroupsTable =
+  Database['next_auth']['Tables']['transactions_groups']
 
 export type TransactionGroups = TransactionGroupsTable['Row']
 
@@ -44,7 +49,8 @@ export interface DataTableSearchableColumn<TData> {
   title: string
 }
 
-export interface DataTableFilterableColumn<TData> extends DataTableSearchableColumn<TData> {
+export interface DataTableFilterableColumn<TData>
+  extends DataTableSearchableColumn<TData> {
   options: Option[]
 }
 

@@ -15,7 +15,10 @@ interface FormatGroupPillProps {
   rates: (CurrencyRates | null)[]
 }
 
-export default function FormatGroupPill({ transactions, rates }: FormatGroupPillProps) {
+export default function FormatGroupPill({
+  transactions,
+  rates,
+}: FormatGroupPillProps) {
   const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
@@ -28,11 +31,15 @@ export default function FormatGroupPill({ transactions, rates }: FormatGroupPill
 
     const revenue = {
       length: sums.filter((item) => item >= 0).length,
-      value: sums.filter((item) => item >= 0).reduce((acc, curr) => acc + curr, 0),
+      value: sums
+        .filter((item) => item >= 0)
+        .reduce((acc, curr) => acc + curr, 0),
     }
     const expenses = {
       length: sums.filter((item) => item < 0).length,
-      value: sums.filter((item) => item < 0).reduce((acc, curr) => acc + curr, 0),
+      value: sums
+        .filter((item) => item < 0)
+        .reduce((acc, curr) => acc + curr, 0),
     }
 
     const totals = {
@@ -43,7 +50,8 @@ export default function FormatGroupPill({ transactions, rates }: FormatGroupPill
     return { totals, revenue, expenses }
   }, [currencyState, rates, transactions])
 
-  const isRevenueGreater = calculated.revenue.value > toPositive(calculated.expenses.value)
+  const isRevenueGreater =
+    calculated.revenue.value > toPositive(calculated.expenses.value)
 
   return mounted ? (
     <GroupPill

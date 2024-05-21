@@ -11,23 +11,38 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
-import { CaretSortIcon, CheckIcon, FrameIcon, PlusCircledIcon } from '@radix-ui/react-icons'
+import {
+  CaretSortIcon,
+  CheckIcon,
+  FrameIcon,
+  PlusCircledIcon,
+} from '@radix-ui/react-icons'
 
-import { GroupsRoute, TransactionGroups, TransactionGroupsInsert } from '@/types'
+import {
+  GroupsRoute,
+  TransactionGroups,
+  TransactionGroupsInsert,
+} from '@/types'
 import { PostgrestError } from '@supabase/supabase-js'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { CreateGroupDialog } from './create-group-dialog'
 
-interface GroupSwitcherProps extends React.ComponentPropsWithoutRef<typeof PopoverTrigger> {
+interface GroupSwitcherProps
+  extends React.ComponentPropsWithoutRef<typeof PopoverTrigger> {
   userId: string | null | undefined
   groupsPromise: ReturnType<typeof getGroups>
   route?: GroupsRoute
-  createGroup: (
-    formData: TransactionGroupsInsert,
-  ) => Promise<{ data: TransactionGroups[] | null; error: PostgrestError | null } | null>
+  createGroup: (formData: TransactionGroupsInsert) => Promise<{
+    data: TransactionGroups[] | null
+    error: PostgrestError | null
+  } | null>
 }
 
 export function GroupSwitcher({
@@ -67,7 +82,10 @@ export function GroupSwitcher({
             {...props}
           >
             {selectedGroup?.title ?? 'Select a group'}
-            <CaretSortIcon className="ml-auto size-4 shrink-0 opacity-50" aria-hidden="true" />
+            <CaretSortIcon
+              className="ml-auto size-4 shrink-0 opacity-50"
+              aria-hidden="true"
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
@@ -83,14 +101,24 @@ export function GroupSwitcher({
                       setOpen(false)
                       pathname.includes(group.id)
                         ? router.replace(pathname.replace(groupId, group.id))
-                        : router.push(`/${route}/groups/${group.id}/transactions`)
+                        : router.push(
+                            `/${route}/groups/${group.id}/transactions`,
+                          )
                     }}
                     className="text-sm"
                   >
-                    <FrameIcon className="mr-2 size-4  text-muted-foreground" aria-hidden="true" />
+                    <FrameIcon
+                      className="mr-2 size-4  text-muted-foreground"
+                      aria-hidden="true"
+                    />
                     {group.title}
                     <CheckIcon
-                      className={cn('ml-auto size-4', selectedGroup?.id === group.id ? 'opacity-100' : 'opacity-0')}
+                      className={cn(
+                        'ml-auto size-4',
+                        selectedGroup?.id === group.id
+                          ? 'opacity-100'
+                          : 'opacity-0',
+                      )}
                       aria-hidden="true"
                     />
                   </CommandItem>

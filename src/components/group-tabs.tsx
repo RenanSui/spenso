@@ -41,13 +41,20 @@ export function GroupTabs({ groupId, route = 'dashboard' }: GroupTabsProps) {
       className="sticky top-0 z-30 size-full overflow-auto bg-background px-1"
       onValueChange={(value) => router.push(value)}
     >
-      <ScrollArea orientation="horizontal" className="pb-2.5" scrollBarClassName="h-2">
+      <ScrollArea
+        orientation="horizontal"
+        className="pb-2.5"
+        scrollBarClassName="h-2"
+      >
         <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
           {tabs.map((tab) => (
             <div
               role="none"
               key={tab.href}
-              className={cn('border-b-2 border-transparent py-1.5', tab.isActive && 'border-foreground')}
+              className={cn(
+                'border-b-2 border-transparent py-1.5',
+                tab.isActive && 'border-foreground',
+              )}
             >
               <TabsTrigger
                 value={tab.href}

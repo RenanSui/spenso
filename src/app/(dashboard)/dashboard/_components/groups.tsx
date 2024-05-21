@@ -11,7 +11,12 @@ interface Groups {
   route?: GroupsRoute
 }
 
-export async function Groups({ groupsPromise, transactionsPromise, href, route = 'dashboard' }: Groups) {
+export async function Groups({
+  groupsPromise,
+  transactionsPromise,
+  href,
+  route = 'dashboard',
+}: Groups) {
   const groups = await groupsPromise
   const transactions = await transactionsPromise
 

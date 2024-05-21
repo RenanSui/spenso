@@ -23,7 +23,11 @@ export default async function AllGroupLayout({ children }: GroupLayoutProps) {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog userId={user.id} route="dashboard" createGroup={addGroup} />
+        <CreateGroupDialog
+          userId={user.id}
+          route="dashboard"
+          createGroup={addGroup}
+        />
       </PageHeader>
       <DashboardTabs />
       <div className="overflow-hidden">{children}</div>

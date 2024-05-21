@@ -11,7 +11,11 @@ type CardChartShellProps = {
   rates: (CurrencyRates | null)[]
 } & HTMLAttributes<HTMLDivElement>
 
-export const CardChartShell = ({ transactions, className, rates }: CardChartShellProps) => {
+export const CardChartShell = ({
+  transactions,
+  className,
+  rates,
+}: CardChartShellProps) => {
   const currencyState = useCurrencyAtom()
 
   const calculated = useMemo(() => {
@@ -22,11 +26,15 @@ export const CardChartShell = ({ transactions, className, rates }: CardChartShel
 
     const revenue = {
       length: sums.filter((item) => item >= 0).length,
-      value: sums.filter((item) => item >= 0).reduce((acc, curr) => acc + curr, 0),
+      value: sums
+        .filter((item) => item >= 0)
+        .reduce((acc, curr) => acc + curr, 0),
     }
     const expenses = {
       length: sums.filter((item) => item < 0).length,
-      value: sums.filter((item) => item < 0).reduce((acc, curr) => acc + curr, 0),
+      value: sums
+        .filter((item) => item < 0)
+        .reduce((acc, curr) => acc + curr, 0),
     }
 
     const totals = {
@@ -39,15 +47,27 @@ export const CardChartShell = ({ transactions, className, rates }: CardChartShel
 
   return (
     <>
-      <AnalyticCard className={className} total={calculated.totals.length} wallet={calculated.totals}>
+      <AnalyticCard
+        className={className}
+        total={calculated.totals.length}
+        wallet={calculated.totals}
+      >
         total
       </AnalyticCard>
 
-      <AnalyticCard className={className} total={calculated.totals.length} wallet={calculated.revenue}>
+      <AnalyticCard
+        className={className}
+        total={calculated.totals.length}
+        wallet={calculated.revenue}
+      >
         total profit
       </AnalyticCard>
 
-      <AnalyticCard className={className} total={calculated.totals.length} wallet={calculated.expenses}>
+      <AnalyticCard
+        className={className}
+        total={calculated.totals.length}
+        wallet={calculated.expenses}
+      >
         total expenses
       </AnalyticCard>
     </>

@@ -3,7 +3,12 @@
 import Link from 'next/link'
 
 import { Button, type ButtonProps } from '@/components/ui/button'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
 
@@ -12,7 +17,11 @@ import { useSidebar } from './sidebar-provider'
 
 export interface SidebarSheetProps extends ButtonProps {}
 
-export function DashboardSidebarSheet({ children, className, ...props }: SidebarSheetProps) {
+export function DashboardSidebarSheet({
+  children,
+  className,
+  ...props
+}: SidebarSheetProps) {
   const { open, setOpen } = useSidebar()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
@@ -34,7 +43,10 @@ export function DashboardSidebarSheet({ children, className, ...props }: Sidebar
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="inset-y-0 flex h-auto w-[18.75rem] flex-col items-center gap-4 px-0 py-4">
+      <SheetContent
+        side="left"
+        className="inset-y-0 flex h-auto w-[18.75rem] flex-col items-center gap-4 px-0 py-4"
+      >
         <SheetClose asChild>
           <Link
             href="/"

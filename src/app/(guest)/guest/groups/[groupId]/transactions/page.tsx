@@ -18,7 +18,9 @@ export default function Page(params: GroupPageProps) {
   const group = guest.groups.find((group) => group.id === groupId)
   if (!group) notFound()
 
-  const transactions = guest.transactions.filter((transaction) => transaction.group_id === groupId)
+  const transactions = guest.transactions.filter(
+    (transaction) => transaction.group_id === groupId,
+  )
   const rates = guest.rates
 
   return (

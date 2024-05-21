@@ -1,14 +1,26 @@
 import { ThemeToggle } from '@/components/layouts/theme-toggle'
-import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from '@/components/page-header'
 import { Shell } from '@/components/shells/shell'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default async function SettingsPage() {
   return (
     <Shell variant="sidebar" className="">
       <PageHeader>
         <PageHeaderHeading size="sm">Settings</PageHeaderHeading>
-        <PageHeaderDescription size="sm">Manage your settings</PageHeaderDescription>
+        <PageHeaderDescription size="sm">
+          Manage your settings
+        </PageHeaderDescription>
       </PageHeader>
       <Card>
         <CardHeader>

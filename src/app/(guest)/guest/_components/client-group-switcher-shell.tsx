@@ -6,7 +6,9 @@ import * as React from 'react'
 import { TransactionsContext } from './guest-provider'
 
 export function ClientGroupSwitcherShell({ userId }: { userId: string }) {
-  const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<typeof getGroups> | null>(null)
+  const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<
+    typeof getGroups
+  > | null>(null)
   const { groups, createGroup } = React.useContext(TransactionsContext)
 
   React.useEffect(() => {
@@ -18,6 +20,11 @@ export function ClientGroupSwitcherShell({ userId }: { userId: string }) {
   }, [groups])
 
   return groupsPromise ? (
-    <GroupSwitcher route="guest" userId={userId} groupsPromise={groupsPromise} createGroup={createGroup} />
+    <GroupSwitcher
+      route="guest"
+      userId={userId}
+      groupsPromise={groupsPromise}
+      createGroup={createGroup}
+    />
   ) : null
 }

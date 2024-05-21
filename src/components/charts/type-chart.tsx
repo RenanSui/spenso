@@ -24,7 +24,9 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
 
   const data = useMemo(() => {
     const calculatedTypes = types.map((type) => {
-      return { sum: getCurrencyValue(type.sum, type.currency, rates, currencyState) }
+      return {
+        sum: getCurrencyValue(type.sum, type.currency, rates, currencyState),
+      }
     })
 
     const incomes = calculatedTypes
@@ -48,7 +50,10 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
         {
           label: 'amount',
           data: newTypes.map((type) => type.sum),
-          backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+          ],
           borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
           borderWidth: 1,
         },
@@ -64,7 +69,9 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
       )}
     >
       <div className={cn('flex w-full items-center justify-center', className)}>
-        {types.length !== 0 ? <Doughnut className="max-h-[300px]" data={data} /> : null}
+        {types.length !== 0 ? (
+          <Doughnut className="max-h-[300px]" data={data} />
+        ) : null}
       </div>
     </div>
   ) : (
