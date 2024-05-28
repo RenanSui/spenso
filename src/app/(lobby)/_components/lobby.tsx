@@ -58,23 +58,23 @@ export async function Lobby({
           Find Happiness In Budgeting!
         </PageHeaderDescription>
         <PageActions className="grid space-x-0 space-y-4">
-          <div
-            className="animate-fade-up space-x-4"
-            style={{ animationDelay: '0.40s', animationFillMode: 'both' }}
-          >
-            <Link className={buttonVariants()} href="/dashboard/groups">
-              Try now
-            </Link>
-            <Link
-              className={buttonVariants({ variant: 'outline' })}
-              href="/signin"
-            >
-              Sign in
-            </Link>
-          </div>
-
           {!user ? (
             <>
+              <div
+                className="animate-fade-up"
+                style={{ animationDelay: '0.40s', animationFillMode: 'both' }}
+              >
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'w-full px-16',
+                  )}
+                  href="/signin"
+                >
+                  Sign in
+                </Link>
+              </div>
+
               <div
                 className="relative animate-fade-up"
                 style={{ animationDelay: '0.50s', animationFillMode: 'both' }}
@@ -91,13 +91,28 @@ export async function Lobby({
 
               <Link
                 className={cn(buttonVariants(), 'animate-fade-up')}
-                style={{ animationDelay: '0.50s', animationFillMode: 'both' }}
+                style={{ animationDelay: '0.60s', animationFillMode: 'both' }}
                 href="/guest/groups"
               >
-                Continue as guest
+                Try Out
               </Link>
             </>
-          ) : null}
+          ) : (
+            <div
+              className="animate-fade-up space-x-4"
+              style={{ animationDelay: '0.40s', animationFillMode: 'both' }}
+            >
+              <Link className={cn(buttonVariants())} href="/dashboard/groups">
+                Dashboard
+              </Link>
+              <Link
+                className={cn(buttonVariants({ variant: 'outline' }))}
+                href="/dashboard/settings"
+              >
+                Settings
+              </Link>
+            </div>
+          )}
         </PageActions>
       </PageHeader>
       <ContentSection
