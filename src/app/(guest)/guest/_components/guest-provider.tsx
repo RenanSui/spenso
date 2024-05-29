@@ -1,6 +1,8 @@
 'use client'
 
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
+import { getTransactions } from '@/actions/server/transactions'
+import { getGroups } from '@/actions/server/transactions-groups'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { mockProducts } from '@/lib/mocks'
 import { positiveOrNegative } from '@/lib/utils'
@@ -15,9 +17,14 @@ import {
 import { PostgrestError } from '@supabase/supabase-js'
 import * as React from 'react'
 
+export type TransactionsPromise = ReturnType<typeof getTransactions> | null
+export type GroupsPromise = ReturnType<typeof getGroups> | null
+
 export interface TransactionsContext {
   transactions: Transaction[]
+  transactionsPromise: TransactionsPromise
   groups: TransactionGroups[]
+  groupsPromise: GroupsPromise
   rates: (CurrencyRates | null)[]
   createTransaction: (transaction: TransactionInsert) => void
   updateTransaction: (transaction: TransactionUpdate) => void
@@ -37,7 +44,9 @@ export interface TransactionsContext {
 
 export const TransactionsContext = React.createContext<TransactionsContext>({
   transactions: [],
+  transactionsPromise: Promise.resolve([]),
   groups: [],
+  groupsPromise: Promise.resolve([]),
   rates: [],
   createTransaction: () => {},
   updateTransaction: () => {},
@@ -52,10 +61,29 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
   const [transactions, setTransactions] = React.useState<Transaction[]>([
     useRandomTransaction(),
   ])
+  const [transactionsPromise, setTransactionsPromise] =
+    React.useState<TransactionsPromise>(null)
   const [groups, setGroups] = React.useState<TransactionGroups[]>([
     useRandomGroup(),
   ])
+  const [groupsPromise, setGroupsPromise] = React.useState<GroupsPromise>(null)
   const [rates, setRates] = React.useState<(CurrencyRates | null)[]>([])
+
+  React.useEffect(() => {
+    function initialLoad() {
+      const transactionsPromise = Promise.resolve(transactions)
+      setTransactionsPromise(transactionsPromise)
+    }
+    initialLoad()
+  }, [groups, transactions])
+
+  React.useEffect(() => {
+    function initialLoad() {
+      const groupsPromise = Promise.resolve(groups)
+      setGroupsPromise(groupsPromise)
+    }
+    initialLoad()
+  }, [groups])
 
   React.useEffect(() => {
     const initialLoad = async () => {
@@ -168,7 +196,9 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
     <TransactionsContext.Provider
       value={{
         transactions,
+        transactionsPromise,
         groups,
+        groupsPromise,
         rates,
         createTransaction,
         updateTransaction,

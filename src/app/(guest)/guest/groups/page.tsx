@@ -1,7 +1,5 @@
 'use client'
 
-import { getTransactions } from '@/actions/server/transactions'
-import { getGroups } from '@/actions/server/transactions-groups'
 import { CreateGroupDialog } from '@/app/(dashboard)/dashboard/_components/create-group-dialog'
 import { Groups } from '@/app/(dashboard)/dashboard/_components/groups'
 import { CurrencyToggle } from '@/components/currency-toggle'
@@ -21,29 +19,11 @@ type PageParams = {
 }
 
 export default function Page(params: PageParams) {
-  const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<
-    typeof getGroups
-  > | null>(null)
-  const [transactionsPromise, setTransactionsPromise] =
-    React.useState<ReturnType<typeof getTransactions> | null>(null)
-
-  const { groups, transactions, createGroup } =
-    React.useContext(TransactionsContext)
-  const user = mockUser
-
+  const { groupsPromise, transactionsPromise, createGroup } =
+    React.use(TransactionsContext)
   const deleting = params.searchParams.deleting ?? 'false'
   const isDeleting = deleting === 'true'
-
-  React.useEffect(() => {
-    function initLoad() {
-      const groupsPromise = Promise.resolve(groups)
-      setGroupsPromise(groupsPromise)
-
-      const transactionsPromise = Promise.resolve(transactions)
-      setTransactionsPromise(transactionsPromise)
-    }
-    initLoad()
-  }, [groups, transactions])
+  const user = mockUser
 
   return (
     <Shell variant="sidebar">
