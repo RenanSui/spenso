@@ -9,7 +9,7 @@ export function ClientGroupSwitcherShell({ userId }: { userId: string }) {
   const [groupsPromise, setGroupsPromise] = React.useState<ReturnType<
     typeof getGroups
   > | null>(null)
-  const { groups, createGroup } = React.useContext(TransactionsContext)
+  const { groups, createGroup } = React.use(TransactionsContext)
 
   React.useEffect(() => {
     function initLoad() {

@@ -11,7 +11,7 @@ import * as React from 'react'
 import { TransactionsContext } from '../../_components/guest-provider'
 
 export default function AnalyticsPage() {
-  const { transactions, rates } = React.useContext(TransactionsContext)
+  const { transactions, rates } = React.use(TransactionsContext)
   if (!transactions) notFound()
 
   const years = getTransactionsYears(transactions)

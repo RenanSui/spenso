@@ -3,19 +3,19 @@
 import { GuestDeleteGroupDialog } from '@/app/(guest)/guest/_components/guest-delete-group-dialog'
 import { Button } from '@/components/ui/button'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from '@/components/ui/card'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -34,7 +34,7 @@ type GroupPageProps = {
 
 export default function Page(params: GroupPageProps) {
   const groupId = params.params.groupId
-  const guest = React.useContext(TransactionsContext)
+  const guest = React.use(TransactionsContext)
 
   const form = useForm<CreateGroupSchema>({
     resolver: zodResolver(createGroupSchema),

@@ -34,7 +34,7 @@ interface GuestDeleteGroupDialogProps
 export function GuestDeleteGroupDialog({
   groupId,
 }: GuestDeleteGroupDialogProps) {
-  const guest = React.useContext(TransactionsContext)
+  const guest = React.use(TransactionsContext)
   const [loading, setLoading] = React.useState(false)
   const isDesktop = useMediaQuery('(min-width: 640px)')
   const router = useRouter()

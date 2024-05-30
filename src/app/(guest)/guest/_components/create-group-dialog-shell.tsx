@@ -11,7 +11,7 @@ type CreateGroupDialogShellProps = {
 export function CreateGroupDialogShell({
   userId,
 }: CreateGroupDialogShellProps) {
-  const guest = React.useContext(TransactionsContext)
+  const guest = React.use(TransactionsContext)
 
   return (
     <CreateGroupDialog

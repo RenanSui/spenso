@@ -2,9 +2,9 @@
 
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
 import {
-  getTransactionsCategories,
-  getTransactionsTypes,
-  getTransactionsYears,
+    getTransactionsCategories,
+    getTransactionsTypes,
+    getTransactionsYears,
 } from '@/lib/transactions'
 import { notFound } from 'next/navigation'
 import * as React from 'react'
@@ -18,7 +18,7 @@ type GroupPageProps = {
 
 export default function AnalyticsPage(params: GroupPageProps) {
   const groupId = params.params.groupId
-  const guest = React.useContext(TransactionsContext)
+  const guest = React.use(TransactionsContext)
 
   const transactions = guest.transactions.filter(
     (transaction) => transaction.group_id === groupId,

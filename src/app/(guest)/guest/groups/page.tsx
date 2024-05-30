@@ -28,7 +28,7 @@ export default function Page(params: PageParams) {
     React.useState<ReturnType<typeof getTransactions> | null>(null)
 
   const { groups, transactions, createGroup } =
-    React.useContext(TransactionsContext)
+    React.use(TransactionsContext)
   const user = mockUser
 
   const deleting = params.searchParams.deleting ?? 'false'

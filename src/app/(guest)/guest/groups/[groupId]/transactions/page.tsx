@@ -13,7 +13,7 @@ type GroupPageProps = {
 
 export default function Page(params: GroupPageProps) {
   const groupId = params.params.groupId
-  const guest = React.useContext(TransactionsContext)
+  const guest = React.use(TransactionsContext)
 
   const group = guest.groups.find((group) => group.id === groupId)
   if (!group) notFound()
