@@ -15,7 +15,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { HTMLAttributes, useMemo } from 'react'
+import { HTMLAttributes } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
@@ -39,53 +39,58 @@ ChartJS.defaults.elements.line.tension = 0.4
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
   const mounted = useMounted()
-  const currencyState = useCurrencyAtom()
-
-  const data = useMemo(() => {
-    const allYears = removeArrayDuplicates(years.map((year) => year.year))
-    const filledYears = fillRemainingYears(years)
-
-    const incomes = filledYears.filter((year) => year.type === 'income')
-    const expenses = filledYears.filter((year) => year.type === 'expense')
-
-    const calculatedIncomes = sumTransactionsByYear(
-      getCalculatedYears(incomes, rates, currencyState),
-    )
-    const calculatedExpenses = sumTransactionsByYear(
-      getCalculatedYears(expenses, rates, currencyState),
-    )
-
-    const incomeValues = calculatedIncomes.map((year) => year.sum)
-    const expenseValues = calculatedExpenses
-      .map((year) => year.sum)
-      .map((sum) => toPositive(sum))
-
-    return {
-      labels: allYears.map((year) => year),
-      datasets: [
-        {
-          label: 'revenue',
-          data: incomeValues,
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.2)',
-          fill: true,
-        },
-        {
-          label: 'expenses',
-          data: expenseValues,
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          fill: true,
-        },
-      ],
-    }
-  }, [currencyState, rates, years])
+  const currency = useCurrencyAtom()
+  const data = getYearsData(years, rates, currency)
 
   return mounted ? (
     <Line className="max-h-[300px]" data={data} />
   ) : (
     <Skeleton className="h-[300px] w-full"></Skeleton>
   )
+}
+
+function getYearsData(
+  years: TransactionYears[],
+  rates: (CurrencyRates | null)[],
+  currency: string,
+) {
+  const allYears = removeArrayDuplicates(years.map((year) => year.year))
+  const filledYears = fillRemainingYears(years)
+
+  const incomes = filledYears.filter((year) => year.type === 'income')
+  const expenses = filledYears.filter((year) => year.type === 'expense')
+
+  const calculatedIncomes = sumTransactionsByYear(
+    getCalculatedYears(incomes, rates, currency),
+  )
+  const calculatedExpenses = sumTransactionsByYear(
+    getCalculatedYears(expenses, rates, currency),
+  )
+
+  const incomeValues = calculatedIncomes.map((year) => year.sum)
+  const expenseValues = calculatedExpenses
+    .map((year) => year.sum)
+    .map((sum) => toPositive(sum))
+
+  return {
+    labels: allYears.map((year) => year),
+    datasets: [
+      {
+        label: 'revenue',
+        data: incomeValues,
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.2)',
+        fill: true,
+      },
+      {
+        label: 'expenses',
+        data: expenseValues,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        fill: true,
+      },
+    ],
+  }
 }
 
 function fillRemainingYears(years: TransactionYears[]) {
@@ -138,10 +143,10 @@ function sumTransactionsByYear(transactions: TransactionYears[]) {
 function getCalculatedYears(
   years: TransactionYears[],
   rates: (CurrencyRates | null)[],
-  currencyState: string,
+  currency: string,
 ) {
   return years.map((year) => ({
     ...year,
-    sum: getCurrencyValue(year.sum, year.currency, rates, currencyState),
+    sum: getCurrencyValue(year.sum, year.currency, rates, currency),
   }))
 }

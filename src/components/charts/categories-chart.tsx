@@ -13,7 +13,6 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
@@ -32,30 +31,8 @@ export const CategoriesChart = ({
   rates,
 }: CategoriesChartProps) => {
   const mounted = useMounted()
-  const currencyState = useCurrencyAtom()
-
-  const data = useMemo(() => {
-    const calculatedCategories = removeDuplicateCategories(
-      getCalculatedCategories(categories, rates, currencyState),
-    )
-    const sortedCategories = calculatedCategories.sort(
-      (item1, item2) => toPositive(item1.sum) - toPositive(item2.sum),
-    )
-
-    const labels = sortedCategories.map((category) => category.category)
-    const sums = sortedCategories.map((category) => toPositive(category.sum))
-
-    return {
-      labels,
-      datasets: [
-        {
-          label: 'Category expenses',
-          data: sums,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-      ],
-    }
-  }, [categories, currencyState, rates])
+  const currency = useCurrencyAtom()
+  const data = getCategoriesData(categories, rates, currency)
 
   return mounted ? (
     <div
@@ -71,19 +48,41 @@ export const CategoriesChart = ({
   )
 }
 
+function getCategoriesData(
+  categories: TransactionCategories[],
+  rates: (CurrencyRates | null)[],
+  currency: string,
+) {
+  const calculatedCategories = removeDuplicateCategories(
+    getCalculatedCategories(categories, rates, currency),
+  )
+  const sortedCategories = calculatedCategories.sort(
+    (item1, item2) => toPositive(item1.sum) - toPositive(item2.sum),
+  )
+
+  const labels = sortedCategories.map((category) => category.category)
+  const sums = sortedCategories.map((category) => toPositive(category.sum))
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Category expenses',
+        data: sums,
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  }
+}
+
 function getCalculatedCategories(
   categories: TransactionCategories[],
   rates: (CurrencyRates | null)[],
-  currencyState: string,
+  currency: string,
 ) {
   return categories.map((category) => ({
     ...category,
-    sum: getCurrencyValue(
-      category.sum,
-      category.currency,
-      rates,
-      currencyState,
-    ),
+    sum: getCurrencyValue(category.sum, category.currency, rates, currency),
   }))
 }
 

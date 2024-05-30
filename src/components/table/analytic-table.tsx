@@ -4,7 +4,7 @@ import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, formatValue } from '@/lib/utils'
 import { CurrencyRates, Transaction } from '@/types'
-import { HTMLAttributes, useMemo } from 'react'
+import { HTMLAttributes } from 'react'
 import { CurrencyToggle } from '../currency-toggle'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
@@ -30,20 +30,17 @@ export const AnalyticTable = ({
 }: AnalyticTableProps) => {
   const currencyState = useCurrencyAtom()
   const mounted = useMounted()
-
-  const data = useMemo(() => {
-    return transactions
-      .map((item) => ({
-        ...item,
-        amount: getCurrencyValue(
-          item.amount,
-          item.currency,
-          rates,
-          currencyState,
-        ),
-      }))
-      .slice(0, 12)
-  }, [currencyState, rates, transactions])
+  const data = transactions
+    .map((item) => ({
+      ...item,
+      amount: getCurrencyValue(
+        item.amount,
+        item.currency,
+        rates,
+        currencyState,
+      ),
+    }))
+    .slice(0, 12)
 
   return mounted ? (
     <div
