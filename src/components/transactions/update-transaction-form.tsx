@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
+import { useCurrencies } from '@/hooks/use-currencies'
 import { useProducts } from '@/hooks/use-products'
 import { cn } from '@/lib/utils'
 import { Transaction, TransactionUpdate } from '@/types'
@@ -34,7 +35,6 @@ import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { CurrencySelector } from '../currency-selector'
-// import { updateTransaction } from '@/actions/server/transactions'
 
 const formSchema = z.object({
   product: z.string().min(1, { message: 'Product is required.' }),
@@ -55,6 +55,7 @@ export const UpdateTransactionForm = ({
   updateTransaction: (formData: TransactionUpdate) => unknown
 }) => {
   const { data: productsApi } = useProducts()
+  const { data: currencies } = useCurrencies()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -91,12 +92,15 @@ export const UpdateTransactionForm = ({
       transactionCategory[
         Math.floor(Math.random() * transactionCategory.length)
       ]
+    const currencyRandom =
+      currencies?.[Math.floor(Math.random() * currencies?.length)] ?? ''
 
     form.setValue('product', randomProduct)
     form.setValue('date', dateRandom)
     form.setValue('amount', amountRandom)
     form.setValue('type', typeRandom)
     form.setValue('category', categoryRandom)
+    form.setValue('currency', currencyRandom)
   }
 
   return (
@@ -199,7 +203,7 @@ export const UpdateTransactionForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  currency
+                  Currency
                   <Required />
                 </FormLabel>
                 <FormControl>
@@ -228,7 +232,11 @@ export const UpdateTransactionForm = ({
                 Transaction Type
                 <Required />
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                value={form.getValues('type')}
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a transaction type" />
@@ -263,7 +271,11 @@ export const UpdateTransactionForm = ({
                 Category
                 <Required />
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                value={form.getValues('category')}
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category" />
