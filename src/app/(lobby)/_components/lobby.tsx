@@ -94,7 +94,7 @@ export async function Lobby({
                 style={{ animationDelay: '0.60s', animationFillMode: 'both' }}
                 href="/guest/groups"
               >
-                Try Out
+                Continue as guest
               </Link>
             </>
           ) : (
