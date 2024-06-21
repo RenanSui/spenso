@@ -40,10 +40,10 @@ export async function Lobby({
     <Shell className="max-w-6xl gap-0">
       <PageHeader
         as="section"
-        className="relative mx-auto items-center gap-2 text-center"
+        className="relative mx-auto items-center gap-2 pb-14 text-center md:pb-20 lg:pb-24"
         withPadding
       >
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle,hsla(0,0%,10%,1)0%,hsla(240,10%,4%,1)50%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle,hsla(0,0%,10%,1)0%,hsla(240,10%,4%,1)45%)]" />
         <PageHeaderHeading
           className="animate-fade-up"
           style={{ animationDelay: '0.20s', animationFillMode: 'both' }}
