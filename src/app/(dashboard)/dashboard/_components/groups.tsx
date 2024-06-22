@@ -17,7 +17,9 @@ export async function Groups({
   href,
   route = 'dashboard',
 }: Groups) {
-  const groups = await groupsPromise
+  const groups = (await groupsPromise)?.sort((group1, group2) => {
+    return group1.title.localeCompare(group2.title)
+  })
   const transactions = await transactionsPromise
 
   return (
