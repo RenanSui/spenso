@@ -54,7 +54,10 @@ export const ChangeTransactionGroup = ({
   transaction,
   updateTransactionGroup,
 }: ChangeTransactionGroupProps) => {
-  const { data: transactionsGroups } = useGroups()
+  const { data } = useGroups()
+  const transactionsGroups = data?.sort((group1, group2) => {
+    return group1.title.localeCompare(group2.title)
+  })
 
   const form = useForm<z.z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

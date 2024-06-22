@@ -59,7 +59,9 @@ export function GroupSwitcher({
   const [open, setOpen] = React.useState(false)
   const [showNewGroupDialog, setShowNewGroupDialog] = React.useState(false)
 
-  const groups = React.use(groupsPromise)
+  const groups = React.use(groupsPromise)?.sort((group1, group2) => {
+    return group1.title.localeCompare(group2.title)
+  })
   const selectedGroup = groups?.find((group) => group.id === groupId)
 
   return (
