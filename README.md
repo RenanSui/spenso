@@ -13,6 +13,8 @@ Bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/can
 - **Table:** [Tanstack React Table](https://tanstack.com/table/v8)
 - **Form:** [React Hook Form](https://react-hook-form.com)
 - **Charts:** [React Chartjs 2](https://react-chartjs-2.js.org)
+- **Toaster:** [Toaster](https://sonner.emilkowal.ski)
+- **Component Library:** [Radix UI](https://www.radix-ui.com) + [Shadcn UI](https://ui.shadcn.com)
 
 ## Features
 
