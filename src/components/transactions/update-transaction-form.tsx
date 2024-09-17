@@ -8,7 +8,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { useCurrencies } from '@/hooks/use-currencies'
-// import { useProducts } from '@/hooks/use-products'
 import { products } from '@/assets/data/products'
 import { cn, getRandomElement } from '@/lib/utils'
 import { type Transaction, type TransactionUpdate } from '@/types'
@@ -38,7 +37,6 @@ export const UpdateTransactionForm = ({
   transaction?: Transaction
   updateTransaction: (formData: TransactionUpdate) => unknown
 }) => {
-  // const { data: productsApi } = useProducts()
   const { data: currencies } = useCurrencies()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
