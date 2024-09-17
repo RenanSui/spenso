@@ -3,8 +3,8 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import { type getTransactions } from '@/actions/server/transactions'
 import { type getGroups } from '@/actions/server/transactions-groups'
+import { products } from '@/assets/data/products'
 import { transactionCategory, transactionType } from '@/config/dashboard'
-import { mockProducts } from '@/lib/mocks'
 import { generateRandomPastDate, getRandomElement, positiveOrNegative } from '@/lib/utils'
 import {
   type CurrencyRates,
@@ -34,8 +34,6 @@ export interface TransactionsContext {
   }>
   updateGroup: (group: TransactionGroups) => void
   deleteGroup: (id: string) => void
-  // transactionsPromise: TransactionsPromise
-  // groupsPromise: GroupsPromise
 }
 
 export const TransactionsContext = React.createContext<TransactionsContext>({
@@ -49,8 +47,6 @@ export const TransactionsContext = React.createContext<TransactionsContext>({
   createGroup: () => Promise.resolve({ data: null, error: null }),
   updateGroup: () => {},
   deleteGroup: () => {},
-  // transactionsPromise: Promise.resolve([]),
-  // groupsPromise: Promise.resolve([]),
 })
 
 export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
@@ -135,8 +131,6 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
         createGroup,
         updateGroup,
         deleteGroup,
-        // transactionsPromise,
-        // groupsPromise,
       }}
     >
       {children}
@@ -145,8 +139,6 @@ export const GuestProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 const useRandomTransaction = () => {
-  const products = mockProducts
-
   // Generate random date and amount
   const date = new Date(Date.now() - Math.random() * 1e12)
   const amount = Number((Math.random() * 100000).toFixed(2))
