@@ -7,13 +7,15 @@ import { cn, removeArrayDuplicates } from '@/lib/utils'
 import { type CurrencyRates, type Transaction, type TransactionYears } from '@/types'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
-import { type Dispatch, type HTMLAttributes, type SetStateAction, useState } from 'react'
+import { useState, type Dispatch, type HTMLAttributes, type SetStateAction } from 'react'
 import { Button } from '../ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '../ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Skeleton } from '../ui/skeleton'
 import { MonthsChart } from './months-chart'
 import { YearsChart } from './years-chart'
+
+type Chart = 'Yearly' | 'Monthly'
 
 interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
@@ -24,7 +26,7 @@ interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
 export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
   const sortedYears = years.sort((item1, item2) => Number(item1.year) - Number(item2.year))
   const [year, setYear] = useState(sortedYears[sortedYears.length - 1]?.year ?? 'XXXX')
-  const [chart, setChart] = useState<'Yearly' | 'Monthly'>('Monthly')
+  const [chart, setChart] = useState<Chart>('Monthly')
   const mounted = useMounted()
 
   return mounted ? (
@@ -47,20 +49,21 @@ export const LineChartShell = ({ rates, years, className, transactions }: LineCh
 }
 
 interface LineChartTabsProps extends HTMLAttributes<HTMLDivElement> {
-  setChart: Dispatch<SetStateAction<'Yearly' | 'Monthly'>>
-  chart: 'Yearly' | 'Monthly'
+  setChart: Dispatch<SetStateAction<Chart>>
+  chart: Chart
   year: string
   setYear: Dispatch<SetStateAction<string>>
   years: TransactionYears[]
 }
 
+const tabs: { chart: Chart }[] = [{ chart: 'Yearly' }, { chart: 'Monthly' }]
+
 function LineChartTabs({ chart, setChart, setYear, year, years }: LineChartTabsProps) {
-  const tabs = [{ chart: 'Yearly' }, { chart: 'Monthly' }]
   const mounted = useMounted()
 
   return mounted ? (
     <Tabs
-      defaultValue={tabs.find((tab) => tab.chart === chart)?.chart ?? tabs[0].chart}
+      defaultValue={tabs.find((t) => t.chart === chart)?.chart ?? 'Yearly'}
       className="sticky top-0 z-30 size-full overflow-auto px-1"
       onValueChange={(value) => setChart(value as 'Yearly' | 'Monthly')}
     >
