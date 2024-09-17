@@ -1,6 +1,6 @@
 {
   "name": "expenser",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,13 +9,13 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "analyze": "cross-env ANALYZE=true next build",
     "db:start": "pnpm dlx supabase start",
     "db:stop": "pnpm dlx supabase stop",
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start",
-    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts"
+    "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
+    "analyze": "cross-env ANALYZE=true next build",
+    "unlighthouse": "pnpm dlx unlighthouse --site https://spenso.vercel.app"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^0.1.18",
