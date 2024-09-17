@@ -12,11 +12,7 @@ import { notFound, redirect } from 'next/navigation'
 import { ClientGroupSwitcherShell } from './_components/client-group-switcher-shell'
 import { GuestProvider } from './_components/guest-provider'
 
-export default async function GuestLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function GuestLayout({ children }: { children: React.ReactNode }) {
   const authUser = await getUser()
   if (authUser) redirect('/')
 
@@ -37,23 +33,16 @@ export default async function GuestLayout({
             <div className="flex flex-col">
               <DashboardHeader user={null}>
                 <DashboardSidebarSheet>
-                  <DashboardSidebar
-                    sidebarItems={guestDashboardConfig.SidebarNav}
-                  >
+                  <DashboardSidebar sidebarItems={guestDashboardConfig.SidebarNav}>
                     <ClientGroupSwitcherShell userId={user.id} />
                   </DashboardSidebar>
                 </DashboardSidebarSheet>
               </DashboardHeader>
               <main className="flex-1 overflow-hidden px-6">
                 {children}
+                <PageHeaderDescription size="sm">All your data will be deleted upon close.</PageHeaderDescription>
                 <PageHeaderDescription size="sm">
-                  All your data will be deleted upon close.
-                </PageHeaderDescription>
-                <PageHeaderDescription size="sm">
-                  <Link
-                    href="/signin"
-                    className="underline transition-all hover:text-foreground"
-                  >
+                  <Link href="/signin" className="underline transition-all hover:text-foreground">
                     Sign In
                   </Link>{' '}
                   to sync your data.

@@ -1,6 +1,6 @@
 import { getAllTransactionsRates } from '@/actions/server/currency-rates'
-import { getGroupById } from '@/actions/server/transactions-groups'
-import { Transaction } from '@/types'
+import { type getGroupById } from '@/actions/server/transactions-groups'
+import { type Transaction } from '@/types'
 import Link from 'next/link'
 import FormatGroupPill from './format-group-pill'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'

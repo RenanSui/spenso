@@ -1,4 +1,4 @@
-import { Transaction, TransactionCategories, TransactionGroups } from '@/types'
+import { type Transaction, type TransactionCategories, type TransactionGroups } from '@/types'
 import { sortRecentTransactions } from './transactions'
 
 const user = {
@@ -187,4 +187,4 @@ const mockTransactions = Promise.resolve(sortRecentTransactions(transactions))
 const mockUser = user
 const mockProducts = products
 
-export { mockCategories, mockGroups, mockTransactions, mockUser, mockProducts }
+export { mockCategories, mockGroups, mockProducts, mockTransactions, mockUser }

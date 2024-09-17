@@ -3,7 +3,7 @@
 import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn } from '@/lib/utils'
-import { CurrencyRates, TransactionTypeses } from '@/types'
+import { type CurrencyRates, type TransactionTypeses } from '@/types'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import { useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
@@ -50,10 +50,7 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
         {
           label: 'amount',
           data: newTypes.map((type) => type.sum),
-          backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-          ],
+          backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
           borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
           borderWidth: 1,
         },
@@ -69,9 +66,7 @@ export const TypeChart = ({ className, types, rates }: TypeChartProps) => {
       )}
     >
       <div className={cn('flex w-full items-center justify-center', className)}>
-        {types.length !== 0 ? (
-          <Doughnut className="max-h-[300px]" data={data} />
-        ) : null}
+        {types.length !== 0 ? <Doughnut className="max-h-[300px]" data={data} /> : null}
       </div>
     </div>
   ) : (

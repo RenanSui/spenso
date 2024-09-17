@@ -4,18 +4,12 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useMounted } from '@/hooks/use-mounted'
 import { cn, removeArrayDuplicates } from '@/lib/utils'
-import { CurrencyRates, Transaction, TransactionYears } from '@/types'
+import { type CurrencyRates, type Transaction, type TransactionYears } from '@/types'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
-import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
+import { type Dispatch, type HTMLAttributes, type SetStateAction, useState } from 'react'
 import { Button } from '../ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '../ui/command'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '../ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Skeleton } from '../ui/skeleton'
 import { MonthsChart } from './months-chart'
@@ -27,18 +21,9 @@ interface LineChartShell extends HTMLAttributes<HTMLDivElement> {
   transactions: Transaction[]
 }
 
-export const LineChartShell = ({
-  rates,
-  years,
-  className,
-  transactions,
-}: LineChartShell) => {
-  const sortedYears = years.sort(
-    (item1, item2) => Number(item1.year) - Number(item2.year),
-  )
-  const [year, setYear] = useState(
-    sortedYears[sortedYears.length - 1]?.year ?? 'XXXX',
-  )
+export const LineChartShell = ({ rates, years, className, transactions }: LineChartShell) => {
+  const sortedYears = years.sort((item1, item2) => Number(item1.year) - Number(item2.year))
+  const [year, setYear] = useState(sortedYears[sortedYears.length - 1]?.year ?? 'XXXX')
   const [chart, setChart] = useState<'Yearly' | 'Monthly'>('Monthly')
   const mounted = useMounted()
 
@@ -50,21 +35,11 @@ export const LineChartShell = ({
       )}
     >
       <div>
-        <LineChartTabs
-          chart={chart}
-          setChart={setChart}
-          setYear={setYear}
-          year={year}
-          years={years}
-        />
+        <LineChartTabs chart={chart} setChart={setChart} setYear={setYear} year={year} years={years} />
       </div>
 
-      {chart === 'Yearly' ? (
-        <YearsChart years={sortedYears} rates={rates} />
-      ) : null}
-      {chart === 'Monthly' ? (
-        <MonthsChart transactions={transactions} year={year} rates={rates} />
-      ) : null}
+      {chart === 'Yearly' ? <YearsChart years={sortedYears} rates={rates} /> : null}
+      {chart === 'Monthly' ? <MonthsChart transactions={transactions} year={year} rates={rates} /> : null}
     </div>
   ) : (
     <Skeleton className="h-[350px] lg:col-span-2" />
@@ -79,38 +54,23 @@ interface LineChartTabsProps extends HTMLAttributes<HTMLDivElement> {
   years: TransactionYears[]
 }
 
-function LineChartTabs({
-  chart,
-  setChart,
-  setYear,
-  year,
-  years,
-}: LineChartTabsProps) {
+function LineChartTabs({ chart, setChart, setYear, year, years }: LineChartTabsProps) {
   const tabs = [{ chart: 'Yearly' }, { chart: 'Monthly' }]
   const mounted = useMounted()
 
   return mounted ? (
     <Tabs
-      defaultValue={
-        tabs.find((tab) => tab.chart === chart)?.chart ?? tabs[0].chart
-      }
+      defaultValue={tabs.find((tab) => tab.chart === chart)?.chart ?? tabs[0].chart}
       className="sticky top-0 z-30 size-full overflow-auto px-1"
       onValueChange={(value) => setChart(value as 'Yearly' | 'Monthly')}
     >
-      <ScrollArea
-        orientation="horizontal"
-        className="pb-2.5"
-        scrollBarClassName="h-2"
-      >
+      <ScrollArea orientation="horizontal" className="pb-2.5" scrollBarClassName="h-2">
         <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
           {tabs.map((tab) => (
             <div
               role="none"
               key={tab.chart}
-              className={cn(
-                'border-b-2 border-transparent transition-all',
-                tab.chart === chart && 'border-foreground',
-              )}
+              className={cn('border-b-2 border-transparent transition-all', tab.chart === chart && 'border-foreground')}
             >
               <TabsTrigger
                 value={tab.chart}
@@ -126,12 +86,7 @@ function LineChartTabs({
               </TabsTrigger>
             </div>
           ))}
-          <YearToggle
-            setYear={setYear}
-            year={year}
-            years={years}
-            disabled={chart !== 'Monthly'}
-          />
+          <YearToggle setYear={setYear} year={year} years={years} disabled={chart !== 'Monthly'} />
         </TabsList>
         <Separator />
       </ScrollArea>
@@ -166,7 +121,7 @@ function YearToggle({ setYear, year, years, disabled }: YearToggleProps) {
           )}
         >
           {year}
-          <CaretSortIcon className="h-4 w-4 shrink-0 opacity-50" />
+          <CaretSortIcon className="size-4 shrink-0 opacity-50" />
         </span>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

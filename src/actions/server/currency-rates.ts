@@ -1,7 +1,7 @@
 'use server'
 
 import { removeArrayDuplicates } from '@/lib/utils'
-import { CurrencyRates, Transaction } from '@/types'
+import { type CurrencyRates, type Transaction } from '@/types'
 import { unstable_cache as cache } from 'next/cache'
 
 export async function getRate(currency: string) {
@@ -20,15 +20,11 @@ export async function getRate(currency: string) {
   )()
 }
 
-export const getAllTransactionsRates = async (
-  newTransaction: Transaction[] | null,
-) => {
+export const getAllTransactionsRates = async (newTransaction: Transaction[] | null) => {
   if (!newTransaction) return null
 
   const allCurrencies = newTransaction.map(({ currency }) => currency)
   const newCurrencies = removeArrayDuplicates(allCurrencies)
-  const allRates = await Promise.all(
-    newCurrencies.map(async (currency) => await getRate(currency)),
-  )
+  const allRates = await Promise.all(newCurrencies.map(async (currency) => await getRate(currency)))
   return allRates
 }

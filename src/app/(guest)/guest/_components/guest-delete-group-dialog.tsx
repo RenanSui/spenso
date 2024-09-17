@@ -26,14 +26,11 @@ import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { TransactionsContext } from './guest-provider'
 
-interface GuestDeleteGroupDialogProps
-  extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface GuestDeleteGroupDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   groupId: string
 }
 
-export function GuestDeleteGroupDialog({
-  groupId,
-}: GuestDeleteGroupDialogProps) {
+export function GuestDeleteGroupDialog({ groupId }: GuestDeleteGroupDialogProps) {
   const guest = React.useContext(TransactionsContext)
   const [loading, setLoading] = React.useState(false)
   const isDesktop = useMediaQuery('(min-width: 640px)')
@@ -61,8 +58,7 @@ export function GuestDeleteGroupDialog({
           <DialogHeader>
             <DialogTitle>Delete group</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              group.
+              This action cannot be undone. This will permanently delete your group.
             </DialogDescription>
           </DialogHeader>
 
@@ -72,18 +68,8 @@ export function GuestDeleteGroupDialog({
                 Cancel
               </Button>
             </DialogClose>
-            <Button
-              type="button"
-              onClick={onDelete}
-              disabled={loading}
-              variant="destructive"
-            >
-              {loading && (
-                <Icons.spinner
-                  className="mr-2 size-4 animate-spin"
-                  aria-hidden="true"
-                />
-              )}
+            <Button type="button" onClick={onDelete} disabled={loading} variant="destructive">
+              {loading && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
               Delete group
             </Button>
           </DialogFooter>
@@ -100,10 +86,7 @@ export function GuestDeleteGroupDialog({
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Delete group</DrawerTitle>
-          <DrawerDescription>
-            This action cannot be undone. This will permanently delete your
-            group.
-          </DrawerDescription>
+          <DrawerDescription>This action cannot be undone. This will permanently delete your group.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter className="flex-col-reverse px-0">
           <DrawerClose asChild>
@@ -111,18 +94,8 @@ export function GuestDeleteGroupDialog({
               Cancel
             </Button>
           </DrawerClose>
-          <Button
-            type="button"
-            onClick={onDelete}
-            disabled={loading}
-            variant="destructive"
-          >
-            {loading && (
-              <Icons.spinner
-                className="mr-2 size-4 animate-spin"
-                aria-hidden="true"
-              />
-            )}
+          <Button type="button" onClick={onDelete} disabled={loading} variant="destructive">
+            {loading && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
             Delete group
           </Button>
         </DrawerFooter>

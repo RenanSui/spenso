@@ -1,7 +1,7 @@
 import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { toPositive } from '@/lib/utils'
-import { CurrencyRates, Transaction } from '@/types'
+import { type CurrencyRates, type Transaction } from '@/types'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { HTMLAttributes, useMemo } from 'react'
+import { type HTMLAttributes, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
@@ -24,16 +24,7 @@ interface MonthsChartProps extends HTMLAttributes<HTMLDivElement> {
   year: string
 }
 
-ChartJS.register(
-  CategoryScale,
-  Filler,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-)
+ChartJS.register(CategoryScale, Filler, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 ChartJS.defaults.elements.line.tension = 0.4
 
 const monthsOfTheYear = [
@@ -51,48 +42,28 @@ const monthsOfTheYear = [
   'December',
 ]
 
-export const MonthsChart = ({
-  year,
-  transactions,
-  rates,
-}: MonthsChartProps) => {
+export const MonthsChart = ({ year, transactions, rates }: MonthsChartProps) => {
   const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
     const months = monthsOfTheYear.map((month) => month.substring(0, 3))
 
-    const filteredTransactions = transactions.filter(
-      (transaction) => transaction.year === year,
-    )
+    const filteredTransactions = transactions.filter((transaction) => transaction.year === year)
 
     const newTransactions = filteredTransactions.map((item) => {
       return {
         month: months[new Date(item.date).getMonth()],
-        amount: getCurrencyValue(
-          item.amount,
-          item.currency,
-          rates,
-          currencyState,
-        ),
+        amount: getCurrencyValue(item.amount, item.currency, rates, currencyState),
       }
     })
 
-    const incomeMonths = removeDuplicatesAndSumMonths(
-      newTransactions.filter((month) => month.amount >= 0),
-    )
-    const expenseMonths = removeDuplicatesAndSumMonths(
-      newTransactions.filter((month) => month.amount < 0),
-    )
+    const incomeMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount >= 0))
+    const expenseMonths = removeDuplicatesAndSumMonths(newTransactions.filter((month) => month.amount < 0))
 
-    const incomeAmounts = months.map(
-      (month) =>
-        incomeMonths.find((income) => income.month === month)?.amount ?? 0,
-    )
+    const incomeAmounts = months.map((month) => incomeMonths.find((income) => income.month === month)?.amount ?? 0)
     const expenseAmounts = months.map((month) =>
-      toPositive(
-        expenseMonths.find((expense) => expense.month === month)?.amount ?? 0,
-      ),
+      toPositive(expenseMonths.find((expense) => expense.month === month)?.amount ?? 0),
     )
 
     const incomeDataset = {
@@ -117,11 +88,7 @@ export const MonthsChart = ({
     }
   }, [currencyState, rates, transactions, year])
 
-  return mounted ? (
-    <Line className="max-h-[300px]" data={data} />
-  ) : (
-    <Skeleton className="h-[300px] w-full"></Skeleton>
-  )
+  return mounted ? <Line className="max-h-[300px]" data={data} /> : <Skeleton className="h-[300px] w-full"></Skeleton>
 }
 
 type TransactionMonth = {

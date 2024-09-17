@@ -3,16 +3,8 @@
 import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, toPositive } from '@/lib/utils'
-import { CurrencyRates, TransactionCategories } from '@/types'
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js'
+import { type CurrencyRates, type TransactionCategories } from '@/types'
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
@@ -26,21 +18,13 @@ type CategoriesChartProps = {
   rates: (CurrencyRates | null)[]
 }
 
-export const CategoriesChart = ({
-  categories,
-  className,
-  rates,
-}: CategoriesChartProps) => {
+export const CategoriesChart = ({ categories, className, rates }: CategoriesChartProps) => {
   const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
-    const calculatedCategories = removeDuplicateCategories(
-      getCalculatedCategories(categories, rates, currencyState),
-    )
-    const sortedCategories = calculatedCategories.sort(
-      (item1, item2) => toPositive(item1.sum) - toPositive(item2.sum),
-    )
+    const calculatedCategories = removeDuplicateCategories(getCalculatedCategories(categories, rates, currencyState))
+    const sortedCategories = calculatedCategories.sort((item1, item2) => toPositive(item1.sum) - toPositive(item2.sum))
 
     const labels = sortedCategories.map((category) => category.category)
     const sums = sortedCategories.map((category) => toPositive(category.sum))
@@ -78,12 +62,7 @@ function getCalculatedCategories(
 ) {
   return categories.map((category) => ({
     ...category,
-    sum: getCurrencyValue(
-      category.sum,
-      category.currency,
-      rates,
-      currencyState,
-    ),
+    sum: getCurrencyValue(category.sum, category.currency, rates, currencyState),
   }))
 }
 

@@ -1,12 +1,8 @@
-import {
-  DataTableFilterableColumn,
-  DataTableSearchableColumn,
-  TransactionInsert,
-} from '@/types'
+import { type DataTableFilterableColumn, type DataTableSearchableColumn, type TransactionInsert } from '@/types'
 import { Cross2Icon } from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+import { type Table } from '@tanstack/react-table'
 import { CurrencyToggle } from '../currency-toggle'
-import { NewTransaction } from '../new-transaction'
+import { type NewTransaction } from '../new-transaction'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
@@ -41,16 +37,8 @@ export function DataTableToolbar<TData>({
                 <Input
                   key={String(column.id)}
                   placeholder={`Filter ${column.title}...`}
-                  value={
-                    (table
-                      .getColumn(String(column.id))
-                      ?.getFilterValue() as string) ?? ''
-                  }
-                  onChange={(event) =>
-                    table
-                      .getColumn(String(column.id))
-                      ?.setFilterValue(event.target.value)
-                  }
+                  value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ''}
+                  onChange={(event) => table.getColumn(String(column.id))?.setFilterValue(event.target.value)}
                   className="h-8 w-[150px] lg:w-[250px]"
                 />
               ),
@@ -75,7 +63,7 @@ export function DataTableToolbar<TData>({
             onClick={() => table.resetColumnFilters()}
           >
             Reset
-            <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
+            <Cross2Icon className="ml-2 size-4" aria-hidden="true" />
           </Button>
         )}
       </div>

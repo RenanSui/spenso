@@ -1,8 +1,8 @@
-import { getTransactions } from '@/actions/server/transactions'
-import { getGroups } from '@/actions/server/transactions-groups'
+import { type getTransactions } from '@/actions/server/transactions'
+import { type getGroups } from '@/actions/server/transactions-groups'
 import { EmptyCard } from '@/components/empty-card'
 import { GroupCard } from '@/components/group-card'
-import { GroupsRoute } from '@/types'
+import { type GroupsRoute } from '@/types'
 
 interface Groups {
   groupsPromise: ReturnType<typeof getGroups>
@@ -11,12 +11,7 @@ interface Groups {
   route?: GroupsRoute
 }
 
-export async function Groups({
-  groupsPromise,
-  transactionsPromise,
-  href,
-  route = 'dashboard',
-}: Groups) {
+export async function Groups({ groupsPromise, transactionsPromise, href, route = 'dashboard' }: Groups) {
   const groups = (await groupsPromise)?.sort((group1, group2) => {
     return group1.title.localeCompare(group2.title)
   })

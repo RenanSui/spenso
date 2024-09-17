@@ -1,5 +1,5 @@
 import { siteConfig } from '@/config/site'
-import { User } from '@/types'
+import { type User } from '@/types'
 import GroupsCombobox from '../groups-combobox'
 import { AuthDropdown } from './auth-dropdown'
 import { MainNav } from './main-nav'

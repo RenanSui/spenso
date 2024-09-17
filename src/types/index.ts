@@ -1,6 +1,6 @@
-import { Icons } from '@/components/ui/icons'
-import { getUser } from '@/lib/auth'
-import { Database } from './database.types'
+import { type Icons } from '@/components/ui/icons'
+import { type getUser } from '@/lib/auth'
+import { type Database } from './database.types'
 
 export type User = Awaited<ReturnType<typeof getUser>>
 
@@ -20,7 +20,11 @@ export type TransactionCategories = {
 
 export type TransactionTypes = 'income' | 'expense'
 
-export type TransactionTypeses = { type: string; sum: number; currency: string }
+export type TransactionTypeses = {
+  type: string
+  sum: number
+  currency: string
+}
 
 export type TransactionYears = {
   year: string
@@ -29,8 +33,7 @@ export type TransactionYears = {
   currency: string
 }
 
-export type TransactionGroupsTable =
-  Database['next_auth']['Tables']['transactions_groups']
+export type TransactionGroupsTable = Database['next_auth']['Tables']['transactions_groups']
 
 export type TransactionGroups = TransactionGroupsTable['Row']
 
@@ -49,8 +52,7 @@ export interface DataTableSearchableColumn<TData> {
   title: string
 }
 
-export interface DataTableFilterableColumn<TData>
-  extends DataTableSearchableColumn<TData> {
+export interface DataTableFilterableColumn<TData> extends DataTableSearchableColumn<TData> {
   options: Option[]
 }
 

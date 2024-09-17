@@ -1,18 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 import { useCurrencies } from '@/hooks/use-currencies'
 import { cn } from '@/lib/utils'
@@ -25,24 +15,16 @@ type CurrencySelectorProps = {
   onChange: (currency: string) => void
 }
 
-export const CurrencySelector = ({
-  value,
-  onChange,
-}: CurrencySelectorProps) => {
+export const CurrencySelector = ({ value, onChange }: CurrencySelectorProps) => {
   const [open, setOpen] = React.useState(false)
   const { data: currencies } = useCurrencies()
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-fit justify-between"
-        >
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-fit justify-between">
           {value.toUpperCase()}
-          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <CaretSortIcon className="ml-2 size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -61,12 +43,7 @@ export const CurrencySelector = ({
                   }}
                 >
                   {currency}
-                  <CheckIcon
-                    className={cn(
-                      'ml-auto h-4 w-4',
-                      value === currency ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
+                  <CheckIcon className={cn('ml-auto size-4', value === currency ? 'opacity-100' : 'opacity-0')} />
                 </CommandItem>
               ))}
             </ScrollArea>

@@ -7,17 +7,13 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export const getObjFromEntries = (
-  iterableObj: Iterable<readonly [PropertyKey, unknown]>,
-) => {
+export const getObjFromEntries = (iterableObj: Iterable<readonly [PropertyKey, unknown]>) => {
   const obj = JSON.parse(JSON.stringify(Object.fromEntries(iterableObj)))
   return obj
 }
 
 export const toSentenceCase = (str: string) => {
-  return str
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, (str) => str.toUpperCase())
+  return str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())
 }
 
 export const removeArrayDuplicates: RemoveDuplicate = (array) => {
@@ -64,4 +60,15 @@ export function isMacOs() {
 
 export function normalizeString(str: string) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+export function generateRandomPastDate(yearsBack: number = 1): string {
+  const now = new Date()
+  const pastDate = new Date(now.getTime() - Math.random() * yearsBack * 365 * 24 * 60 * 60 * 1000)
+  return pastDate.toISOString()
+}
+
+export const getRandomElement = <T>(array: T[], fallback: T): T => {
+  const randomIndex = Math.floor(Math.random() * array.length)
+  return array[randomIndex] ?? fallback
 }

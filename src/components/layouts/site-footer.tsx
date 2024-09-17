@@ -36,7 +36,7 @@ export const SiteFooter = () => {
                 }),
               )}
             >
-              <Icons.github className="h-4 w-4" aria-hidden="true" />
+              <Icons.github className="size-4" aria-hidden="true" />
               <span className="sr-only">GitHub</span>
             </Link>
             <ThemeToggle />

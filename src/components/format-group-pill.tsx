@@ -3,7 +3,7 @@
 import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { cn, formatValue, toPositive } from '@/lib/utils'
-import { CurrencyRates, Transaction } from '@/types'
+import { type CurrencyRates, type Transaction } from '@/types'
 import { useMemo } from 'react'
 import GroupPill from './group-pill'
 import { useCurrencyAtom } from './providers/currency-provider'
@@ -15,10 +15,7 @@ interface FormatGroupPillProps {
   rates: (CurrencyRates | null)[]
 }
 
-export default function FormatGroupPill({
-  transactions,
-  rates,
-}: FormatGroupPillProps) {
+export default function FormatGroupPill({ transactions, rates }: FormatGroupPillProps) {
   const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
@@ -31,15 +28,11 @@ export default function FormatGroupPill({
 
     const revenue = {
       length: sums.filter((item) => item >= 0).length,
-      value: sums
-        .filter((item) => item >= 0)
-        .reduce((acc, curr) => acc + curr, 0),
+      value: sums.filter((item) => item >= 0).reduce((acc, curr) => acc + curr, 0),
     }
     const expenses = {
       length: sums.filter((item) => item < 0).length,
-      value: sums
-        .filter((item) => item < 0)
-        .reduce((acc, curr) => acc + curr, 0),
+      value: sums.filter((item) => item < 0).reduce((acc, curr) => acc + curr, 0),
     }
 
     const totals = {
@@ -50,8 +43,7 @@ export default function FormatGroupPill({
     return { totals, revenue, expenses }
   }, [currencyState, rates, transactions])
 
-  const isRevenueGreater =
-    calculated.revenue.value > toPositive(calculated.expenses.value)
+  const isRevenueGreater = calculated.revenue.value > toPositive(calculated.expenses.value)
 
   return mounted ? (
     <GroupPill

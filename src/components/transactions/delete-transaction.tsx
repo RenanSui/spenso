@@ -13,7 +13,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { cn } from '@/lib/utils'
-import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
+import { type Dispatch, type HTMLAttributes, type SetStateAction } from 'react'
 
 interface DeleteTransactionProps extends HTMLAttributes<HTMLDivElement> {
   transactionId: string
@@ -32,32 +32,19 @@ export const DeleteTransaction = ({
   transactionId,
   deleteTransaction,
 }: DeleteTransactionProps) => {
-  const DeleteTransaction = async () => await deleteTransaction(transactionId)
-
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className={cn(className)}>
-        {children}
-      </AlertDialogTrigger>
+      <AlertDialogTrigger className={cn(className)}>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Transaction</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            transaction.
+            This action cannot be undone. This will permanently delete your transaction.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setIsDisable(false)}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              DeleteTransaction()
-            }}
-          >
-            Delete
-          </AlertDialogAction>
+          <AlertDialogCancel onClick={() => setIsDisable(false)}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={async () => await deleteTransaction(transactionId)}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -1,27 +1,17 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import {
-  ButtonHTMLAttributes,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
+import { type ButtonHTMLAttributes, type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Icons } from '../ui/icons'
-import { OAuthProviders } from './oauth-signin'
+import { type OAuthProviders } from './oauth-signin'
 
 interface ProviderSignInProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   provider: OAuthProviders
   setIsSigning: Dispatch<SetStateAction<boolean>>
 }
 
-export const ProviderSignIn = ({
-  provider,
-  setIsSigning,
-  ...props
-}: ProviderSignInProps) => {
+export const ProviderSignIn = ({ provider, setIsSigning, ...props }: ProviderSignInProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [redirectUrl, setRedirectUrl] = useState('')
 
@@ -37,17 +27,17 @@ export const ProviderSignIn = ({
     <Button
       variant={'outline'}
       className="border bg-white text-black hover:bg-neutral-100 dark:border-neutral-900 dark:bg-black dark:text-white dark:hover:bg-neutral-900"
-      onClick={() => {
+      onClick={async () => {
         setIsLoading(true)
-        signIn(provider.providerType, { callbackUrl: redirectUrl })
+        await signIn(provider.providerType, { callbackUrl: redirectUrl })
         setIsSigning(true)
       }}
       {...props}
     >
       {isLoading ? (
-        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        <Icons.spinner className="mr-2 size-4 animate-spin" />
       ) : (
-        <Icon className="mr-2 h-4 w-4" aria-hidden="true" />
+        <Icon className="mr-2 size-4" aria-hidden="true" />
       )}
       {provider.name}
     </Button>

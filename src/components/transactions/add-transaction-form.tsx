@@ -2,37 +2,20 @@
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { useCurrencies } from '@/hooks/use-currencies'
 import { useProducts } from '@/hooks/use-products'
 import { cn } from '@/lib/utils'
-import { TransactionInsert } from '@/types'
+import { type TransactionInsert } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
-import { Dispatch, SetStateAction } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type Dispatch, type SetStateAction } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { CurrencySelector } from '../currency-selector'
 
@@ -69,9 +52,7 @@ export const AddTransactionForm = ({
     },
   })
 
-  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (
-    values: z.infer<typeof formSchema>,
-  ) => {
+  const processForm: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
     const { date, ...valuesObj } = values
     const newValues = { date: new Date(date).toString(), ...valuesObj }
 
@@ -88,14 +69,9 @@ export const AddTransactionForm = ({
     const randomProduct = productsApi[Math.floor(Math.random() * 30)]
     const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12) // 1e12 is the same as 1000000000000 (a million million).
     const amountRandom = Number((Math.random() * 100000).toFixed(2))
-    const typeRandom =
-      transactionType[Math.floor(Math.random() * transactionType.length)]
-    const categoryRandom =
-      transactionCategory[
-        Math.floor(Math.random() * transactionCategory.length)
-      ]
-    const currencyRandom =
-      currencies?.[Math.floor(Math.random() * currencies?.length)] ?? ''
+    const typeRandom = transactionType[Math.floor(Math.random() * transactionType.length)]
+    const categoryRandom = transactionCategory[Math.floor(Math.random() * transactionCategory.length)]
+    const currencyRandom = currencies?.[Math.floor(Math.random() * currencies?.length)] ?? ''
 
     form.setValue('product', randomProduct)
     form.setValue('date', dateRandom)
@@ -139,10 +115,7 @@ export const AddTransactionForm = ({
                   <FormControl>
                     <Button
                       variant={'outline'}
-                      className={cn(
-                        'w-[240px] pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground',
-                      )}
+                      className={cn('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                     >
                       {field.value ? (
                         format(field.value, 'PPP')
@@ -152,7 +125,7 @@ export const AddTransactionForm = ({
                           <Required />
                         </span>
                       )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      <CalendarIcon className="ml-auto size-4 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
@@ -161,9 +134,7 @@ export const AddTransactionForm = ({
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date('1900-01-01')
-                    }
+                    disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                     initialFocus
                   />
                 </PopoverContent>
@@ -185,13 +156,7 @@ export const AddTransactionForm = ({
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center gap-2">
-                    <Input
-                      className=""
-                      type="number"
-                      step=".01"
-                      placeholder=""
-                      {...field}
-                    />
+                    <Input className="" type="number" step=".01" placeholder="" {...field} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -234,11 +199,7 @@ export const AddTransactionForm = ({
                 Transaction Type
                 <Required />
               </FormLabel>
-              <Select
-                value={form.getValues('type')}
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
+              <Select value={form.getValues('type')} onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a transaction type" />
@@ -247,11 +208,7 @@ export const AddTransactionForm = ({
                 <SelectContent>
                   {transactionType.map((type) => {
                     return (
-                      <SelectItem
-                        className="capitalize"
-                        key={type}
-                        value={type}
-                      >
+                      <SelectItem className="capitalize" key={type} value={type}>
                         {type}
                       </SelectItem>
                     )
@@ -273,11 +230,7 @@ export const AddTransactionForm = ({
                 Category
                 <Required />
               </FormLabel>
-              <Select
-                value={form.getValues('category')}
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
+              <Select value={form.getValues('category')} onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category" />
@@ -286,11 +239,7 @@ export const AddTransactionForm = ({
                 <SelectContent>
                   {transactionCategory.map((category) => {
                     return (
-                      <SelectItem
-                        className="capitalize"
-                        key={category}
-                        value={category}
-                      >
+                      <SelectItem className="capitalize" key={category} value={category}>
                         {category}
                       </SelectItem>
                     )

@@ -3,7 +3,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { GroupsRoute } from '@/types'
+import { type GroupsRoute } from '@/types'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
 import Link from 'next/link'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
@@ -40,20 +40,13 @@ export function DashboardTabs({ route = 'dashboard' }: DashboardTabsProps) {
       className="sticky top-0 z-30 size-full overflow-auto bg-background px-1"
       onValueChange={(value) => router.push(value)}
     >
-      <ScrollArea
-        orientation="horizontal"
-        className="pb-2.5"
-        scrollBarClassName="h-2"
-      >
+      <ScrollArea orientation="horizontal" className="pb-2.5" scrollBarClassName="h-2">
         <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
           {tabs.map((tab) => (
             <div
               role="none"
               key={tab.href}
-              className={cn(
-                'border-b-2 border-transparent py-1.5',
-                tab.isActive && 'border-foreground',
-              )}
+              className={cn('border-b-2 border-transparent py-1.5', tab.isActive && 'border-foreground')}
             >
               <TabsTrigger
                 value={tab.href}

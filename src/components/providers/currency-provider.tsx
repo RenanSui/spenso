@@ -6,9 +6,7 @@ import { atomWithStorage } from 'jotai/utils'
 const store = createStore()
 export const currencyAtom = atomWithStorage('currency', 'BRL')
 
-export const CurrencyProvider = ({
-  children,
-}: React.HTMLAttributes<HTMLDivElement>) => (
+export const CurrencyProvider = ({ children }: React.HTMLAttributes<HTMLDivElement>) => (
   <Provider store={store}>{children}</Provider>
 )
 

@@ -14,14 +14,12 @@ type GroupPageProps = {
 export default function Page(params: GroupPageProps) {
   const groupId = params.params.groupId
   const guest = React.useContext(TransactionsContext)
+  const rates = guest.rates
 
   const group = guest.groups.find((group) => group.id === groupId)
   if (!group) notFound()
 
-  const transactions = guest.transactions.filter(
-    (transaction) => transaction.group_id === groupId,
-  )
-  const rates = guest.rates
+  const transactions = guest.transactions.filter((transaction) => transaction.group_id === groupId)
 
   return (
     <div className="space-y-6">

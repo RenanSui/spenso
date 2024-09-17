@@ -27,10 +27,10 @@ export default function TransactionTableSkeleton() {
           <Skeleton className="h-8 w-[180px]" />
           <Skeleton className="h-8 w-[80px]" />
           <div className="flex gap-2">
-            <Skeleton className="h-[30px] w-[30px]" />
-            <Skeleton className="h-[30px] w-[30px]" />
-            <Skeleton className="h-[30px] w-[30px]" />
-            <Skeleton className="h-[30px] w-[30px]" />
+            <Skeleton className="size-[30px]" />
+            <Skeleton className="size-[30px]" />
+            <Skeleton className="size-[30px]" />
+            <Skeleton className="size-[30px]" />
           </div>
         </div>
       </div>
