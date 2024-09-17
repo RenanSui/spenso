@@ -1,6 +1,6 @@
 {
   "name": "expenser",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
@@ -11,7 +11,8 @@
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start",
     "lint": "next lint",
     "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "unlighthouse": "pnpm dlx unlighthouse --site https://spenso.vercel.app"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^0.1.18",
