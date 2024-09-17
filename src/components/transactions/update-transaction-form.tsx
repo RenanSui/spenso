@@ -8,14 +8,15 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { transactionCategory, transactionType } from '@/config/dashboard'
 import { useCurrencies } from '@/hooks/use-currencies'
-import { useProducts } from '@/hooks/use-products'
-import { cn } from '@/lib/utils'
+// import { useProducts } from '@/hooks/use-products'
+import { products } from '@/assets/data/products'
+import { cn, getRandomElement } from '@/lib/utils'
 import { type Transaction, type TransactionUpdate } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
 import { type Dispatch, type SetStateAction } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import * as z from 'zod'
 import { CurrencySelector } from '../currency-selector'
 
@@ -37,7 +38,7 @@ export const UpdateTransactionForm = ({
   transaction?: Transaction
   updateTransaction: (formData: TransactionUpdate) => unknown
 }) => {
-  const { data: productsApi } = useProducts()
+  // const { data: productsApi } = useProducts()
   const { data: currencies } = useCurrencies()
 
   const form = useForm<z.z.infer<typeof formSchema>>({
@@ -64,19 +65,12 @@ export const UpdateTransactionForm = ({
   }
 
   const setRandomForm = async () => {
-    const randomProduct = productsApi[Math.floor(Math.random() * 30)]
-    const dateRandom = new Date(new Date().valueOf() - Math.random() * 1e12) // 1e12 is the same as 1000000000000 (a million million).
-    const amountRandom = Number((Math.random() * 100000).toFixed(2))
-    const typeRandom = transactionType[Math.floor(Math.random() * transactionType.length)]
-    const categoryRandom = transactionCategory[Math.floor(Math.random() * transactionCategory.length)]
-    const currencyRandom = currencies?.[Math.floor(Math.random() * currencies?.length)] ?? ''
-
-    form.setValue('product', randomProduct)
-    form.setValue('date', dateRandom)
-    form.setValue('amount', amountRandom)
-    form.setValue('type', typeRandom)
-    form.setValue('category', categoryRandom)
-    form.setValue('currency', currencyRandom)
+    form.setValue('product', getRandomElement(products, 'Key Holder'))
+    form.setValue('date', new Date(new Date().valueOf() - Math.random() * 1e12)) // 1e12 same as 1000000000000
+    form.setValue('amount', Number((Math.random() * 100000).toFixed(2)))
+    form.setValue('type', getRandomElement(transactionType, 'income'))
+    form.setValue('category', getRandomElement(transactionCategory, 'miscellaneous'))
+    form.setValue('currency', getRandomElement(currencies ?? [], 'BRL'))
   }
 
   return (
