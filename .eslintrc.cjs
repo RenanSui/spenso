@@ -1,35 +1,61 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint", "tailwindcss"],
+  plugins: ['@typescript-eslint', 'tailwindcss', 'jsx-a11y'],
   extends: [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "prettier",
-    "plugin:tailwindcss/recommended",
+    'next/core-web-vitals',
+    'plugin:@typescript-eslint/recommended-type-checked',
+    'prettier',
+    'plugin:prettier/recommended',
+    'plugin:tailwindcss/recommended',
   ],
   rules: {
-    "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
+    'prettier/prettier': [
+      'error',
       {
-        prefer: "type-imports",
-        fixStyle: "inline-type-imports",
+        printWidth: 120,
+        tabWidth: 2,
+        singleQuote: true,
+        trailingComma: 'all',
+        arrowParens: 'always',
+        semi: false,
+        endOfLine: 'auto',
       },
     ],
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
+    'jsx-a11y/alt-text': [
+      'warn',
       {
-        argsIgnorePattern: "^_",
+        elements: ['img'],
+        img: ['Image'],
       },
     ],
-    "@typescript-eslint/require-await": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
+    'jsx-a11y/aria-props': 'warn',
+    'jsx-a11y/aria-proptypes': 'warn',
+    'jsx-a11y/aria-unsupported-elements': 'warn',
+    'jsx-a11y/role-has-required-aria-props': 'warn',
+    'jsx-a11y/role-supports-aria-props': 'warn',
+    'react/no-unknown-property': 'error',
+    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/consistent-type-imports': [
+      'warn',
+      {
+        prefer: 'type-imports',
+        fixStyle: 'inline-type-imports',
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+      },
+    ],
+    '@typescript-eslint/require-await': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
       {
         checksVoidReturn: {
           attributes: false,
@@ -39,12 +65,12 @@ const config = {
   },
   settings: {
     tailwindcss: {
-      callees: ["cn", "cva"],
-      config: "./tailwind.config.ts",
-      classRegex: "^(class(Name)?|tw)$",
+      callees: ['cn', 'cva'],
+      config: './tailwind.config.ts',
+      classRegex: '^(class(Name)?|tw)$',
     },
     next: {
-      rootDir: ["./"],
+      rootDir: ['./'],
     },
   },
 }
