@@ -14,7 +14,6 @@
     "db:stop": "pnpm dlx supabase stop",
     "db:restart": "pnpm dlx supabase stop && pnpm dlx supabase start",
     "database": "pnpx supabase gen types typescript --project-id hnnognxlfmpwfhsbdkxy --schema next_auth > src/types/database.types.ts",
-    "analyze": "cross-env ANALYZE=true next build",
     "unlighthouse": "pnpm dlx unlighthouse --site https://spenso.vercel.app"
   },
   "dependencies": {
