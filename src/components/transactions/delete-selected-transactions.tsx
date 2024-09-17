@@ -12,12 +12,11 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { cn } from '@/lib/utils'
-import { Transaction } from '@/types'
-import { Row } from '@tanstack/react-table'
-import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
+import { type Transaction } from '@/types'
+import { type Row } from '@tanstack/react-table'
+import { type Dispatch, type HTMLAttributes, type SetStateAction } from 'react'
 
-interface DeleteSelectedTransactionsProps
-  extends HTMLAttributes<HTMLDivElement> {
+interface DeleteSelectedTransactionsProps extends HTMLAttributes<HTMLDivElement> {
   rows: Row<unknown>[]
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -36,30 +35,23 @@ export const DeleteSelectedTransaction = ({
 }: DeleteSelectedTransactionsProps) => {
   const deleteSelections = () => {
     const transactions = rows.map((row) => row.original) as Transaction[]
-    transactions.forEach(
-      async (transaction) => await deleteTransaction(transaction.id),
-    )
+    transactions.forEach((transaction) => deleteTransaction(transaction.id))
     resetRows()
   }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className={cn(className)}>
-        {children}
-      </AlertDialogTrigger>
+      <AlertDialogTrigger className={cn(className)}>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Transaction</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete all your
-            selected transactions.
+            This action cannot be undone. This will permanently delete all your selected transactions.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => deleteSelections()}>
-            Delete
-          </AlertDialogAction>
+          <AlertDialogAction onClick={() => deleteSelections()}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

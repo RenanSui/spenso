@@ -1,4 +1,4 @@
-import { DashboardConfig } from '@/types'
+import { type DashboardConfig } from '@/types'
 
 const dashboardConfig: DashboardConfig = {
   SidebarNav: [

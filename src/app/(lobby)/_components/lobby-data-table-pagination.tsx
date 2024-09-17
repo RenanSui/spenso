@@ -1,20 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@radix-ui/react-icons'
-import { Row, Table } from '@tanstack/react-table'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
+import { type Row, type Table } from '@tanstack/react-table'
 
 interface LobbyDataTablePaginationProps<TData> {
   table: Table<TData>
@@ -30,14 +19,9 @@ export function LobbyDataTablePagination<TData>({
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
       <div className="flex flex-1 items-center whitespace-nowrap text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
         {rows.length !== 0 ? (
-          <Button
-            className="mx-2"
-            size="sm"
-            onClick={() => table.resetRowSelection()}
-          >
+          <Button className="mx-2" size="sm" onClick={() => table.resetRowSelection()}>
             Delete Selections
           </Button>
         ) : null}
@@ -66,8 +50,7 @@ export function LobbyDataTablePagination<TData>({
         </div>
 
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{' '}
-          {table.getPageCount()}
+          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
 
         <div className="flex items-center space-x-2">
@@ -75,41 +58,41 @@ export function LobbyDataTablePagination<TData>({
             aria-label="Go to first page"
             variant="outline"
             size="icon"
-            className="hidden h-8 w-8 lg:flex"
+            className="hidden size-8 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <DoubleArrowLeftIcon className="h-4 w-4" aria-hidden="true" />
+            <DoubleArrowLeftIcon className="size-4" aria-hidden="true" />
           </Button>
           <Button
             aria-label="Go to previous page"
             variant="outline"
             size="icon"
-            className="h-8 w-8"
+            className="size-8"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
+            <ChevronLeftIcon className="size-4" aria-hidden="true" />
           </Button>
           <Button
             aria-label="Go to next page"
             variant="outline"
             size="icon"
-            className="h-8 w-8"
+            className="size-8"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
+            <ChevronRightIcon className="size-4" aria-hidden="true" />
           </Button>
           <Button
             aria-label="Go to last page"
             variant="outline"
             size="icon"
-            className="hidden h-8 w-8 lg:flex"
+            className="hidden size-8 lg:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <DoubleArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+            <DoubleArrowRightIcon className="size-4" aria-hidden="true" />
           </Button>
         </div>
       </div>

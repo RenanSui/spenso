@@ -1,5 +1,5 @@
 import { AuthDropdown } from '@/components/layouts/auth-dropdown'
-import { User } from '@/types'
+import { type User } from '@/types'
 
 interface DashboardHeaderProps {
   user: User | null

@@ -24,11 +24,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env files
-*.env
-
 # local env files
-.env*.local
+.env*
 
 # vercel
 .vercel
@@ -39,3 +36,6 @@ next-env.d.ts
 
 # supabase
 /supabase/**/*.sql
+
+# unlighthouse
+.unlighthouse

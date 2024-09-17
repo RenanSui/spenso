@@ -2,11 +2,7 @@ import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import { getTransactions } from '@/actions/server/transactions'
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
 import { getUser } from '@/lib/auth'
-import {
-  getTransactionsYears,
-  getTransactionsTypes,
-  getTransactionsCategories,
-} from '@/lib/transactions'
+import { getTransactionsYears, getTransactionsTypes, getTransactionsCategories } from '@/lib/transactions'
 import { notFound, redirect } from 'next/navigation'
 
 export default async function AnalyticsPage() {

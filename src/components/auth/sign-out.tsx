@@ -13,31 +13,17 @@ export const Signout = () => {
 
   return (
     <div className="flex w-full flex-col-reverse items-center gap-2 sm:flex-row">
-      <Button
-        variant="secondary"
-        size="sm"
-        className="w-full"
-        onClick={() => router.back()}
-      >
+      <Button variant="secondary" size="sm" className="w-full" onClick={() => router.back()}>
         Go back
         <span className="sr-only">Previous page</span>
       </Button>
       {mounted ? (
-        <Button
-          size="sm"
-          className="w-full"
-          onClick={() => signOut({ callbackUrl: '/' })}
-        >
+        <Button size="sm" className="w-full" onClick={() => signOut({ callbackUrl: '/' })}>
           Log out
           <span className="sr-only">Log out</span>
         </Button>
       ) : (
-        <Skeleton
-          className={cn(
-            buttonVariants({ size: 'sm' }),
-            'w-full bg-muted text-muted-foreground',
-          )}
-        >
+        <Skeleton className={cn(buttonVariants({ size: 'sm' }), 'w-full bg-muted text-muted-foreground')}>
           Log out
         </Skeleton>
       )}

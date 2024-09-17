@@ -1,4 +1,4 @@
-import { DashboardConfig, TransactionTypes } from '@/types'
+import { type DashboardConfig, type TransactionTypes } from '@/types'
 
 export const dashboardConfig: DashboardConfig = {
   SidebarNav: [

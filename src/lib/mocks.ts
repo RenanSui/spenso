@@ -1,4 +1,4 @@
-import { Transaction, TransactionCategories, TransactionGroups } from '@/types'
+import { type Transaction, type TransactionCategories, type TransactionGroups } from '@/types'
 import { sortRecentTransactions } from './transactions'
 
 const user = {
@@ -10,10 +10,10 @@ const user = {
 }
 
 export const groups: TransactionGroups[] = [
-  { created_at: '', id: 'group-1', title: 'Finances', user_id: 'user-1' },
-  { created_at: '', id: 'group-2', title: 'Games', user_id: 'user-2' },
-  { created_at: '', id: 'group-3', title: 'Traveling', user_id: 'user-3' },
-  { created_at: '', id: 'group-4', title: 'Company', user_id: 'user-4' },
+  { created_at: '2024-05-08T13:50:32.788655+00:00', id: 'group-1', title: 'Finances', user_id: user.id },
+  { created_at: '2024-05-08T13:50:32.788655+00:00', id: 'group-2', title: 'Games', user_id: user.id },
+  { created_at: '2024-05-08T13:50:32.788655+00:00', id: 'group-3', title: 'Traveling', user_id: user.id },
+  { created_at: '2024-05-08T13:50:32.788655+00:00', id: 'group-4', title: 'Company', user_id: user.id },
 ]
 
 const categories: TransactionCategories[] = [
@@ -78,113 +78,9 @@ const transactions: Transaction[] = [
   },
 ]
 
-const products = [
-  '- Daal Masoor 500 grams',
-  '3 DOOR PORTABLE',
-  '3 Tier Corner Shelves',
-  '3 lights lndenpant kitchen islang',
-  '3D Embellishment Art Lamp',
-  'American Vintage Wood Pendant Light',
-  'Automatic Motor Gas Motorcycles',
-  'Black Motorbike',
-  'Bluetooth Aux',
-  'Brown Perfume',
-  'Chain Pin Tassel Earrings',
-  'Chappals & Shoe Ladies Metallic',
-  'Crystal chandelier maria theresa for 12 light',
-  'Cycle Bike Glow',
-  'Eau De Perfume Spray',
-  'Elbow Macaroni - 400 gm',
-  'Elegant Female Pearl Earrings',
-  'FREE FIRE T Shirt',
-  'Fancy hand clutch',
-  'Fashion Magnetic Wrist Watch',
-  'Flying Wooden Bird',
-  'Fog Scent Xpressio Perfume',
-  'Freckle Treatment Cream- 15gm',
-  'Golden Watch Pearls Bracelet Watch',
-  'Gulab Powder 50 Gram',
-  'HOT SALE IN EUROPE electric racing motorcycle',
-  'HP Pavilion 15-DK1056WM',
-  'Handbag For Girls',
-  'Handcraft Chinese style',
-  'Huawei P30',
-  'Hyaluronic Acid Serum',
-  'Infinix INBOOK',
-  'Kabir Singh Square Sunglass',
-  'Key Holder',
-  'Ladies Multicolored Dress',
-  'Leather Hand Bag',
-  'Leather Strap Skeleton Watch',
-  'Leather Straps Wristwatch',
-  'Loafers for men',
-  'LouisWill Men Sunglasses',
-  'MacBook Pro',
-  'Malai Maxi Dress',
-  'Metal Ceramic Flower',
-  'Microsoft Surface Laptop 4',
-  'Money Heist Printed Summer T Shirts',
-  'Mornadi Velvet Bed',
-  'NIGHT SUIT',
-  'Non-Alcoholic Concentrated Perfume Oil',
-  'OPPOF19',
-  'Oil Free Moisturizer 100ml',
-  'Orange Essence Food Flavou',
-  'Plant Hanger For Home',
-  'Plastic Table',
-  'Pubg Printed Graphic T-Shirt',
-  'Qualcomm original Car Charger',
-  'Rhinestone Korean Style Open Rings',
-  'Rose Ring',
-  'Round Silver Frame Sun Glasses',
-  'Royal Blue Premium Watch',
-  'Samsung Galaxy Book',
-  'Samsung Universe 9',
-  'Seven Pocket Women Bag',
-  'Silver Ring Set Women',
-  'Skin Beauty Serum.',
-  'Sleeve Shirt Womens',
-  'Sneaker shoes',
-  'Sneakers Joggers Shoes',
-  'Sofa for Coffe Cafe',
-  'Spring and summershoes',
-  'Square Sunglasses',
-  'Stainless Steel Women',
-  'Stainless Steel Wrist Watch',
-  'Steel Analog Couple Watches',
-  'Stiched Kurta plus trouser',
-  'Stylish Casual Jeans Shoes',
-  'Stylish Luxury Digital Watch',
-  'TC Reusable Silicone Magic Washing Gloves',
-  'Tree Oil 30ml',
-  'Waterproof Leather Brand Watch',
-  'Wholesale cargo lashing Belt',
-  'Wiley X Night Vision Yellow Glasses',
-  'Women Shoes',
-  'Women Shoulder Bags',
-  'Women Strip Heel',
-  'Women Sweaters Wool',
-  'ank Tops for Womens/Girls',
-  'cereals muesli fruit nuts',
-  'formal offices shoes',
-  'frock gold printed',
-  'half sleeves T shirts',
-  'iPhone 9',
-  'iPhone X',
-  'lighting ceiling kitchen',
-  'new arrivals Fashion motocross goggles',
-  'perfume Oil',
-  'printed high quality T shirts',
-  'sublimation plain kids tank',
-  't Temperature Controller Incubator Controller',
-  'women winter clothes',
-  "women's shoes",
-]
-
 const mockGroups = Promise.resolve(groups)
 const mockCategories = Promise.resolve(categories)
 const mockTransactions = Promise.resolve(sortRecentTransactions(transactions))
 const mockUser = user
-const mockProducts = products
 
-export { mockCategories, mockGroups, mockTransactions, mockUser, mockProducts }
+export { mockCategories, mockGroups, mockTransactions, mockUser }

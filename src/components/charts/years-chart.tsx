@@ -3,7 +3,7 @@
 import { useMounted } from '@/hooks/use-mounted'
 import { getCurrencyValue } from '@/lib/transactions'
 import { removeArrayDuplicates, toPositive } from '@/lib/utils'
-import { CurrencyRates, TransactionYears } from '@/types'
+import { type CurrencyRates, type TransactionYears } from '@/types'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -15,7 +15,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import { HTMLAttributes, useMemo } from 'react'
+import { useMemo, type HTMLAttributes } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useCurrencyAtom } from '../providers/currency-provider'
 import { Skeleton } from '../ui/skeleton'
@@ -25,123 +25,110 @@ interface YearsChartProps extends HTMLAttributes<HTMLDivElement> {
   rates: (CurrencyRates | null)[]
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Title,
-  Tooltip,
-  Legend,
-)
-ChartJS.defaults.elements.line.tension = 0.4
+setupChartDefaults()
 
 export const YearsChart = ({ years, rates }: YearsChartProps) => {
   const mounted = useMounted()
   const currencyState = useCurrencyAtom()
 
   const data = useMemo(() => {
-    const allYears = removeArrayDuplicates(years.map((year) => year.year))
-    const filledYears = fillRemainingYears(years)
+    const uniqueYears = getUniqueYears(years)
+    const filledYears = fillMissingYears(years)
 
-    const incomes = filledYears.filter((year) => year.type === 'income')
-    const expenses = filledYears.filter((year) => year.type === 'expense')
+    const income = calculateYearData(filledYears, 'income', rates, currencyState)
+    const expense = calculateYearData(filledYears, 'expense', rates, currencyState).map(toPositive)
 
-    const calculatedIncomes = sumTransactionsByYear(
-      getCalculatedYears(incomes, rates, currencyState),
-    )
-    const calculatedExpenses = sumTransactionsByYear(
-      getCalculatedYears(expenses, rates, currencyState),
-    )
-
-    const incomeValues = calculatedIncomes.map((year) => year.sum)
-    const expenseValues = calculatedExpenses
-      .map((year) => year.sum)
-      .map((sum) => toPositive(sum))
-
-    return {
-      labels: allYears.map((year) => year),
-      datasets: [
-        {
-          label: 'revenue',
-          data: incomeValues,
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.2)',
-          fill: true,
-        },
-        {
-          label: 'expenses',
-          data: expenseValues,
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          fill: true,
-        },
-      ],
-    }
+    return createChartData(uniqueYears, income, expense)
   }, [currencyState, rates, years])
 
-  return mounted ? (
-    <Line className="max-h-[300px]" data={data} />
-  ) : (
-    <Skeleton className="h-[300px] w-full"></Skeleton>
-  )
+  if (!mounted) return <Skeleton className="h-[300px] w-full"></Skeleton>
+
+  return <Line className="max-h-[300px]" data={data} />
 }
 
-function fillRemainingYears(years: TransactionYears[]) {
-  const yearsMap = new Map<string, TransactionYears>()
+// 1. Function to get unique years
+function getUniqueYears(years: TransactionYears[]): string[] {
+  return removeArrayDuplicates(years.map((y) => y.year))
+}
 
-  for (const year of years) {
-    const { currency, sum, type, year: tYear } = year
-    let group = yearsMap.get(tYear + type + currency)
+// 2. Function to fill missing year data
+function fillMissingYears(years: TransactionYears[]): TransactionYears[] {
+  const yearMap = new Map<string, TransactionYears>()
 
-    if (!group) {
-      group = { currency, type, year: tYear, sum }
-      yearsMap.set(tYear + type + currency, group)
+  years.forEach(({ currency, sum, type, year }) => {
+    const key = `${year}-${type}-${currency}`
+    if (!yearMap.has(key)) {
+      yearMap.set(key, { year, type, currency, sum })
     }
-  }
+  })
 
-  // create opposite map if "year" or "type" do not exist
-  for (const year of years) {
-    const { currency, type, year: tYear } = year
+  // Ensure both income and expense exist for every year
+  years.forEach(({ year, currency, type }) => {
     const oppositeType = type === 'income' ? 'expense' : 'income'
-    let group = yearsMap.get(tYear + oppositeType + currency)
-
-    if (!group) {
-      group = { currency, type: oppositeType, year: tYear, sum: 0 }
-      yearsMap.set(tYear + oppositeType + currency, group)
+    const key = `${year}-${oppositeType}-${currency}`
+    if (!yearMap.has(key)) {
+      yearMap.set(key, { year, type: oppositeType, currency, sum: 0 })
     }
-  }
+  })
 
-  return Array.from(yearsMap.values()).sort(
-    (item1, item2) => Number(item1.year) - Number(item2.year),
-  )
+  return Array.from(yearMap.values()).sort((a, b) => Number(a.year) - Number(b.year))
 }
 
-function sumTransactionsByYear(transactions: TransactionYears[]) {
+// 3. Function to calculate year data with converted currencies
+function calculateYearData(
+  years: TransactionYears[],
+  type: 'income' | 'expense',
+  rates: (CurrencyRates | null)[],
+  currencyState: string,
+): number[] {
+  const filtered = years.filter((y) => y.type === type)
+  const calculated = filtered.map((y) => ({
+    ...y,
+    sum: getCurrencyValue(y.sum, y.currency, rates, currencyState),
+  }))
+  return sumByYear(calculated).map((y) => y.sum)
+}
+
+// 4. Function to sum transactions by year
+function sumByYear(transactions: TransactionYears[]): { year: string; sum: number }[] {
   const yearSums: { [year: string]: { year: string; sum: number } } = {}
 
-  for (const transaction of transactions) {
-    if (!yearSums[transaction.year]) {
-      yearSums[transaction.year] = {
-        year: transaction.year,
-        sum: transaction.sum,
-      }
+  transactions.forEach(({ year, sum }) => {
+    if (yearSums[year] === undefined) {
+      yearSums[year] = { year, sum }
     } else {
-      yearSums[transaction.year].sum += transaction.sum
+      const currentSum = yearSums[year] as { year: string; sum: number }
+      currentSum.sum += sum
     }
-  }
+  })
 
   return Object.values(yearSums)
 }
 
-function getCalculatedYears(
-  years: TransactionYears[],
-  rates: (CurrencyRates | null)[],
-  currencyState: string,
-) {
-  return years.map((year) => ({
-    ...year,
-    sum: getCurrencyValue(year.sum, year.currency, rates, currencyState),
-  }))
+// 5. Function to generate chart data
+function createChartData(labels: string[], income: number[], expense: number[]) {
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'revenue',
+        data: income,
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.2)',
+        fill: true,
+      },
+      {
+        label: 'expenses',
+        data: expense,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        fill: true,
+      },
+    ],
+  }
+}
+
+function setupChartDefaults() {
+  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Tooltip, Legend)
+  ChartJS.defaults.elements.line.tension = 0.4
 }

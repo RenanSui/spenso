@@ -1,6 +1,6 @@
 'use server'
 
-import { Database } from '@/types/database.types'
+import { type Database } from '@/types/database.types'
 import { createClient } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth'

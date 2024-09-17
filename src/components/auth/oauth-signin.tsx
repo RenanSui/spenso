@@ -1,9 +1,9 @@
 'use client'
 
-import { BuiltInProviderType } from 'next-auth/providers/index'
-import { LiteralUnion } from 'next-auth/react'
+import { type BuiltInProviderType } from 'next-auth/providers/index'
+import { type LiteralUnion } from 'next-auth/react'
 import { useState } from 'react'
-import { Icons } from '../ui/icons'
+import { type Icons } from '../ui/icons'
 import { ProviderSignIn } from './provider-signin'
 
 export type OAuthProviders = {
@@ -24,12 +24,7 @@ export const OAuthSignIn = () => {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {oauthProviders.map((provider) => (
-        <ProviderSignIn
-          key={provider.name}
-          disabled={isSigning}
-          provider={provider}
-          setIsSigning={setIsSigning}
-        />
+        <ProviderSignIn key={provider.name} disabled={isSigning} provider={provider} setIsSigning={setIsSigning} />
       ))}
     </div>
   )

@@ -2,11 +2,7 @@ import { getAllTransactionsRates } from '@/actions/server/currency-rates'
 import { getTransactionsByGroupId } from '@/actions/server/transactions'
 import { getGroupById } from '@/actions/server/transactions-groups'
 import { TransactionAnalyticsShell } from '@/components/shells/transactions-analytics-shell'
-import {
-  getTransactionsCategories,
-  getTransactionsTypes,
-  getTransactionsYears,
-} from '@/lib/transactions'
+import { getTransactionsCategories, getTransactionsTypes, getTransactionsYears } from '@/lib/transactions'
 import { notFound } from 'next/navigation'
 
 type GroupPageProps = {

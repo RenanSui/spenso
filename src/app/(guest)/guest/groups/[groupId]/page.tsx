@@ -2,24 +2,11 @@
 
 import { GuestDeleteGroupDialog } from '@/app/(guest)/guest/_components/guest-delete-group-dialog'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { CreateGroupSchema, createGroupSchema } from '@/lib/validations/group'
+import { type CreateGroupSchema, createGroupSchema } from '@/lib/validations/group'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { notFound } from 'next/navigation'
 import * as React from 'react'
@@ -46,8 +33,7 @@ export default function Page(params: GroupPageProps) {
   const group = guest.groups.find((group) => group.id === groupId)
   if (!group) return notFound()
 
-  const onSubmit = (formData: CreateGroupSchema) =>
-    guest.updateGroup({ ...group, ...formData })
+  const onSubmit = (formData: CreateGroupSchema) => guest.updateGroup({ ...group, ...formData })
 
   return (
     <div className="space-y-6">

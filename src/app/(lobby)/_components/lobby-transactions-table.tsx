@@ -13,10 +13,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { transactionTypeses } from '@/config/dashboard'
 import { cn, formatValue } from '@/lib/utils'
-import { CurrencyRates, Transaction } from '@/types'
-import { Column, ColumnDef } from '@tanstack/react-table'
+import { type CurrencyRates, type Transaction } from '@/types'
+import { type Column, type ColumnDef } from '@tanstack/react-table'
 import { ChevronsUpDown, MoreHorizontal } from 'lucide-react'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { type ReactNode, useEffect, useState } from 'react'
 import { LobbyDataTable } from './lobby-data-table'
 
 interface LobbyTransactionsTableProps {
@@ -26,11 +26,7 @@ interface LobbyTransactionsTableProps {
   mocked?: boolean
 }
 
-export function LobbyTransactionsTable({
-  data: transactions,
-  rates,
-  groupId,
-}: LobbyTransactionsTableProps) {
+export function LobbyTransactionsTable({ data: transactions, rates, groupId }: LobbyTransactionsTableProps) {
   const currencyState = useCurrencyAtom()
 
   const columns = React.useMemo<ColumnDef<Transaction, unknown>[]>(
@@ -41,9 +37,7 @@ export function LobbyTransactionsTable({
           groupId ? (
             <Checkbox
               checked={table.getIsAllPageRowsSelected()}
-              onCheckedChange={(value: unknown) =>
-                table.toggleAllPageRowsSelected(!!value)
-              }
+              onCheckedChange={(value: unknown) => table.toggleAllPageRowsSelected(!!value)}
               aria-label="Select all"
             />
           ) : null,
@@ -60,47 +54,34 @@ export function LobbyTransactionsTable({
       },
       {
         accessorKey: 'type',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Type</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Type</SortableHeader>,
         cell: ({ row }) => {
           const type = String(row.getValue('type'))
           return (
-            <span
-              className={cn(
-                'pl-4 capitalize',
-                type === 'expense' ? 'text-red-600 dark:text-red-400' : null,
-              )}
-            >
+            <span className={cn('pl-4 capitalize', type === 'expense' ? 'text-red-600 dark:text-red-400' : null)}>
               {type}
             </span>
           )
         },
-        filterFn: (row, id, value) => {
-          return value.includes(row.getValue(id))
+        filterFn: (row, id, value: string[]) => {
+          return value.includes(String(row.getValue(id)))
         },
       },
       {
         accessorKey: 'product',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Item</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Item</SortableHeader>,
       },
       {
         accessorKey: 'amount',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Amount</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Amount</SortableHeader>,
         cell: ({ row }) => {
-          const type = row.getValue('type') as 'expense' | 'income'
+          const type = row.getValue('type')
 
           const returnFormatted = () => {
             const amount = parseFloat(row.getValue('amount'))
             const currency = String(row.getValue('currency'))
 
-            const transactionRates = rates.find(
-              (item) => item?.base === currency,
-            )
+            const transactionRates = rates.find((item) => item?.base === currency)
             const currencyRate = transactionRates?.rates[currencyState] ?? 1
             const newAmount = parseFloat((amount * currencyRate).toFixed(2))
 
@@ -110,12 +91,7 @@ export function LobbyTransactionsTable({
           const formatted = returnFormatted()
 
           return (
-            <div
-              className={cn(
-                'pl-4 font-medium',
-                type === 'expense' ? 'text-red-600 dark:text-red-400' : '',
-              )}
-            >
+            <div className={cn('pl-4 font-medium', type === 'expense' ? 'text-red-600 dark:text-red-400' : '')}>
               {formatted}
             </div>
           )
@@ -123,9 +99,7 @@ export function LobbyTransactionsTable({
       },
       {
         accessorKey: 'category',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Category</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Category</SortableHeader>,
         cell: ({ row }) => {
           const category = String(row.getValue('category'))
           return <span className="pl-4 capitalize">{category}</span>
@@ -133,9 +107,7 @@ export function LobbyTransactionsTable({
       },
       {
         accessorKey: 'date',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Date</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Date</SortableHeader>,
         sortingFn: (itemA, itemB): number => {
           const dateA = new Date(itemA.original.date).getTime()
           const dateB = new Date(itemB.original.date).getTime()
@@ -154,9 +126,7 @@ export function LobbyTransactionsTable({
       },
       {
         accessorKey: 'currency',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Currency</SortableHeader>
-        ),
+        header: ({ column }) => <SortableHeader column={column}>Currency</SortableHeader>,
         cell: ({ row }) => {
           const currency = String(row.getValue('currency'))
 
@@ -177,27 +147,19 @@ export function LobbyTransactionsTable({
       data={transactions}
       columns={columns}
       searchableColumns={[{ id: 'product', title: 'Product' }]}
-      filterableColumns={[
-        { id: 'type', title: 'Type', options: transactionTypeses },
-      ]}
+      filterableColumns={[{ id: 'type', title: 'Type', options: transactionTypeses }]}
     />
   )
 }
 
-const SortableHeader = ({
-  children,
-  column,
-}: {
-  children: ReactNode
-  column: Column<Transaction, unknown>
-}) => (
+const SortableHeader = ({ children, column }: { children: ReactNode; column: Column<Transaction, unknown> }) => (
   <Button
     className="text-xs dark:text-neutral-400 dark:hover:bg-neutral-800"
     variant="ghost"
     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
   >
     {children}
-    <ChevronsUpDown className="ml-2 h-3 w-3" />
+    <ChevronsUpDown className="ml-2 size-3" />
   </Button>
 )
 
@@ -232,15 +194,11 @@ const TableDropdown = () => {
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button
-            disabled={isDisable}
-            variant="ghost"
-            className={cn('h-8 w-8 p-0', isDisable ? 'bg-red-400' : '')}
-          >
+          <Button disabled={isDisable} variant="ghost" className={cn('size-8 p-0', isDisable ? 'bg-red-400' : '')}>
             <span className="sr-only">Open menu</span>
             <MoreHorizontal
               className={cn(
-                'h-4 w-4 transition-all duration-300',
+                'size-4 transition-all duration-300',
                 !open ? '-rotate-90' : '',
                 isDisable ? 'text-red-900' : '',
               )}
@@ -250,15 +208,9 @@ const TableDropdown = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleUpdate()}>
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleUpdate(true)}>
-            Duplicate
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleChangeGroup()}>
-            Change Group
-          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleUpdate()}>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleUpdate(true)}>Duplicate</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleChangeGroup()}>Change Group</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => handleDelete()} title="destructive">
             Delete

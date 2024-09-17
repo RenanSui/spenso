@@ -20,39 +20,28 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Icons } from '@/components/ui/icons'
 import { Input } from '@/components/ui/input'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
-import { CreateGroupSchema, createGroupSchema } from '@/lib/validations/group'
-import {
-  GroupsRoute,
-  TransactionGroups,
-  TransactionGroupsInsert,
-} from '@/types'
+import { createGroupSchema, type CreateGroupSchema } from '@/lib/validations/group'
+import { type GroupsRoute, type TransactionGroups, type TransactionGroupsInsert } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PostgrestError } from '@supabase/supabase-js'
+import { type PostgrestError } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { UseFormReturn, useForm } from 'react-hook-form'
+import { useForm, type UseFormReturn } from 'react-hook-form'
 import { toast } from 'sonner'
 
-interface CreateGroupDialogProps
-  extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface CreateGroupDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   userId: string | null | undefined
   createGroup: (formData: TransactionGroupsInsert) => Promise<{
     data: TransactionGroups[] | null
     error: PostgrestError | null
   } | null>
   route?: GroupsRoute
+  onOpenChange?: (this: void, isOpen: boolean) => void
 }
 
 export function CreateGroupDialog({
@@ -88,8 +77,9 @@ export function CreateGroupDialog({
       return
     }
 
-    if (data) {
-      router.push(`/${route}/groups/${data[0].id}`)
+    const groupId = data?.[0]?.id
+    if (groupId) {
+      router.push(`/${route}/groups/${groupId}`)
       toast.success('Group created')
     }
 
@@ -117,9 +107,7 @@ export function CreateGroupDialog({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Create a new group</DialogTitle>
-            <DialogDescription>
-              Create a new group to manage your transactions
-            </DialogDescription>
+            <DialogDescription>Create a new group to manage your transactions</DialogDescription>
           </DialogHeader>
           <CreateGroupForm form={form} onSubmit={onSubmit}>
             <DialogFooter className="pt-4">
@@ -129,12 +117,7 @@ export function CreateGroupDialog({
                 </Button>
               </DialogClose>
               <Button type="submit" disabled={loading}>
-                {loading && (
-                  <Icons.spinner
-                    className="mr-2 size-4 animate-spin"
-                    aria-hidden="true"
-                  />
-                )}
+                {loading && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
                 Add group
               </Button>
             </DialogFooter>
@@ -162,9 +145,7 @@ export function CreateGroupDialog({
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Create a new group</DrawerTitle>
-          <DrawerDescription>
-            Create a new group to manage your transactions
-          </DrawerDescription>
+          <DrawerDescription>Create a new group to manage your transactions</DrawerDescription>
         </DrawerHeader>
         <CreateGroupForm form={form} onSubmit={onSubmit} className="px-4">
           <DrawerFooter className="flex-col-reverse px-0">
@@ -174,12 +155,7 @@ export function CreateGroupDialog({
               </Button>
             </DrawerClose>
             <Button type="submit" disabled={loading}>
-              {loading && (
-                <Icons.spinner
-                  className="mr-2 size-4 animate-spin"
-                  aria-hidden="true"
-                />
-              )}
+              {loading && <Icons.spinner className="mr-2 size-4 animate-spin" aria-hidden="true" />}
               Add group
             </Button>
           </DrawerFooter>
@@ -189,20 +165,13 @@ export function CreateGroupDialog({
   )
 }
 
-interface CreateGroupFormProps
-  extends Omit<React.ComponentPropsWithRef<'form'>, 'onSubmit'> {
+interface CreateGroupFormProps extends Omit<React.ComponentPropsWithRef<'form'>, 'onSubmit'> {
   children: React.ReactNode
   form: UseFormReturn<CreateGroupSchema>
   onSubmit: (data: CreateGroupSchema) => void
 }
 
-function CreateGroupForm({
-  children,
-  form,
-  onSubmit,
-  className,
-  ...props
-}: CreateGroupFormProps) {
+function CreateGroupForm({ children, form, onSubmit, className, ...props }: CreateGroupFormProps) {
   return (
     <Form {...form}>
       <form
@@ -224,19 +193,6 @@ function CreateGroupForm({
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Type group description here." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         {children}
       </form>
     </Form>

@@ -10,20 +10,31 @@ import { Shell } from '@/components/shells/shell'
 import { mockUser } from '@/lib/mocks'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
-import { TransactionsContext } from '../_components/guest-provider'
+import { TransactionsContext, type GroupsPromise, type TransactionsPromise } from '../_components/guest-provider'
 
 type PageParams = {
-  searchParams: {
-    deleting: string
-  }
+  searchParams: { deleting: string }
 }
 
 export default function Page(params: PageParams) {
-  const { groupsPromise, transactionsPromise, createGroup } =
-    React.use(TransactionsContext)
+  const { transactions, groups, createGroup } = React.use(TransactionsContext)
+  const [transactionsPromise, setTransactionsPromise] = React.useState<TransactionsPromise>(null)
+  const [groupsPromise, setGroupsPromise] = React.useState<GroupsPromise>(null)
+
   const deleting = params.searchParams.deleting ?? 'false'
   const isDeleting = deleting === 'true'
   const user = mockUser
+
+  React.useEffect(() => {
+    function loadData() {
+      const transactionsPromise = Promise.resolve(transactions)
+      const groupsPromise = Promise.resolve(groups)
+
+      setTransactionsPromise(transactionsPromise)
+      setGroupsPromise(groupsPromise)
+    }
+    loadData()
+  }, [groups, transactions])
 
   return (
     <Shell variant="sidebar">
@@ -32,11 +43,7 @@ export default function Page(params: PageParams) {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog
-          userId={user.id}
-          route="guest"
-          createGroup={createGroup}
-        />
+        <CreateGroupDialog userId={user.id} route="guest" createGroup={createGroup} />
       </PageHeader>
       <DashboardTabs route="guest" />
       <section
@@ -51,11 +58,7 @@ export default function Page(params: PageParams) {
           ))}
         >
           {groupsPromise && transactionsPromise ? (
-            <Groups
-              groupsPromise={groupsPromise}
-              transactionsPromise={transactionsPromise}
-              route="guest"
-            />
+            <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} route="guest" />
           ) : null}
         </React.Suspense>
       </section>

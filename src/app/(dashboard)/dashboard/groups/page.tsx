@@ -27,11 +27,7 @@ export default async function GroupsPage() {
           Groups
         </PageHeaderHeading>
         <CurrencyToggle />
-        <CreateGroupDialog
-          userId={user.id}
-          route="dashboard"
-          createGroup={addGroup}
-        />
+        <CreateGroupDialog userId={user.id} route="dashboard" createGroup={addGroup} />
       </PageHeader>
       <DashboardTabs />
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -40,10 +36,7 @@ export default async function GroupsPage() {
             <GroupCardSkeleton key={i} />
           ))}
         >
-          <Groups
-            groupsPromise={groupsPromise}
-            transactionsPromise={transactionsPromise}
-          />
+          <Groups groupsPromise={groupsPromise} transactionsPromise={transactionsPromise} />
         </React.Suspense>
       </section>
     </Shell>
